@@ -1,6 +1,11 @@
 export enum AppRoutes {
+  ApresentationOne = "/(onboarding)/apresentationOne",
+  ApresentationTwo = "/(onboarding)/apresentationTwo",
+  ApresentationThree = "/(onboarding)/apresentationThree",
+
   SignUp = "/(auth)/sign-up",
   SignIn = "/(auth)/sign-in",
+
   ForgotPassword = "/(auth)/forgot-password",
   Home = "/(dashboard)/home",
   Profile = "/(dashboard)/profile",
@@ -8,16 +13,21 @@ export enum AppRoutes {
 }
 
 export enum AppNames {
-  SignUp = "sign-up/index",
+  ApresentationOne = "apresentationOne/index",
+  ApresentationTwo = "apresentationTwo/index",
+  ApresentationThree = "apresentationThree/index",
 
+  SignUp = "sign-up/index",
   SignIn = "sign-in/index",
   ForgotPassword = "forgot-password/index",
+
   Home = "home/index",
   Profile = "profile/index",
   Settings = "settings/index",
 }
 
 export enum AppGroupNames {
+  Onboarding = "(onboarding)",
   Auth = "(auth)",
   Dashboard = "(dashboard)",
 }
