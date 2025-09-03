@@ -1,6 +1,8 @@
 import { Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppRoutes } from "../../../routes/appRoutes";
 
 export default function Home() {
   const studyTopics = [
@@ -8,6 +10,7 @@ export default function Home() {
     { id: 2, title: "Science", icon: "flask" },
     { id: 3, title: "History", icon: "book" },
     { id: 4, title: "Languages", icon: "message-circle" },
+    { id: 5, title: "Tema", icon: "eye" },
   ];
 
   return (
@@ -26,7 +29,15 @@ export default function Home() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.topicsGrid}>
           {studyTopics.map(topic => (
-            <TouchableOpacity key={topic.id} style={styles.topicCard}>
+            <TouchableOpacity
+              key={topic.id}
+              style={styles.topicCard}
+              onPress={() => {
+                if (topic.title === "Tema") {
+                  router.push(AppRoutes.ThemeExample);
+                }
+              }}
+            >
               <View style={styles.iconContainer}>
                 <Feather name={topic.icon} size={24} color='#fff' />
               </View>

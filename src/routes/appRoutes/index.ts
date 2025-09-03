@@ -10,6 +10,8 @@ export enum AppRoutes {
   Home = "/(dashboard)/home",
   Profile = "/(dashboard)/profile",
   Settings = "/(dashboard)/settings",
+  
+  ThemeExample = "/(examples)/theme-example",
 }
 
 export enum AppNames {
@@ -18,6 +20,7 @@ export enum AppNames {
   ApresentationThree = "apresentationThree/index",
 
   SignUp = "sign-up/index",
+  ThemeExample = "theme-example/index",
   SignIn = "sign-in/index",
   ForgotPassword = "forgot-password/index",
 

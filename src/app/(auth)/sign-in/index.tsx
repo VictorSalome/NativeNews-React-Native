@@ -1,5 +1,5 @@
-import useAuth from "@/app/hooks/useAuth";
-import { AppRoutes } from "@/app/routes/appRoutes";
+import useAuth from "@/hooks/useAuth";
+import { AppRoutes } from "@/routes/appRoutes";
 
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";

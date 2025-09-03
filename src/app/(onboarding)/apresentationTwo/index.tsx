@@ -1,40 +1,15 @@
-// src/app/(onboarding)/apresentationOne/index.tsx
+// src/app/(onboarding)/apresentationTwo/index.tsx
 import { AppRoutes } from "@/routes/appRoutes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import LottieView from "lottie-react-native";
 import React, { useRef } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 
 const { width, height } = Dimensions.get("window");
 
 // Você precisará baixar ou criar animações Lottie para usar aqui
 // Exemplo de slides para o onboarding
-const slides = [
-  {
-    key: "one",
-    title: "Bem-vindo ao NativeNews",
-    text: "Seu aplicativo de notícias personalizadas",
-    lottie: require("../../../../assets/animations/Welcome.json"),
-
-    backgroundColor: "#f27575",
-  },
-  {
-    key: "two",
-    title: "Notícias em Tempo Real",
-    text: "Receba atualizações instantâneas sobre os assuntos que você se interessa",
-    lottie: require("../../../../assets/animations/news.json"),
-    backgroundColor: "#febe29",
-  },
-  {
-    key: "three",
-    title: "Personalize sua Experiência",
-    text: "Escolha suas categorias favoritas e tenha uma experiência única",
-    lottie: require("../../../../assets/animations/customize.json"),
-    backgroundColor: "#22bcb5",
-  },
-];
 
 const introApresentation = [
   {
@@ -42,6 +17,7 @@ const introApresentation = [
     title: "Bem-vindo ao NativeNews",
     text: "Seu aplicativo de notícias personalizadas",
     lottie: require("../../../../assets/images/apresentation1.png"),
+    logo: require("../../../../assets/logos/nativeNewsLogo.png"),
     backgroundColor: "#ffffff",
   },
   {
@@ -49,6 +25,8 @@ const introApresentation = [
     title: "Mantenha-se Informado",
     text: "Receba atualizações sobre os assuntos que você se interessa",
     lottie: require("../../../../assets/images/apresentation2.png"),
+    logo: require("../../../../assets/logos/nativeNewsLogo.png"),
+
     backgroundColor: "#ffffff",
   },
   {
@@ -56,18 +34,23 @@ const introApresentation = [
     title: "Informações sempre atualizadas",
     text: "Atualizamos constantemente para trazer as últimas notícias.",
     lottie: require("../../../../assets/images/apresentation3.png"),
+    logo: require("../../../../assets/logos/nativeNewsLogo.png"),
+
     backgroundColor: "#ffffff",
   },
 ];
 
-export default function ApresentationOne() {
+export default function ApresentationTwo() {
   const sliderRef = useRef(null);
 
-  const renderItem = ({ item }: { item: (typeof slides)[0] }) => {
+  const renderItem = ({ item }: { item: (typeof introApresentation)[0] }) => {
     return (
       <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
+        <Text className='text-3xl font-bold text-blue-500'>oladsadasda</Text>
+
+        <Image source={item.logo} style={styles.logo} />
         <Text style={styles.title}>{item.title}</Text>
-        <LottieView source={item.lottie} autoPlay loop style={styles.lottieAnimation} />
+        <Image source={item.lottie} style={styles.lottieAnimation} />
         <Text style={styles.text}>{item.text}</Text>
       </View>
     );
@@ -109,7 +92,7 @@ export default function ApresentationOne() {
       <AppIntroSlider
         ref={sliderRef}
         renderItem={renderItem}
-        data={slides}
+        data={introApresentation}
         onDone={onDone}
         renderDoneButton={renderDoneButton}
         renderNextButton={renderNextButton}
@@ -126,6 +109,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  logo: {
+    width: 250,
+    height: 250,
+  },
+
   slide: {
     flex: 1,
     alignItems: "center",
@@ -133,15 +121,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
     textAlign: "center",
     marginBottom: 16,
   },
   text: {
     fontSize: 16,
-    color: "white",
+    color: "black",
     textAlign: "center",
     marginTop: 16,
   },
@@ -158,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     fontSize: 16,
   },
@@ -169,7 +157,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   skipButtonText: {
-    color: "white",
+    color: "black",
     fontWeight: "500",
     fontSize: 16,
   },
@@ -177,6 +165,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.3)",
   },
   activeDot: {
-    backgroundColor: "white",
+    backgroundColor: "black",
   },
 });

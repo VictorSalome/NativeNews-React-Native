@@ -1,8 +1,10 @@
+import "./global.css";
+
 import { Redirect } from "expo-router";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { useAuthContext } from "./context/authContext";
-import { useOnboardingContext } from "./context/onboardContext";
-import { AppRoutes } from "./routes/appRoutes";
+import { useAuthContext } from "../context/authContext";
+import { useOnboardingContext } from "../context/onboardContext";
+import { AppRoutes } from "../routes/appRoutes";
 
 export default function Index() {
   const { isAuthenticated, isLoading } = useAuthContext();
@@ -17,7 +19,7 @@ export default function Index() {
   }
 
   if (hasSeenOnboarding === true) {
-    return <Redirect href={AppRoutes.ApresentationOne} />;
+    return <Redirect href={AppRoutes.ApresentationTwo} />;
   }
 
   return isAuthenticated ? (

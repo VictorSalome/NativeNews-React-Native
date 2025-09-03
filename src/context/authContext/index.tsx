@@ -1,5 +1,5 @@
-import { auth } from "@/app/services/firebaseConfig";
-import { getSecureItem, saveSecureItem } from "@/app/utils/secureStore";
+import { auth } from "@/services/firebaseConfig";
+import { getSecureItem, saveSecureItem } from "@/utils/secureStore";
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,

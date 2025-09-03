@@ -13,7 +13,7 @@ import {
   View,
 } from "react-native";
 
-import useAuth from "@/app/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");

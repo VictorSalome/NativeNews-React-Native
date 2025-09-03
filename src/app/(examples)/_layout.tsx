@@ -1,14 +1,18 @@
 import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppNames } from "../../routes/appRoutes";
 
-export default function OnboardingLayout() {
+export default function ExamplesLayout() {
   return (
     <SafeAreaView style={styles.container}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={AppNames.ApresentationOne} />
-        <Stack.Screen name={AppNames.ApresentationTwo} />
+      <Stack screenOptions={{ headerShown: true }}>
+        <Stack.Screen 
+          name="theme-example" 
+          options={{ 
+            title: "Exemplo de Tema",
+            headerTitleAlign: "center"
+          }} 
+        />
       </Stack>
     </SafeAreaView>
   );

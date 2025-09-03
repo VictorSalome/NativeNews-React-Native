@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppNames } from "../routes/appRoutes";
+import { AppNames } from "../../routes/appRoutes";
 
 export default function AuthLayout() {
   return (
