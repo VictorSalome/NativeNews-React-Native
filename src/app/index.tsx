@@ -1,24 +1,20 @@
 import "./global.css";
 
 import { Redirect } from "expo-router";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useAuthContext } from "../context/authContext";
 import { useOnboardingContext } from "../context/onboardContext";
 import { AppRoutes } from "../routes/appRoutes";
+import { LoadingScreens } from "../components/LoadingScreens";
 
 export default function Index() {
   const { isAuthenticated, isLoading } = useAuthContext();
   const { hasSeenOnboarding } = useOnboardingContext();
 
   if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size='large' color='#007AFF' />
-      </View>
-    );
+    return <LoadingScreens />;
   }
 
-  if (hasSeenOnboarding === true) {
+  if (hasSeenOnboarding === false) {
     return <Redirect href={AppRoutes.ApresentationTwo} />;
   }
 
@@ -28,11 +24,3 @@ export default function Index() {
     <Redirect href={AppRoutes.SignIn} />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

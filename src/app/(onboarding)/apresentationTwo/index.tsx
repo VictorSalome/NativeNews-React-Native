@@ -3,20 +3,19 @@ import { AppRoutes } from "@/routes/appRoutes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useRef } from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { Image, Text, View, Dimensions } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
+import { SafeAreaView } from "react-native-safe-area-context";
 
+// Obtém as dimensões da tela para cálculos responsivos
 const { width, height } = Dimensions.get("window");
-
-// Você precisará baixar ou criar animações Lottie para usar aqui
-// Exemplo de slides para o onboarding
 
 const introApresentation = [
   {
     key: "one",
     title: "Bem-vindo ao NativeNews",
     text: "Seu aplicativo de notícias personalizadas",
-    lottie: require("../../../../assets/images/apresentation1.png"),
+    image: require("../../../../assets/images/apresentation1.png"),
     logo: require("../../../../assets/logos/nativeNewsLogo.png"),
     backgroundColor: "#ffffff",
   },
@@ -24,7 +23,7 @@ const introApresentation = [
     key: "two",
     title: "Mantenha-se Informado",
     text: "Receba atualizações sobre os assuntos que você se interessa",
-    lottie: require("../../../../assets/images/apresentation2.png"),
+    image: require("../../../../assets/images/apresentation2.png"),
     logo: require("../../../../assets/logos/nativeNewsLogo.png"),
 
     backgroundColor: "#ffffff",
@@ -33,7 +32,7 @@ const introApresentation = [
     key: "three",
     title: "Informações sempre atualizadas",
     text: "Atualizamos constantemente para trazer as últimas notícias.",
-    lottie: require("../../../../assets/images/apresentation3.png"),
+    image: require("../../../../assets/images/apresentation3.png"),
     logo: require("../../../../assets/logos/nativeNewsLogo.png"),
 
     backgroundColor: "#ffffff",
@@ -45,37 +44,47 @@ export default function ApresentationTwo() {
 
   const renderItem = ({ item }: { item: (typeof introApresentation)[0] }) => {
     return (
-      <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-        <Text className='text-3xl font-bold text-blue-500'>oladsadasda</Text>
-
-        <Image source={item.logo} style={styles.logo} />
-        <Text style={styles.title}>{item.title}</Text>
-        <Image source={item.lottie} style={styles.lottieAnimation} />
-        <Text style={styles.text}>{item.text}</Text>
-      </View>
+      <SafeAreaView className='flex-1 '>
+        <View className='flex-1 items-center px-5 bg-white'>
+          <Image
+            source={item.logo}
+            style={{
+              width: 200,
+              height: 200,
+            }}
+            resizeMode='contain'
+          />
+          <Text className='text-2xl font-bold text-gray-800 text-center mb-10'>{item.title}</Text>
+          <Text className='text-base text-gray-600 text-center px-4 mb-6'>{item.text}</Text>
+          <Image
+            source={item.image}
+            style={{
+              width: 220,
+              height: 220,
+            }}
+            resizeMode='contain'
+          />
+        </View>
+      </SafeAreaView>
     );
   };
 
   const renderNextButton = () => {
     return (
-      <View style={styles.buttonCircle}>
-        <Text style={styles.buttonText}>Próximo</Text>
+      <View className='w-full flex items-center justify-center'>
+        <View className='w-[120px] h-[50px] bg-[#4FA6BB] rounded-full justify-center items-center shadow-md'>
+          <Text className='text-white font-bold text-lg'>Próximo</Text>
+        </View>
       </View>
     );
   };
 
   const renderDoneButton = () => {
     return (
-      <View style={styles.buttonCircle}>
-        <Text style={styles.buttonText}>Começar</Text>
-      </View>
-    );
-  };
-
-  const renderSkipButton = () => {
-    return (
-      <View style={styles.skipButton}>
-        <Text style={styles.skipButtonText}>Pular</Text>
+      <View className='w-full flex items-center justify-center'>
+        <View className='w-[120px] h-[50px] bg-[#4FA6BB] rounded-full justify-center items-center shadow-md'>
+          <Text className='text-white font-bold text-lg'>Começar</Text>
+        </View>
       </View>
     );
   };
@@ -88,7 +97,7 @@ export default function ApresentationTwo() {
   };
 
   return (
-    <View style={styles.container}>
+    <View className='flex-1 bg-white'>
       <AppIntroSlider
         ref={sliderRef}
         renderItem={renderItem}
@@ -96,75 +105,12 @@ export default function ApresentationTwo() {
         onDone={onDone}
         renderDoneButton={renderDoneButton}
         renderNextButton={renderNextButton}
-        renderSkipButton={renderSkipButton}
-        showSkipButton
-        dotStyle={styles.dot}
-        activeDotStyle={styles.activeDot}
+        dotStyle={{ backgroundColor: "rgba(0, 0, 0, 0.3)", marginBottom: 20, marginTop: 10 }}
+        activeDotStyle={{ backgroundColor: "#4FA6BB", marginBottom: 20, marginTop: 10 }}
+        bottomButton
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  logo: {
-    width: 250,
-    height: 250,
-  },
-
-  slide: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "black",
-    textAlign: "center",
-    marginBottom: 16,
-  },
-  text: {
-    fontSize: 16,
-    color: "black",
-    textAlign: "center",
-    marginTop: 16,
-  },
-  lottieAnimation: {
-    width: width * 0.8,
-    height: height * 0.4,
-  },
-  buttonCircle: {
-    width: 100,
-    height: 40,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  skipButton: {
-    width: 80,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  skipButtonText: {
-    color: "black",
-    fontWeight: "500",
-    fontSize: 16,
-  },
-  dot: {
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
-  },
-  activeDot: {
-    backgroundColor: "black",
-  },
-});
+// Não precisamos mais do StyleSheet pois estamos usando classes do Tailwind
