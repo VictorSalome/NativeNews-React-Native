@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
+import { showLoginError, showLoginSuccess } from "@/utils/authFeedback";
 import { useState } from "react";
 import {
   Image,
@@ -46,9 +47,14 @@ export default function SignIn() {
     const { email, password } = data;
     const response = await handleSignIn(email, password);
 
-    router.replace(AppRoutes.Home);
+    if (response.ok) {
+      showLoginSuccess();
+    } else {
+      showLoginError();
+      return;
+    }
 
-    console.log("response", response);
+    router.replace(AppRoutes.Home);
   };
 
   const handleGoToSignUp = () => {
@@ -84,7 +90,6 @@ export default function SignIn() {
           <View className='w-full'>
             <Text className='text-[28px] font-bold text-[#333] mb-2.5'>Bem-vindo!</Text>
             <Text className='text-base text-[#666] mb-8'>Faça login para continuar</Text>
-
             <Controller
               control={control}
               name='email'
@@ -105,7 +110,6 @@ export default function SignIn() {
                 </>
               )}
             />
-
             <View className='flex-row items-center bg-[#f5f5f5] rounded-lg mb-4'>
               <Controller
                 control={control}
@@ -136,14 +140,12 @@ export default function SignIn() {
             <TouchableOpacity className='self-end mb-5 mt-4' onPress={handleGoToForgotPassword}>
               <Text className='text-[#666] text-sm'>Esqueceu a senha?</Text>
             </TouchableOpacity>
-
             <TouchableOpacity
               className='bg-[#007AFF] rounded-lg p-4 items-center mb-5'
               onPress={handleSubmit(onSubmit)}
             >
               <Text className='text-white text-base font-bold'>Entrar</Text>
             </TouchableOpacity>
-
             <View className='flex-row justify-center items-center'>
               <Text className='text-[#666] text-sm'>Não tem uma conta? </Text>
               <TouchableOpacity onPress={handleGoToSignUp}>
