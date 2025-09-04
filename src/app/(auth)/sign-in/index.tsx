@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
+import { authTexts } from "@/constants/texts/auth";
 import { showLoginError, showLoginSuccess } from "@/utils/userFeedback";
 import { useState } from "react";
 import {
@@ -27,6 +28,17 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    title,
+    description,
+    emailPlaceholder,
+    passwordPlaceholder,
+    forgotPassword,
+    loginButton,
+    noAccountText,
+    createAccountButton,
+  } = authTexts.signIn;
 
   const { handleSignIn } = useAuth();
 
@@ -86,10 +98,9 @@ export default function SignIn() {
               resizeMode='contain'
             />
           </View>
-
           <View className='w-full'>
-            <Text className='text-[28px] font-bold text-[#333] mb-2.5'>Bem-vindo!</Text>
-            <Text className='text-base text-[#666] mb-8'>Faça login para continuar</Text>
+            <Text className='text-[28px] font-bold text-[#333] mb-2.5'>{title}</Text>
+            <Text className='text-base text-[#666] mb-8'>{description}</Text>
             <Controller
               control={control}
               name='email'
@@ -138,18 +149,18 @@ export default function SignIn() {
             </View>
 
             <TouchableOpacity className='self-end mb-5 mt-4' onPress={handleGoToForgotPassword}>
-              <Text className='text-[#666] text-sm'>Esqueceu a senha?</Text>
+              <Text className='text-[#666] text-sm'>{forgotPassword}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               className='bg-[#007AFF] rounded-lg p-4 items-center mb-5'
               onPress={handleSubmit(onSubmit)}
             >
-              <Text className='text-white text-base font-bold'>Entrar</Text>
+              <Text className='text-white text-base font-bold'>{loginButton}</Text>
             </TouchableOpacity>
             <View className='flex-row justify-center items-center'>
-              <Text className='text-[#666] text-sm'>Não tem uma conta? </Text>
+              <Text className='text-[#666] text-sm'>{noAccountText} </Text>
               <TouchableOpacity onPress={handleGoToSignUp}>
-                <Text className='text-[#007AFF] text-sm font-bold'>Criar Conta</Text>
+                <Text className='text-[#007AFF] text-sm font-bold'>{createAccountButton}</Text>
               </TouchableOpacity>
             </View>
           </View>
