@@ -8,7 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
-import { showLoginError, showLoginSuccess } from "@/utils/authFeedback";
+import { showLoginError, showLoginSuccess } from "@/utils/userFeedback";
 import { useState } from "react";
 import {
   Image,
