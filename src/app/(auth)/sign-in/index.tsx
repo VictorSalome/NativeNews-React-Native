@@ -99,8 +99,8 @@ export default function SignIn() {
             />
           </View>
           <View className='w-full'>
-            <Text className='text-[28px] font-bold text-[#333] mb-2.5'>{title}</Text>
-            <Text className='text-base text-[#666] mb-8'>{description}</Text>
+            <Text className='text-[28px] font-bold text-[#333] mb-2.5 text-center'>{title}</Text>
+            <Text className='text-base text-[#666] mb-8 text-center'>{description}</Text>
             <Controller
               control={control}
               name='email'

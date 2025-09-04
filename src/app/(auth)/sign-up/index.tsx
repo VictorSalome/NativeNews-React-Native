@@ -22,6 +22,7 @@ import {
 } from "react-native";
 import { signUpSchema } from "./signInSchema";
 import type { ISignUpData } from "./types";
+import { authTexts } from "@/constants/texts/auth";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -29,7 +30,19 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const {
+    title,
+    alreadyHaveAccountText,
+    confirmPasswordPlaceholder,
+    description,
+    emailPlaceholder,
+    passwordPlaceholder,
+    signInButton,
+    signUpButton,
+  } = authTexts.signUp;
+
   const { handleSignUp } = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -72,19 +85,21 @@ export default function SignUp() {
       >
         <ScrollView
           className='flex-grow'
-          contentContainerStyle={{ justifyContent: "center", padding: 24 }}
+          contentContainerStyle={{ justifyContent: "center", paddingHorizontal: 32 }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps='handled'
         >
-          <View className='items-center mb-6'>
+          <View className='items-center mb-8'>
             <Image
               source={require("../../../../assets/logos/nativeNewsLogo.png")}
               className='w-[200px] h-[200px]'
               resizeMode='contain'
             />
           </View>
+          <View className='w-full'>
+            <Text className='text-[28px] font-bold text-[#333] mb-2.5 text-center'>{title}</Text>
+            <Text className='text-base text-[#666] mb-8 text-center'>{description}</Text>
 
-          <Text className='text-2xl font-bold mb-6 text-center'>Create Account</Text>
 
           <Controller
             control={control}
@@ -93,7 +108,7 @@ export default function SignUp() {
               <>
                 <TextInput
                   className='bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base'
-                  placeholder='Email'
+                  placeholder={emailPlaceholder}
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -114,7 +129,7 @@ export default function SignUp() {
                 <>
                   <TextInput
                     className='flex-1 p-4 text-base'
-                    placeholder='Password'
+                    placeholder={passwordPlaceholder}
                     value={value}
                     onChangeText={onChange}
                     secureTextEntry={!showPassword}
@@ -141,7 +156,7 @@ export default function SignUp() {
                 <>
                   <TextInput
                     className='flex-1 p-4 text-base'
-                    placeholder='Confirm Password'
+                    placeholder={confirmPasswordPlaceholder}
                     value={value}
                     onChangeText={onChange}
                     secureTextEntry={!showPassword}
@@ -161,21 +176,21 @@ export default function SignUp() {
           </View>
 
           <TouchableOpacity
-            className='mt-5 h-[50px] bg-[#007AFF] rounded-lg justify-center items-center'
+            className='bg-[#007AFF] rounded-lg p-4 items-center mb-5'
             onPress={handleSubmit(onSubmit)}
           >
-            <Text className='text-white text-base font-bold'>Sign Up</Text>
+            <Text className='text-white text-base font-bold'>{signUpButton}</Text>
           </TouchableOpacity>
 
-          <View className='flex-row justify-center mt-4'>
-            <Text className='text-[#666] text-sm'>Already have an account? </Text>
+          <View className='flex-row justify-center items-center'>
+            <Text className='text-[#666] text-sm'>{alreadyHaveAccountText} </Text>
             <TouchableOpacity onPress={goToLogin}>
-              <Text className='text-[#007AFF] text-sm font-bold'>Login</Text>
+              <Text className='text-[#007AFF] text-sm font-bold'>{signInButton}</Text>
             </TouchableOpacity>
+          </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </>
   );
 }
-
