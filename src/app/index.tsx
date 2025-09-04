@@ -1,10 +1,10 @@
 import "./global.css";
 
 import { Redirect } from "expo-router";
+import { LoadingScreens } from "../components/LoadingScreens";
 import { useAuthContext } from "../context/authContext";
 import { useOnboardingContext } from "../context/onboardContext";
 import { AppRoutes } from "../routes/appRoutes";
-import { LoadingScreens } from "../components/LoadingScreens";
 
 export default function Index() {
   const { isAuthenticated, isLoading } = useAuthContext();
