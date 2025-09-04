@@ -41,3 +41,21 @@ export const showSignUpError = () => {
     ...defaultConfig,
   });
 };
+
+export const showForgotPasswordSuccess = () => {
+  Toast.show({
+    type: "success",
+    text1: "Recuperação de senha realizada com sucesso",
+    text2: "Por favor, verifique seu email",
+    ...defaultConfig,
+  });
+};
+
+export const showForgotPasswordError = () => {
+  Toast.show({
+    type: "error",
+    text1: "Recuperação de senha falhou",
+    text2: "Por favor, verifique seu email",
+    ...defaultConfig,
+  });
+};

@@ -12,6 +12,7 @@ import { authTexts } from "@/constants/texts/auth";
 import { showLoginError, showLoginSuccess } from "@/utils/userFeedback";
 import { useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -28,6 +29,7 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     title,
@@ -56,17 +58,22 @@ export default function SignIn() {
   });
 
   const onSubmit = async (data: ISignInData) => {
-    const { email, password } = data;
-    const response = await handleSignIn(email, password);
+    try {
+      setIsLoading(true);
+      const { email, password } = data;
+      const response = await handleSignIn(email, password);
 
-    if (response.ok) {
-      showLoginSuccess();
-    } else {
+      if (response.ok) {
+        showLoginSuccess();
+        router.replace(AppRoutes.Home);
+      } else {
+        showLoginError();
+      }
+    } catch (error) {
       showLoginError();
-      return;
+    } finally {
+      setIsLoading(false);
     }
-
-    router.replace(AppRoutes.Home);
   };
 
   const handleGoToSignUp = () => {
@@ -152,10 +159,17 @@ export default function SignIn() {
               <Text className='text-[#666] text-sm'>{forgotPassword}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className='bg-[#007AFF] rounded-lg p-4 items-center mb-5'
+              className={`rounded-lg p-4 items-center mb-5 ${
+                isLoading ? "bg-[#007AFF]/70" : "bg-[#007AFF]"
+              }`}
               onPress={handleSubmit(onSubmit)}
+              disabled={isLoading}
             >
-              <Text className='text-white text-base font-bold'>{loginButton}</Text>
+              {isLoading ? (
+                <ActivityIndicator color='#FFFFFF' size='small' />
+              ) : (
+                <Text className='text-white text-base font-bold'>{loginButton}</Text>
+              )}
             </TouchableOpacity>
             <View className='flex-row justify-center items-center'>
               <Text className='text-[#666] text-sm'>{noAccountText} </Text>
