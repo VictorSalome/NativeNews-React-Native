@@ -66,25 +66,25 @@ export default function SignUp() {
     <>
       <StatusBar style='dark' />
       <KeyboardAvoidingView
-        className="flex-1 bg-white"
+        className='flex-1 bg-white'
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
       >
         <ScrollView
-          className="flex-grow"
+          className='flex-grow'
           contentContainerStyle={{ justifyContent: "center", padding: 24 }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps='handled'
         >
-          <View className="items-center mb-6">
+          <View className='items-center mb-6'>
             <Image
-              source={require("../../../../assets/images/Logo_Portal_do_Vendedor.jpg")}
-              className="w-[200px] h-[80px]"
+              source={require("../../../../assets/logos/nativeNewsLogo.png")}
+              className='w-[200px] h-[200px]'
               resizeMode='contain'
             />
           </View>
 
-          <Text className="text-2xl font-bold mb-6 text-center">Create Account</Text>
+          <Text className='text-2xl font-bold mb-6 text-center'>Create Account</Text>
 
           <Controller
             control={control}
@@ -127,8 +127,8 @@ export default function SignUp() {
                 </>
               )}
             />
-            
-            <TouchableOpacity className="p-[15px]" onPress={() => setShowPassword(!showPassword)}>
+
+            <TouchableOpacity className='p-[15px]' onPress={() => setShowPassword(!showPassword)}>
               <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color='#666' />
             </TouchableOpacity>
           </View>
@@ -154,20 +154,23 @@ export default function SignUp() {
                 </>
               )}
             />
-            
-            <TouchableOpacity className="p-[15px]" onPress={() => setShowPassword(!showPassword)}>
+
+            <TouchableOpacity className='p-[15px]' onPress={() => setShowPassword(!showPassword)}>
               <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color='#666' />
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity className="mt-5 h-[50px] bg-[#007AFF] rounded-lg justify-center items-center" onPress={handleSubmit(onSubmit)}>
-            <Text className="text-white text-base font-bold">Sign Up</Text>
+          <TouchableOpacity
+            className='mt-5 h-[50px] bg-[#007AFF] rounded-lg justify-center items-center'
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text className='text-white text-base font-bold'>Sign Up</Text>
           </TouchableOpacity>
 
-          <View className="flex-row justify-center mt-4">
-            <Text className="text-[#666] text-sm">Already have an account? </Text>
+          <View className='flex-row justify-center mt-4'>
+            <Text className='text-[#666] text-sm'>Already have an account? </Text>
             <TouchableOpacity onPress={goToLogin}>
-              <Text className="text-[#007AFF] text-sm font-bold">Login</Text>
+              <Text className='text-[#007AFF] text-sm font-bold'>Login</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -176,4 +179,3 @@ export default function SignUp() {
   );
 }
 
-// Estilos convertidos para Tailwind CSS

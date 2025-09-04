@@ -94,7 +94,7 @@ export default function SignIn() {
           <View className='items-center mb-8'>
             <Image
               source={require("../../../../assets/logos/nativeNewsLogo.png")}
-              className='w-[250px] h-[180px]'
+              className='w-[200px] h-[200px]'
               resizeMode='contain'
             />
           </View>
@@ -130,7 +130,6 @@ export default function SignIn() {
                     <TextInput
                       className='flex-1 p-4 text-base'
                       placeholder={passwordPlaceholder}
-
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}
