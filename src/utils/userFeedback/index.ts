@@ -28,7 +28,7 @@ export const showSignUpSuccess = () => {
   Toast.show({
     type: "success",
     text1: "Cadastro realizado com sucesso",
-    text2: "A",
+    text2: "Por favor, faça login",
     ...defaultConfig,
   });
 };

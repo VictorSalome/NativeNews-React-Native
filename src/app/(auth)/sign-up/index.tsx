@@ -156,7 +156,7 @@ export default function SignUp() {
               </TouchableOpacity>
             </View>
 
-            <View className='flex-row items-center bg-[#f5f5f5] rounded-lg mb-4'>
+            <View className='flex-row items-center bg-[#f5f5f5] rounded-lg mb-4 mt-5'>
               <Controller
                 control={control}
                 name='confirmPassword'
@@ -184,7 +184,7 @@ export default function SignUp() {
             </View>
 
             <TouchableOpacity
-              className={`rounded-lg p-4 items-center mb-5 ${
+              className={`rounded-lg p-4 items-center mb-5 mt-5 ${
                 isLoading ? "bg-[#007AFF]/70" : "bg-[#007AFF]"
               }`}
               onPress={handleSubmit(onSubmit)}
