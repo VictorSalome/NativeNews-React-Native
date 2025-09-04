@@ -22,7 +22,7 @@ import {
   View,
 } from "react-native";
 import { signInSchema } from "./signInSchema";
-import type { ILoginData } from "./types";
+import type { ISignInData } from "./types";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -46,7 +46,7 @@ export default function SignIn() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginData>({
+  } = useForm<ISignInData>({
     resolver: zodResolver(signInSchema),
 
     defaultValues: {
@@ -55,7 +55,7 @@ export default function SignIn() {
     },
   });
 
-  const onSubmit = async (data: ILoginData) => {
+  const onSubmit = async (data: ISignInData) => {
     const { email, password } = data;
     const response = await handleSignIn(email, password);
 
@@ -108,7 +108,7 @@ export default function SignIn() {
                 <>
                   <TextInput
                     className='bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base'
-                    placeholder='Email'
+                    placeholder={emailPlaceholder}
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -129,7 +129,8 @@ export default function SignIn() {
                   <>
                     <TextInput
                       className='flex-1 p-4 text-base'
-                      placeholder='Password'
+                      placeholder={passwordPlaceholder}
+
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}

@@ -23,3 +23,21 @@ export const showLoginError = () => {
     ...defaultConfig,
   });
 };
+
+export const showSignUpSuccess = () => {
+  Toast.show({
+    type: "success",
+    text1: "Cadastro realizado com sucesso",
+    text2: "A",
+    ...defaultConfig,
+  });
+};
+
+export const showSignUpError = () => {
+  Toast.show({
+    type: "error",
+    text1: "Cadastro falhou",
+    text2: "Por favor, verifique suas credenciais",
+    ...defaultConfig,
+  });
+};

@@ -33,7 +33,7 @@ export const authTexts: IAuthTexts = {
     title: "Bem-vindo!",
     description: "Faça login para continuar",
     emailPlaceholder: "Email",
-    passwordPlaceholder: "Password",
+    passwordPlaceholder: "Senha",
     forgotPassword: "Esqueceu a senha?",
     loginButton: "Entrar",
     noAccountText: "Não tem uma conta? ",
