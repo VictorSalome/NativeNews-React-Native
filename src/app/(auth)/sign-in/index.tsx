@@ -11,13 +11,15 @@ import { Controller, useForm } from "react-hook-form";
 import { LogoSvg } from "@/components/LogoSvg";
 import { authTexts } from "@/constants/texts/auth";
 import { useThemeContext } from "@/context/themeContext";
+import { getLastEmail, saveLastEmail } from "@/utils/lastCredentials";
 import { showLoginError, showLoginSuccess } from "@/utils/userFeedback";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Switch,
   Text,
   TextInput,
   TouchableOpacity,
@@ -29,6 +31,7 @@ import type { ISignInData } from "./types";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberEmail, setRememberEmail] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,6 +52,7 @@ export default function SignIn() {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ISignInData>({
     resolver: zodResolver(signInSchema),
@@ -67,6 +71,10 @@ export default function SignIn() {
 
       if (response.ok) {
         showLoginSuccess();
+
+        if (rememberEmail) {
+          await saveLastEmail(email);
+        }
         router.replace(AppRoutes.Home);
       } else {
         showLoginError();
@@ -85,6 +93,18 @@ export default function SignIn() {
   const handleGoToForgotPassword = () => {
     router.navigate(AppRoutes.ForgotPassword);
   };
+
+  useEffect(() => {
+    const loadLastEmail = async () => {
+      const lastEmail = await getLastEmail();
+      if (lastEmail) {
+        setEmail(lastEmail);
+        setValue("email", lastEmail);
+      }
+    };
+
+    loadLastEmail();
+  }, []);
 
   return (
     <>
@@ -171,6 +191,19 @@ export default function SignIn() {
               </TouchableOpacity>
             </View>
 
+            <View className="flex-row justify-end items-center mb-4">
+              <Switch
+                value={rememberEmail}
+                onValueChange={setRememberEmail}
+                trackColor={{ false: "#D1D5DB", true: "#9CA3AF" }}
+                thumbColor={rememberEmail ? "#6B7280" : "#E5E7EB"}
+                ios_backgroundColor="#3e3e3e"
+              />
+              <Text className="ml-2 text-text-muted dark:text-text-muted-dark">
+                Lembrar Credenciais?
+              </Text>
+            </View>
+
             <TouchableOpacity
               className="self-end mb-5 mt-4"
               onPress={handleGoToForgotPassword}
@@ -179,6 +212,7 @@ export default function SignIn() {
                 {forgotPassword}
               </Text>
             </TouchableOpacity>
+
             <TouchableOpacity
               className={`rounded-lg p-4 items-center mb-5 ${
                 isLoading
@@ -198,8 +232,9 @@ export default function SignIn() {
             </TouchableOpacity>
             <View className="flex-row justify-center items-center">
               <Text className="text-text-muted dark:text-text-muted-dark text-sm">
-                {noAccountText}{" "}
+                {noAccountText}
               </Text>
+
               <TouchableOpacity onPress={handleGoToSignUp}>
                 <Text className="text-primary dark:text-primary-dark text-sm font-bold">
                   {createAccountButton}

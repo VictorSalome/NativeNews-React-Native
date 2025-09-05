@@ -156,8 +156,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         const accessToken = await userCredential.user.getIdToken();
         const refreshToken = await userCredential.user.refreshToken;
-        // const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
-        const expiresAt = Date.now() + 60 * 1000; // 1 minute
+        const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
 
         await handleSaveAuthData(
           userCredential.user,
@@ -182,8 +181,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       );
       const accessToken = await userCredential.user.getIdToken();
       const refreshToken = await userCredential.user.refreshToken;
-      // const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
-      const expiresAt = Date.now() + 60 * 1000; // 1 minute
+      const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
+
       await handleSaveAuthData(
         userCredential.user,
         accessToken,
@@ -212,8 +211,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       if (user) {
         const newAccessToken = await user.getIdToken(true);
-        // const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
-        const expiresAt = Date.now() + 60 * 1000; // 1 minute
+        const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
+
         await saveSecureItem("accessToken", newAccessToken);
         await saveSecureItem("expiresAt", expiresAt.toString());
         setTokens((prevTokens) => ({
@@ -227,8 +226,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         if (currentUser) {
           const newAccessToken = await currentUser.getIdToken(true);
-          // const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
-          const expiresAt = Date.now() + 60 * 1000; // 1 minute
+          const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
+
           await saveSecureItem("accessToken", newAccessToken);
           await saveSecureItem("expiresAt", expiresAt.toString());
 

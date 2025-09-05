@@ -1,4 +1,5 @@
 import { useAuthContext } from "@/context/authContext";
+import { saveLastEmail } from "@/utils/lastCredentials";
 
 interface AuthResult {
   ok: boolean;
@@ -16,6 +17,10 @@ export default function useAuth() {
     try {
       console.log("[useAuth] Chamando função login do AuthContext");
       const result = await login(email, password);
+
+      if (result) {
+        await saveLastEmail(email);
+      }
       console.log(
         "[useAuth] Resultado do login:",
         result ? "Sucesso" : "Falha",

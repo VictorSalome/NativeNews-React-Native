@@ -8,8 +8,9 @@ export enum AppRoutes {
 
   ForgotPassword = "/(auth)/forgot-password",
   Home = "/(dashboard)/home",
-  Profile = "/(dashboard)/profile",
-  Settings = "/(dashboard)/settings",
+  ProfileUser = "/(dashboard)/profile",
+  News = "/(dashboard)/news",
+  Weather = "/(dashboard)/weather",
 
   ThemeExample = "/(examples)/theme-example",
 }
@@ -25,6 +26,8 @@ export enum AppNames {
   ForgotPassword = "forgot-password/index",
 
   Home = "home/index",
+  News = "news/index",
+  Weather = "weather/index",
   ProfileUser = "profileUser/index",
 }
 

@@ -7,7 +7,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function DashboardLayout() {
   const { Screen } = Tabs;
-  const { Home, ProfileUser } = AppNames;
+  const { Home, ProfileUser, News, Weather } = AppNames;
   const colorScheme = useColorScheme();
 
   return (
@@ -27,15 +27,38 @@ export default function DashboardLayout() {
           name={Home}
           options={{
             headerShown: false,
+            title: "Inicio",
             tabBarIcon: ({ color }) => (
               <AntDesign name="home" size={24} color={color} />
             ),
           }}
         />
         <Screen
+          name={News}
+          options={{
+            headerShown: false,
+            title: "Notícias",
+            tabBarIcon: ({ color }) => (
+              <AntDesign name="cloud" size={24} color={color} />
+            ),
+          }}
+        />
+        <Screen
+          name={Weather}
+          options={{
+            headerShown: false,
+            title: "Clima",
+            tabBarIcon: ({ color }) => (
+              <AntDesign name="cloud" size={24} color={color} />
+            ),
+          }}
+        />
+
+        <Screen
           name={ProfileUser}
           options={{
             headerShown: false,
+            title: "Perfil",
             tabBarIcon: ({ color }) => (
               <AntDesign name="user" size={24} color={color} />
             ),
