@@ -1,9 +1,9 @@
 import { AppNames } from "@/routes/appRoutes";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { useColorScheme } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function DashboardLayout() {
   const { Screen } = Tabs;
@@ -12,15 +12,15 @@ export default function DashboardLayout() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
       <Tabs
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: colorScheme === 'dark' ? '#1F2937' : '#FFFFFF',
-            borderTopColor: colorScheme === 'dark' ? '#374151' : '#E5E7EB',
+            backgroundColor: colorScheme === "dark" ? "#27272A" : "#FFFFFF",
           },
-          tabBarActiveTintColor: colorScheme === 'dark' ? '#3B82F6' : '#2563EB',
-          tabBarInactiveTintColor: colorScheme === 'dark' ? '#9CA3AF' : '#6B7280',
+          tabBarActiveTintColor: colorScheme === "dark" ? "#1c4aad" : "#1c4aad",
+          tabBarInactiveTintColor:
+            colorScheme === "dark" ? "#9CA3AF" : "#6B7280",
         }}
       >
         <Screen
