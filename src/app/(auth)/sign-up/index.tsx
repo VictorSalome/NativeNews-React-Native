@@ -88,7 +88,7 @@ export default function SignUp() {
     <>
       <StatusBar style="dark" />
       <KeyboardAvoidingView
-        className="flex-1 bg-white"
+        className="flex-1 bg-surface dark:bg-surface-dark"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
       >
@@ -109,10 +109,10 @@ export default function SignUp() {
             />
           </View>
           <View className="w-full">
-            <Text className="text-[28px] font-bold text-[#333] mb-2.5 text-center">
+            <Text className="text-[28px] font-bold text-text-base dark:text-text-base-dark mb-2.5 text-center">
               {title}
             </Text>
-            <Text className="text-base text-[#666] mb-8 text-center">
+            <Text className="text-base text-text-muted dark:text-text-muted-dark mb-8 text-center">
               {description}
             </Text>
 
@@ -122,8 +122,9 @@ export default function SignUp() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
-                    className="bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base"
+                    className="bg-input dark:bg-input-dark rounded-lg p-4 mb-4 text-base text-text-base dark:text-text-base-dark"
                     placeholder={emailPlaceholder}
+                    placeholderTextColor="#9CA3AF"
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -138,15 +139,16 @@ export default function SignUp() {
                 </>
               )}
             />
-            <View className="flex-row items-center bg-[#f5f5f5] rounded-lg mb-4">
+            <View className="flex-row items-center bg-input dark:bg-input-dark rounded-lg mb-4">
               <Controller
                 control={control}
                 name="password"
                 render={({ field: { onChange, value } }) => (
                   <>
                     <TextInput
-                      className="flex-1 p-4 text-base"
+                      className="flex-1 p-4 text-base text-text-base dark:text-text-base-dark"
                       placeholder={passwordPlaceholder}
+                      placeholderTextColor="#9CA3AF"
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}
@@ -167,20 +169,21 @@ export default function SignUp() {
                 <Ionicons
                   name={showPassword ? "eye-off" : "eye"}
                   size={24}
-                  color="#666"
+                  color="#9CA3AF"
                 />
               </TouchableOpacity>
             </View>
 
-            <View className="flex-row items-center bg-[#f5f5f5] rounded-lg mb-4 mt-5">
+            <View className="flex-row items-center bg-input dark:bg-input-dark rounded-lg mb-4 mt-5">
               <Controller
                 control={control}
                 name="confirmPassword"
                 render={({ field: { onChange, value } }) => (
                   <>
                     <TextInput
-                      className="flex-1 p-4 text-base"
+                      className="flex-1 p-4 text-base text-text-base dark:text-text-base-dark"
                       placeholder={confirmPasswordPlaceholder}
+                      placeholderTextColor="#9CA3AF"
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}
@@ -208,7 +211,7 @@ export default function SignUp() {
 
             <TouchableOpacity
               className={`rounded-lg p-4 items-center mb-5 mt-5 ${
-                isLoading ? "bg-[#007AFF]/70" : "bg-[#007AFF]"
+                isLoading ? "bg-primary/70 dark:bg-primary-dark/70" : "bg-primary dark:bg-primary-dark"
               }`}
               onPress={handleSubmit(onSubmit)}
               disabled={isLoading}
@@ -223,11 +226,11 @@ export default function SignUp() {
             </TouchableOpacity>
 
             <View className="flex-row justify-center items-center">
-              <Text className="text-[#666] text-sm">
+              <Text className="text-text-muted dark:text-text-muted-dark text-sm">
                 {alreadyHaveAccountText}{" "}
               </Text>
               <TouchableOpacity onPress={goToLogin}>
-                <Text className="text-[#007AFF] text-sm font-bold">
+                <Text className="text-primary dark:text-primary-dark text-sm font-bold">
                   {signInButton}
                 </Text>
               </TouchableOpacity>

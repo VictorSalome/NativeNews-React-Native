@@ -1,107 +1,58 @@
 import { AntDesign } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useThemeContext } from "@/context/themeContext";
 
 export default function Home() {
+  const { isDarkMode } = useThemeContext();
+
   const studyTopics = [
     { id: 1, title: "Mathematics", icon: "plus" },
-    { id: 2, title: "Science", icon: "flask" },
-    { id: 3, title: "History", icon: "book" },
-    { id: 4, title: "Languages", icon: "message-circle" },
-    { id: 5, title: "Tema", icon: "eye" },
+    { id: 2, title: "Science", icon: "plus" },
+    { id: 3, title: "History", icon: "plus" },
+    { id: 4, title: "Languages", icon: "plus" },
+    { id: 5, title: "Tema", icon: "plus" },
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
+      <View className="p-5 bg-background dark:bg-background-dark border-b border-border dark:border-border-dark flex-row justify-between items-center">
         <View>
-          <Text style={styles.greeting}>Hello, Student!</Text>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>
+          <Text className="text-base text-text-muted dark:text-text-muted-dark mb-1">
+            Hello, Student!
+          </Text>
+          <Text className="text-2xl font-bold text-text-base dark:text-text-base-dark mb-1">
+            Welcome Back
+          </Text>
+          <Text className="text-base text-text-muted dark:text-text-muted-dark">
             What would you like to study today?
           </Text>
         </View>
-        <TouchableOpacity style={styles.profileButton}>
-          <AntDesign name="user" size={24} color="#333" />
+        <TouchableOpacity className="w-10 h-10 rounded-full bg-input dark:bg-input-dark items-center justify-center">
+          <AntDesign
+            name="user"
+            size={24}
+            color={isDarkMode ? "#FFFFFF" : "#000000"}
+          />
         </TouchableOpacity>
+      </View>
+      <View className="flex-1 p-5">
+        <View className="flex-row flex-wrap justify-between gap-4">
+          {studyTopics.map((topic) => (
+            <TouchableOpacity
+              key={topic.id}
+              className="w-[47%] bg-surface dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-border dark:border-border-dark"
+            >
+              <View className="w-12 h-12 rounded-full bg-primary dark:bg-primary-dark items-center justify-center mb-3">
+                <AntDesign name={topic.icon} size={24} color="#fff" />
+              </View>
+              <Text className="text-base font-semibold text-text-base dark:text-text-base-dark">
+                {topic.title}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  header: {
-    padding: 20,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  greeting: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 4,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-  },
-  profileButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#f0f0f0",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
-  topicsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    gap: 16,
-  },
-  topicCard: {
-    width: "47%",
-    backgroundColor: "#fff",
-    padding: 16,
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: "#6366f1",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 12,
-  },
-  topicTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#333",
-  },
-});

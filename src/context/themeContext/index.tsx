@@ -6,10 +6,12 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { useColorScheme } from "react-native";
+import { useColorScheme as useSystemColorScheme } from "react-native";
+import { useColorScheme } from 'nativewind';
 
 interface IThemeContext {
   isDarkMode: boolean;
+  theme: 'light' | 'dark';
   toggleTheme: () => void;
   setTheme: (isDark: boolean) => Promise<void>;
   isLoading: boolean;
@@ -29,7 +31,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const colorScheme = useColorScheme();
+  const systemColorScheme = useSystemColorScheme();
+  const { setColorScheme } = useColorScheme();
 
   useEffect(() => {
     const loadThemePreference = async () => {
@@ -39,21 +42,27 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         if (savedTheme !== null) {
           setIsDarkMode(savedTheme === "dark");
         } else {
-          setIsDarkMode(colorScheme === "dark");
+          setIsDarkMode(systemColorScheme === "dark");
         }
       } catch (error) {
         console.error(
           "[ThemeContext] Erro ao carregar preferência de tema:",
           error,
         );
-        setIsDarkMode(colorScheme === "dark");
+        setIsDarkMode(systemColorScheme === "dark");
       } finally {
         setIsLoading(false);
       }
     };
 
     loadThemePreference();
-  }, [colorScheme]);
+  }, [systemColorScheme]);
+
+  useEffect(() => {
+    if (isDarkMode !== null) {
+      setColorScheme(isDarkMode ? 'dark' : 'light');
+    }
+  }, [isDarkMode]);
 
   const toggleTheme = () => {
     setTheme(!isDarkMode);
@@ -77,6 +86,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     <ThemeContext.Provider
       value={{
         isDarkMode: !!isDarkMode,
+        theme: isDarkMode ? 'dark' : 'light',
         toggleTheme,
         setTheme,
         isLoading,

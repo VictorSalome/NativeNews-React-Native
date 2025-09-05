@@ -75,7 +75,7 @@ export default function ForgotPassword() {
     <>
       <StatusBar style="dark" />
       <KeyboardAvoidingView
-        className="flex-1 bg-white"
+        className="flex-1 bg-surface dark:bg-surface-dark"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
       >
@@ -89,14 +89,14 @@ export default function ForgotPassword() {
           keyboardShouldPersistTaps="handled"
         >
           <View className="items-center mb-8">
-            <MaterialIcons name="lock-reset" size={100} color="#4A90E2" />
+            <MaterialIcons name="lock-reset" size={100} className="text-primary dark:text-primary-dark" />
           </View>
 
           <View className="w-full">
-            <Text className="text-[28px] font-bold text-[#333] mb-2.5 text-center">
+            <Text className="text-[28px] font-bold text-text-base dark:text-text-base-dark mb-2.5 text-center">
               {title}
             </Text>
-            <Text className="text-base text-[#666] text-center mb-8">
+            <Text className="text-base text-text-muted dark:text-text-muted-dark text-center mb-8">
               {description}
             </Text>
 
@@ -106,8 +106,9 @@ export default function ForgotPassword() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
-                    className="bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base"
+                    className="bg-input dark:bg-input-dark rounded-lg p-4 mb-4 text-base text-text-base dark:text-text-base-dark"
                     placeholder={emailPlaceholder}
+                    placeholderTextColor="#9CA3AF"
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -125,7 +126,7 @@ export default function ForgotPassword() {
 
             <TouchableOpacity
               className={`rounded-lg p-4 items-center mb-5 ${
-                isLoading ? "bg-[#007AFF]/70" : "bg-[#007AFF]"
+                isLoading ? "bg-primary/70 dark:bg-primary-dark/70" : "bg-primary dark:bg-primary-dark"
               }`}
               onPress={handleSubmit(onSubmit)}
               disabled={isLoading}
@@ -141,7 +142,7 @@ export default function ForgotPassword() {
 
             <View className="flex-row justify-center items-center">
               <TouchableOpacity onPress={() => router.back()}>
-                <Text className="text-[#007AFF] text-sm font-bold">
+                <Text className="text-primary dark:text-primary-dark text-sm font-bold">
                   {backToLoginButton}
                 </Text>
               </TouchableOpacity>

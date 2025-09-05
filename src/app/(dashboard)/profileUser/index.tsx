@@ -1,12 +1,14 @@
+import { useThemeContext } from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function ProfileUser() {
   const router = useRouter();
   const { logout } = useAuth();
+  const { toggleTheme, isDarkMode } = useThemeContext();
 
   const handleLogout = async () => {
     await logout();
@@ -15,107 +17,56 @@ export default function ProfileUser() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View className="flex-1 bg-surface dark:bg-surface-dark">
+      <View className="flex-row items-center p-4 border-b border-border dark:border-border-dark">
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={isDarkMode ? '#FFFFFF' : '#000000'} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Profile</Text>
+        <Text className="text-xl font-bold ml-4 text-text-base dark:text-text-base-dark">Profile</Text>
       </View>
 
-      <View style={styles.profileSection}>
+      <View className="items-center p-5">
         <Image
           source={{ uri: "https://via.placeholder.com/150" }}
-          style={styles.profileImage}
+          className="w-30 h-30 rounded-full mb-4"
         />
-        <Text style={styles.userName}>John Doe</Text>
-        <Text style={styles.userEmail}>john.doe@example.com</Text>
+        <Text className="text-2xl font-bold mb-2 text-text-base dark:text-text-base-dark">John Doe</Text>
+        <Text className="text-base text-text-muted dark:text-text-muted-dark">john.doe@example.com</Text>
       </View>
 
-      <View style={styles.infoSection}>
-        <TouchableOpacity style={styles.infoItem}>
-          <Ionicons name="person-outline" size={24} color="#666" />
-          <Text style={styles.infoText}>Edit Profile</Text>
+      <View className="p-5">
+        <TouchableOpacity className="flex-row items-center py-4 border-b border-border dark:border-border-dark">
+          <Ionicons name="person-outline" size={24} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+          <Text className="text-base ml-4 text-text-base dark:text-text-base-dark">Edit Profile</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.infoItem}>
-          <Ionicons name="settings-outline" size={24} color="#666" />
-          <Text style={styles.infoText}>Settings</Text>
+        <TouchableOpacity className="flex-row items-center py-4 border-b border-border dark:border-border-dark">
+          <Ionicons name="settings-outline" size={24} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+          <Text className="text-base ml-4 text-text-base dark:text-text-base-dark">Settings</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.infoItem}>
-          <Ionicons name="help-circle-outline" size={24} color="#666" />
-          <Text style={styles.infoText}>Help & Support</Text>
-        </TouchableOpacity>
-
+        //botao que troca a cor do theme
         <TouchableOpacity
-          style={[styles.infoItem, styles.logoutButton]}
+          className="flex-row items-center py-4 border-b border-border dark:border-border-dark"
+          onPress={toggleTheme}
+        >
+          <MaterialCommunityIcons
+            name="theme-light-dark"
+            size={24}
+            color={isDarkMode ? '#FFFFFF' : '#000000'}
+          />
+          <Text className="text-base ml-4 text-text-base dark:text-text-base-dark">Change Theme</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className="flex-row items-center py-4 border-b border-border dark:border-border-dark">
+          <Ionicons name="help-circle-outline" size={24} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+          <Text className="text-base ml-4 text-text-base dark:text-text-base-dark">Help & Support</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="flex-row items-center py-4 mt-5"
           onPress={handleLogout}
         >
-          <Ionicons name="log-out-outline" size={24} color="#FF4444" />
-          <Text style={[styles.infoText, styles.logoutText]}>Logout</Text>
+          <Ionicons name="log-out-outline" size={24} color={isDarkMode ? '#EF4444' : '#DC2626'} />
+          <Text className="text-base ml-4 text-error dark:text-error-dark">Logout</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginLeft: 16,
-  },
-  profileSection: {
-    alignItems: "center",
-    padding: 20,
-  },
-  profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    marginBottom: 16,
-  },
-  userName: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  userEmail: {
-    fontSize: 16,
-    color: "#666",
-  },
-  infoSection: {
-    padding: 20,
-  },
-  infoItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  infoText: {
-    fontSize: 16,
-    marginLeft: 16,
-    color: "#333",
-  },
-  logoutButton: {
-    marginTop: 20,
-    borderBottomWidth: 0,
-  },
-  logoutText: {
-    color: "#FF4444",
-  },
-});
