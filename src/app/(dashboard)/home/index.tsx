@@ -176,7 +176,6 @@ export default function Home() {
           </View>
           <TouchableOpacity
             onPress={() => router.navigate(AppRoutes.Weather)}
-
             className="items-center py-2 px-4 rounded-full bg-white/20 self-center"
             activeOpacity={0.8}
           >
