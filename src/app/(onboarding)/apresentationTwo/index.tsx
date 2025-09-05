@@ -1,4 +1,5 @@
 // src/app/(onboarding)/apresentationTwo/index.tsx
+import { LogoSvg } from "@/components/LogoSvg";
 import { AppRoutes } from "@/routes/appRoutes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -45,14 +46,7 @@ export default function ApresentationTwo() {
     return (
       <SafeAreaView className="flex-1 ">
         <View className="flex-1 items-center px-5 bg-white">
-          <Image
-            source={item.logo}
-            style={{
-              width: 200,
-              height: 200,
-            }}
-            resizeMode="contain"
-          />
+          <LogoSvg width={200} height={200} />
           <Text className="text-2xl font-bold text-gray-800 text-center mb-10">
             {item.title}
           </Text>
