@@ -1,16 +1,17 @@
 import { Stack } from "expo-router";
-import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AppNames } from "../../routes/appRoutes";
 
 export default function AuthLayout() {
+  const { Screen } = Stack;
+  const { SignUp, SignIn, ForgotPassword } = AppNames;
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className='flex-1 bg-white'>
       <Stack>
-        <Stack.Screen name={AppNames.SignUp} options={{ headerShown: false }} />
-        <Stack.Screen name={AppNames.SignIn} options={{ headerShown: false }} />
-        <Stack.Screen
-          name={AppNames.ForgotPassword}
+        <Screen name={SignUp} options={{ headerShown: false }} />
+        <Screen name={SignIn} options={{ headerShown: false }} />
+        <Screen
+          name={ForgotPassword}
           options={{
             headerShown: true,
             title: "",
@@ -22,10 +23,3 @@ export default function AuthLayout() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});

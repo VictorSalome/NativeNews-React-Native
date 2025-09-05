@@ -4,19 +4,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AppNames } from "../../routes/appRoutes";
 
 export default function OnboardingLayout() {
+  const { Screen } = Stack;
+  const { ApresentationOne, ApresentationTwo } = AppNames;
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className='flex-1 bg-white'>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={AppNames.ApresentationOne} />
-        <Stack.Screen name={AppNames.ApresentationTwo} />
+        <Screen name={ApresentationOne} />
+        <Screen name={ApresentationTwo} />
       </Stack>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});

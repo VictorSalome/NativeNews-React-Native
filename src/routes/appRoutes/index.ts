@@ -10,7 +10,7 @@ export enum AppRoutes {
   Home = "/(dashboard)/home",
   Profile = "/(dashboard)/profile",
   Settings = "/(dashboard)/settings",
-  
+
   ThemeExample = "/(examples)/theme-example",
 }
 
@@ -25,8 +25,7 @@ export enum AppNames {
   ForgotPassword = "forgot-password/index",
 
   Home = "home/index",
-  Profile = "profile/index",
-  Settings = "settings/index",
+  ProfileUser = "profileUser/index",
 }
 
 export enum AppGroupNames {
