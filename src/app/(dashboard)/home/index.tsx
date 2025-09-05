@@ -1,14 +1,14 @@
-import React, { useMemo } from "react";
-import { Text, View, ScrollView, TouchableOpacity, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { LogoSvg } from "@/components/LogoSvg";
+import { useThemeContext } from "@/context/themeContext";
+import { AppRoutes } from "@/routes/appRoutes";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useThemeContext } from "@/context/themeContext";
-import { AppRoutes } from "@/routes/appRoutes";
-import { LogoSvg } from "@/components/LogoSvg";
+import { router } from "expo-router";
+import React, { useMemo } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Dados mockados (futuramente virão de uma API)
 const weatherMock = {
@@ -90,33 +90,33 @@ export default function Home() {
           {/* Lado Esquerdo: Data e Localização */}
           <View className="flex-1">
             <View className="flex-row items-center mb-1">
-              <Ionicons 
-                name="calendar-outline" 
-                size={16} 
-                color={isDarkMode ? "#9CA3AF" : "#6B7280"} 
+              <Ionicons
+                name="calendar-outline"
+                size={16}
+                color={isDarkMode ? "#9CA3AF" : "#6B7280"}
               />
               <Text className="text-sm font-medium text-text-base dark:text-text-base-dark ml-2 capitalize">
                 {dateText}
               </Text>
             </View>
             <View className="flex-row items-center">
-              <Ionicons 
-                name="location-outline" 
-                size={14} 
-                color={isDarkMode ? "#9CA3AF" : "#6B7280"} 
+              <Ionicons
+                name="location-outline"
+                size={14}
+                color={isDarkMode ? "#9CA3AF" : "#6B7280"}
               />
               <Text className="text-xs text-text-muted dark:text-text-muted-dark ml-1">
                 {locationText}
               </Text>
             </View>
           </View>
-          
+
           {/* Lado Direito: Logo e Avatar */}
           <View className="flex-row items-center gap-3">
             <LogoSvg width={24} height={24} isDark={isDarkMode} />
             <TouchableOpacity
               className="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary-dark/10 items-center justify-center border border-primary/20 dark:border-primary-dark/20"
-              onPress={() => router.navigate(AppRoutes.Profile)}
+              onPress={() => router.navigate(AppRoutes.ProfileUser)}
               accessibilityLabel="Abrir perfil"
               style={{ minWidth: 44, minHeight: 44 }}
             >
@@ -141,6 +141,7 @@ export default function Home() {
             shadowOpacity: 0.1,
             shadowRadius: 12,
             elevation: 8,
+            borderRadius: 24,
           }}
         >
           <View className="items-center mb-4">
@@ -174,7 +175,8 @@ export default function Home() {
             </View>
           </View>
           <TouchableOpacity
-            onPress={() => router.navigate(AppRoutes.Profile)}
+            onPress={() => router.navigate(AppRoutes.Weather)}
+
             className="items-center py-2 px-4 rounded-full bg-white/20 self-center"
             activeOpacity={0.8}
           >
@@ -188,8 +190,8 @@ export default function Home() {
         <Text className="text-xl font-bold text-text-base dark:text-text-base-dark mb-4">
           Featured News
         </Text>
-        <ScrollView 
-          horizontal 
+        <ScrollView
+          horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingHorizontal: 4 }}
         >
@@ -211,7 +213,9 @@ export default function Home() {
                   source={{ uri: item.image }}
                   className="w-full h-32"
                   resizeMode="cover"
-                  onError={(e) => console.log('Image error:', e.nativeEvent.error)}
+                  onError={(e) =>
+                    console.log("Image error:", e.nativeEvent.error)
+                  }
                 />
                 <View className="p-4">
                   <Text
