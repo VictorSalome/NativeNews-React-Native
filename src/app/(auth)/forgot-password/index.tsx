@@ -17,7 +17,10 @@ import {
 } from "react-native";
 
 import useAuth from "@/hooks/useAuth";
-import { showForgotPasswordError, showForgotPasswordSuccess } from "@/utils/userFeedback";
+import {
+  showForgotPasswordError,
+  showForgotPasswordSuccess,
+} from "@/utils/userFeedback";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { forgotPasswordSchema } from "./forgotPasswordSchema";
@@ -27,8 +30,13 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { title, description, emailPlaceholder, backToLoginButton, recoverButton } =
-    authTexts.forgotPassword;
+  const {
+    title,
+    description,
+    emailPlaceholder,
+    backToLoginButton,
+    recoverButton,
+  } = authTexts.forgotPassword;
 
   const { handleResetPassword } = useAuth();
 
@@ -65,42 +73,51 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <StatusBar style='dark' />
+      <StatusBar style="dark" />
       <KeyboardAvoidingView
-        className='flex-1 bg-white'
+        className="flex-1 bg-white"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
       >
         <ScrollView
-          className='flex-grow'
-          contentContainerStyle={{ justifyContent: "center", paddingHorizontal: 32 }}
+          className="flex-grow"
+          contentContainerStyle={{
+            justifyContent: "center",
+            paddingHorizontal: 32,
+          }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps='handled'
+          keyboardShouldPersistTaps="handled"
         >
-          <View className='items-center mb-8'>
-            <MaterialIcons name='lock-reset' size={100} color='#4A90E2' />
+          <View className="items-center mb-8">
+            <MaterialIcons name="lock-reset" size={100} color="#4A90E2" />
           </View>
 
-          <View className='w-full'>
-            <Text className='text-[28px] font-bold text-[#333] mb-2.5 text-center'>{title}</Text>
-            <Text className='text-base text-[#666] text-center mb-8'>{description}</Text>
+          <View className="w-full">
+            <Text className="text-[28px] font-bold text-[#333] mb-2.5 text-center">
+              {title}
+            </Text>
+            <Text className="text-base text-[#666] text-center mb-8">
+              {description}
+            </Text>
 
             <Controller
               control={control}
-              name='email'
+              name="email"
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
-                    className='bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base'
+                    className="bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base"
                     placeholder={emailPlaceholder}
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
-                    keyboardType='email-address'
-                    autoCapitalize='none'
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                   />
                   {errors.email && (
-                    <Text className='text-red-500 text-sm mb-2'>{errors.email.message}</Text>
+                    <Text className="text-red-500 text-sm mb-2">
+                      {errors.email.message}
+                    </Text>
                   )}
                 </>
               )}
@@ -114,15 +131,19 @@ export default function ForgotPassword() {
               disabled={isLoading}
             >
               {isLoading ? (
-                <ActivityIndicator color='#FFFFFF' size='small' />
+                <ActivityIndicator color="#FFFFFF" size="small" />
               ) : (
-                <Text className='text-white text-base font-bold'>{recoverButton}</Text>
+                <Text className="text-white text-base font-bold">
+                  {recoverButton}
+                </Text>
               )}
             </TouchableOpacity>
 
-            <View className='flex-row justify-center items-center'>
+            <View className="flex-row justify-center items-center">
               <TouchableOpacity onPress={() => router.back()}>
-                <Text className='text-[#007AFF] text-sm font-bold'>{backToLoginButton}</Text>
+                <Text className="text-[#007AFF] text-sm font-bold">
+                  {backToLoginButton}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

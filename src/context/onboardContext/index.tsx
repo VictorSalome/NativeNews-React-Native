@@ -1,5 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 interface IOnboardingContext {
   hasSeenOnboarding: boolean | null;
@@ -7,18 +13,24 @@ interface IOnboardingContext {
   isLoading: boolean;
 }
 
-const OnboardingContext = createContext<IOnboardingContext | undefined>(undefined);
+const OnboardingContext = createContext<IOnboardingContext | undefined>(
+  undefined,
+);
 
 export const useOnboardingContext = () => {
   const context = useContext(OnboardingContext);
   if (!context) {
-    throw new Error("useOnboardingContext must be used within an OnboardingProvider");
+    throw new Error(
+      "useOnboardingContext must be used within an OnboardingProvider",
+    );
   }
   return context;
 };
 
 export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
-  const [hasSeenOnboarding, setHasSeenOnboardingState] = useState<boolean | null>(null);
+  const [hasSeenOnboarding, setHasSeenOnboardingState] = useState<
+    boolean | null
+  >(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +40,10 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
         console.log("[OnboardingContext] Status do onboarding:", value);
         setHasSeenOnboardingState(value === "true");
       } catch (error) {
-        console.error("[OnboardingContext] Erro ao verificar status do onboarding:", error);
+        console.error(
+          "[OnboardingContext] Erro ao verificar status do onboarding:",
+          error,
+        );
       } finally {
         setIsLoading(false);
       }
@@ -42,7 +57,10 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
       await AsyncStorage.setItem("hasSeenOnboarding", value.toString());
       setHasSeenOnboardingState(value);
     } catch (error) {
-      console.error("[OnboardingContext] Erro ao definir status do onboarding:", error);
+      console.error(
+        "[OnboardingContext] Erro ao definir status do onboarding:",
+        error,
+      );
     }
   };
 

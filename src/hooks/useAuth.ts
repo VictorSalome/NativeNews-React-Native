@@ -8,12 +8,18 @@ interface AuthResult {
 export default function useAuth() {
   const { login, register, logout, resetPassword, error } = useAuthContext();
 
-  const handleSignIn = async (email: string, password: string): Promise<AuthResult> => {
+  const handleSignIn = async (
+    email: string,
+    password: string,
+  ): Promise<AuthResult> => {
     console.log("[useAuth] Iniciando handleSignIn");
     try {
       console.log("[useAuth] Chamando função login do AuthContext");
       const result = await login(email, password);
-      console.log("[useAuth] Resultado do login:", result ? "Sucesso" : "Falha");
+      console.log(
+        "[useAuth] Resultado do login:",
+        result ? "Sucesso" : "Falha",
+      );
       return { ok: !!result };
     } catch (err) {
       console.error(
@@ -24,7 +30,10 @@ export default function useAuth() {
     }
   };
 
-  const handleSignUp = async (email: string, password: string): Promise<AuthResult> => {
+  const handleSignUp = async (
+    email: string,
+    password: string,
+  ): Promise<AuthResult> => {
     try {
       const result = await register(email, password);
       return { ok: !!result };

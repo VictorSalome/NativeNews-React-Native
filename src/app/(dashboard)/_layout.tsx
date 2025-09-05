@@ -3,7 +3,6 @@ import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Feather from "@expo/vector-icons/Feather";
 
 export default function DashboardLayout() {
   const { Screen } = Tabs;
@@ -11,20 +10,24 @@ export default function DashboardLayout() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style='dark' />
+      <StatusBar style="dark" />
       <Tabs>
         <Screen
           name={Home}
           options={{
             headerShown: false,
-            tabBarIcon: ({ color }) => <AntDesign name='home' size={24} color={color} />,
+            tabBarIcon: ({ color }) => (
+              <AntDesign name="home" size={24} color={color} />
+            ),
           }}
         />
         <Screen
           name={ProfileUser}
           options={{
             headerShown: false,
-            tabBarIcon: ({ color }) => <Feather name='user' size={24} color={color} />,
+            tabBarIcon: ({ color }) => (
+              <AntDesign name="user" size={24} color={color} />
+            ),
           }}
         />
       </Tabs>

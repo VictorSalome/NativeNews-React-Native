@@ -44,25 +44,29 @@ export default function ApresentationTwo() {
 
   const renderItem = ({ item }: { item: (typeof introApresentation)[0] }) => {
     return (
-      <SafeAreaView className='flex-1 '>
-        <View className='flex-1 items-center px-5 bg-white'>
+      <SafeAreaView className="flex-1 ">
+        <View className="flex-1 items-center px-5 bg-white">
           <Image
             source={item.logo}
             style={{
               width: 200,
               height: 200,
             }}
-            resizeMode='contain'
+            resizeMode="contain"
           />
-          <Text className='text-2xl font-bold text-gray-800 text-center mb-10'>{item.title}</Text>
-          <Text className='text-base text-gray-600 text-center px-4 mb-6'>{item.text}</Text>
+          <Text className="text-2xl font-bold text-gray-800 text-center mb-10">
+            {item.title}
+          </Text>
+          <Text className="text-base text-gray-600 text-center px-4 mb-6">
+            {item.text}
+          </Text>
           <Image
             source={item.image}
             style={{
               width: 220,
               height: 220,
             }}
-            resizeMode='contain'
+            resizeMode="contain"
           />
         </View>
       </SafeAreaView>
@@ -71,9 +75,9 @@ export default function ApresentationTwo() {
 
   const renderNextButton = () => {
     return (
-      <View className='w-full flex items-center justify-center'>
-        <View className='w-[120px] h-[50px] bg-[#4FA6BB] rounded-full justify-center items-center shadow-md'>
-          <Text className='text-white font-bold text-lg'>Próximo</Text>
+      <View className="w-full flex items-center justify-center">
+        <View className="w-[120px] h-[50px] bg-[#4FA6BB] rounded-full justify-center items-center shadow-md">
+          <Text className="text-white font-bold text-lg">Próximo</Text>
         </View>
       </View>
     );
@@ -81,9 +85,9 @@ export default function ApresentationTwo() {
 
   const renderDoneButton = () => {
     return (
-      <View className='w-full flex items-center justify-center'>
-        <View className='w-[120px] h-[50px] bg-[#4FA6BB] rounded-full justify-center items-center shadow-md'>
-          <Text className='text-white font-bold text-lg'>Começar</Text>
+      <View className="w-full flex items-center justify-center">
+        <View className="w-[120px] h-[50px] bg-[#4FA6BB] rounded-full justify-center items-center shadow-md">
+          <Text className="text-white font-bold text-lg">Começar</Text>
         </View>
       </View>
     );
@@ -97,7 +101,7 @@ export default function ApresentationTwo() {
   };
 
   return (
-    <View className='flex-1 bg-white'>
+    <View className="flex-1 bg-white">
       <AppIntroSlider
         ref={sliderRef}
         renderItem={renderItem}
@@ -105,8 +109,16 @@ export default function ApresentationTwo() {
         onDone={onDone}
         renderDoneButton={renderDoneButton}
         renderNextButton={renderNextButton}
-        dotStyle={{ backgroundColor: "rgba(0, 0, 0, 0.3)", marginBottom: 20, marginTop: 10 }}
-        activeDotStyle={{ backgroundColor: "#4FA6BB", marginBottom: 20, marginTop: 10 }}
+        dotStyle={{
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
+          marginBottom: 20,
+          marginTop: 10,
+        }}
+        activeDotStyle={{
+          backgroundColor: "#4FA6BB",
+          marginBottom: 20,
+          marginTop: 10,
+        }}
         bottomButton
       />
     </View>

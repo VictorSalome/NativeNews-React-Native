@@ -1,5 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { useColorScheme } from "react-native";
 
 interface IThemeContext {
@@ -36,7 +42,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
           setIsDarkMode(colorScheme === "dark");
         }
       } catch (error) {
-        console.error("[ThemeContext] Erro ao carregar preferência de tema:", error);
+        console.error(
+          "[ThemeContext] Erro ao carregar preferência de tema:",
+          error,
+        );
         setIsDarkMode(colorScheme === "dark");
       } finally {
         setIsLoading(false);
@@ -57,7 +66,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       setIsDarkMode(isDark);
       console.log("[ThemeContext] Tema definido para:", themeValue);
     } catch (error) {
-      console.error("[ThemeContext] Erro ao salvar preferência de tema:", error);
+      console.error(
+        "[ThemeContext] Erro ao salvar preferência de tema:",
+        error,
+      );
     }
   };
 

@@ -8,7 +8,7 @@ export default function OnboardingLayout() {
   const { ApresentationOne, ApresentationTwo } = AppNames;
 
   return (
-    <SafeAreaView className='flex-1 bg-white'>
+    <SafeAreaView className="flex-1 bg-white">
       <Stack screenOptions={{ headerShown: false }}>
         <Screen name={ApresentationOne} />
         <Screen name={ApresentationTwo} />

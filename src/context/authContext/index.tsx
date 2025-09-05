@@ -9,7 +9,13 @@ import {
   type UserCredential,
 } from "@firebase/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 interface IAuthContext {
   user: User | null;
@@ -142,13 +148,22 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     mutationFn: async (credentials: ICredentials) => {
       const { email, password } = credentials;
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
 
         const accessToken = await userCredential.user.getIdToken();
         const refreshToken = await userCredential.user.refreshToken;
         const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
 
-        await handleSaveAuthData(userCredential.user, accessToken, refreshToken, expiresAt);
+        await handleSaveAuthData(
+          userCredential.user,
+          accessToken,
+          refreshToken,
+          expiresAt,
+        );
         return userCredential;
       } catch (error) {
         throw error;
@@ -159,11 +174,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const handleRegisterMutation = useMutation({
     mutationFn: async (credentials: ICredentials) => {
       const { email, password } = credentials;
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const accessToken = await userCredential.user.getIdToken();
       const refreshToken = await userCredential.user.refreshToken;
       const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
-      await handleSaveAuthData(userCredential.user, accessToken, refreshToken, expiresAt);
+      await handleSaveAuthData(
+        userCredential.user,
+        accessToken,
+        refreshToken,
+        expiresAt,
+      );
       return userCredential;
     },
   });
@@ -189,7 +213,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         const expiresAt = Date.now() + 1800 * 1000; // 30 minutes
         await saveSecureItem("accessToken", newAccessToken);
         await saveSecureItem("expiresAt", expiresAt.toString());
-        setTokens(prevTokens => ({
+        setTokens((prevTokens) => ({
           ...prevTokens,
           accessToken: newAccessToken,
           expiresAt,
@@ -205,7 +229,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           await saveSecureItem("expiresAt", expiresAt.toString());
 
           setUser(currentUser);
-          setTokens(prevTokens => ({
+          setTokens((prevTokens) => ({
             ...prevTokens,
             accessToken: newAccessToken,
             expiresAt,
@@ -224,30 +248,39 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (tokens.expiresAt) {
-        const timeToExpiry = tokens.expiresAt - Date.now();
-        const minutesToExpiry = Math.floor(timeToExpiry / 1000 / 60);
+    const interval = setInterval(
+      () => {
+        if (tokens.expiresAt) {
+          const timeToExpiry = tokens.expiresAt - Date.now();
+          const minutesToExpiry = Math.floor(timeToExpiry / 1000 / 60);
 
-        if (timeToExpiry < 1800000) {
-          // 30 minutos
-          handleRefreshAccessToken();
+          if (timeToExpiry < 1800000) {
+            // 30 minutos
+            handleRefreshAccessToken();
+          }
         }
-      }
-    }, 5 * 60 * 1000); // Verificar a cada 5 minutos
+      },
+      5 * 60 * 1000,
+    ); // Verificar a cada 5 minutos
     return () => clearInterval(interval);
   }, [tokens]);
 
-  const handleAuthOperation = async <T,>(operation: () => Promise<T>): Promise<T | null> => {
+  const handleAuthOperation = async <T,>(
+    operation: () => Promise<T>,
+  ): Promise<T | null> => {
     try {
       return await operation();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro na operação de autenticação");
+      setError(
+        err instanceof Error ? err.message : "Erro na operação de autenticação",
+      );
       return null;
     }
   };
 
-  const handleBooleanOperation = async (operation: () => Promise<any>): Promise<boolean> => {
+  const handleBooleanOperation = async (
+    operation: () => Promise<any>,
+  ): Promise<boolean> => {
     try {
       await operation();
       return true;
@@ -265,14 +298,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         error,
         login: (email, password) =>
-          handleAuthOperation(() => handleLoginMutation.mutateAsync({ email, password })),
+          handleAuthOperation(() =>
+            handleLoginMutation.mutateAsync({ email, password }),
+          ),
         register: (email, password) =>
-          handleAuthOperation(() => handleRegisterMutation.mutateAsync({ email, password })),
+          handleAuthOperation(() =>
+            handleRegisterMutation.mutateAsync({ email, password }),
+          ),
         logout: () => handleLogoutMutation.mutateAsync(),
         refreshAccessToken: handleRefreshAccessToken,
 
-        resetPassword: email =>
-          handleBooleanOperation(() => handleResetPasswordMutation.mutateAsync({ email })),
+        resetPassword: (email) =>
+          handleBooleanOperation(() =>
+            handleResetPasswordMutation.mutateAsync({ email }),
+          ),
       }}
     >
       {children}

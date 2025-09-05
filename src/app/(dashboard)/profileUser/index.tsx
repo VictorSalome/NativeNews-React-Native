@@ -18,35 +18,41 @@ export default function ProfileUser() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name='arrow-back' size={24} color='#000' />
+          <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
       </View>
 
       <View style={styles.profileSection}>
-        <Image source={{ uri: "https://via.placeholder.com/150" }} style={styles.profileImage} />
+        <Image
+          source={{ uri: "https://via.placeholder.com/150" }}
+          style={styles.profileImage}
+        />
         <Text style={styles.userName}>John Doe</Text>
         <Text style={styles.userEmail}>john.doe@example.com</Text>
       </View>
 
       <View style={styles.infoSection}>
         <TouchableOpacity style={styles.infoItem}>
-          <Ionicons name='person-outline' size={24} color='#666' />
+          <Ionicons name="person-outline" size={24} color="#666" />
           <Text style={styles.infoText}>Edit Profile</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.infoItem}>
-          <Ionicons name='settings-outline' size={24} color='#666' />
+          <Ionicons name="settings-outline" size={24} color="#666" />
           <Text style={styles.infoText}>Settings</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.infoItem}>
-          <Ionicons name='help-circle-outline' size={24} color='#666' />
+          <Ionicons name="help-circle-outline" size={24} color="#666" />
           <Text style={styles.infoText}>Help & Support</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.infoItem, styles.logoutButton]} onPress={handleLogout}>
-          <Ionicons name='log-out-outline' size={24} color='#FF4444' />
+        <TouchableOpacity
+          style={[styles.infoItem, styles.logoutButton]}
+          onPress={handleLogout}
+        >
+          <Ionicons name="log-out-outline" size={24} color="#FF4444" />
           <Text style={[styles.infoText, styles.logoutText]}>Logout</Text>
         </TouchableOpacity>
       </View>

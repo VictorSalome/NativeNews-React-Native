@@ -18,7 +18,7 @@ export default function RootLayout() {
         <OnboardingProvider>
           <ThemeProvider>
             <SafeAreaProvider>
-              <StatusBar style='dark' />
+              <StatusBar style="dark" />
               <Slot />
               <Toast />
             </SafeAreaProvider>

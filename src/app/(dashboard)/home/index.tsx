@@ -1,8 +1,6 @@
-import { Feather } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppRoutes } from "../../../routes/appRoutes";
 
 export default function Home() {
   const studyTopics = [
@@ -19,33 +17,14 @@ export default function Home() {
         <View>
           <Text style={styles.greeting}>Hello, Student!</Text>
           <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>What would you like to study today?</Text>
+          <Text style={styles.subtitle}>
+            What would you like to study today?
+          </Text>
         </View>
         <TouchableOpacity style={styles.profileButton}>
-          <Feather name='user' size={24} color='#333' />
+          <AntDesign name="user" size={24} color="#333" />
         </TouchableOpacity>
       </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.topicsGrid}>
-          {studyTopics.map(topic => (
-            <TouchableOpacity
-              key={topic.id}
-              style={styles.topicCard}
-              onPress={() => {
-                if (topic.title === "Tema") {
-                  router.push(AppRoutes.ThemeExample);
-                }
-              }}
-            >
-              <View style={styles.iconContainer}>
-                <Feather name={topic.icon} size={24} color='#fff' />
-              </View>
-              <Text style={styles.topicTitle}>{topic.title}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }

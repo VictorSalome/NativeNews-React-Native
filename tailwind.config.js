@@ -4,7 +4,7 @@ module.exports = {
   content: ["./src/app/index.tsx", "./src/app/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: require('./src/theme'),
+    extend: require("./src/theme"),
   },
   plugins: [],
 };

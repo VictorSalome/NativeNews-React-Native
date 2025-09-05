@@ -86,64 +86,73 @@ export default function SignUp() {
 
   return (
     <>
-      <StatusBar style='dark' />
+      <StatusBar style="dark" />
       <KeyboardAvoidingView
-        className='flex-1 bg-white'
+        className="flex-1 bg-white"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
       >
         <ScrollView
-          className='flex-grow'
-          contentContainerStyle={{ justifyContent: "center", paddingHorizontal: 32 }}
+          className="flex-grow"
+          contentContainerStyle={{
+            justifyContent: "center",
+            paddingHorizontal: 32,
+          }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps='handled'
+          keyboardShouldPersistTaps="handled"
         >
-          <View className='items-center mb-8'>
+          <View className="items-center mb-8">
             <Image
               source={require("../../../../assets/logos/nativeNewsLogo.png")}
-              className='w-[200px] h-[200px]'
-              resizeMode='contain'
+              className="w-[200px] h-[200px]"
+              resizeMode="contain"
             />
           </View>
-          <View className='w-full'>
-            <Text className='text-[28px] font-bold text-[#333] mb-2.5 text-center'>{title}</Text>
-            <Text className='text-base text-[#666] mb-8 text-center'>{description}</Text>
+          <View className="w-full">
+            <Text className="text-[28px] font-bold text-[#333] mb-2.5 text-center">
+              {title}
+            </Text>
+            <Text className="text-base text-[#666] mb-8 text-center">
+              {description}
+            </Text>
 
             <Controller
               control={control}
-              name='email'
+              name="email"
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
-                    className='bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base'
+                    className="bg-[#f5f5f5] rounded-lg p-4 mb-4 text-base"
                     placeholder={emailPlaceholder}
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
-                    keyboardType='email-address'
-                    autoCapitalize='none'
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                   />
                   {errors.email && (
-                    <Text className='text-red-500 text-sm mb-2'>{errors.email.message}</Text>
+                    <Text className="text-red-500 text-sm mb-2">
+                      {errors.email.message}
+                    </Text>
                   )}
                 </>
               )}
             />
-            <View className='flex-row items-center bg-[#f5f5f5] rounded-lg mb-4'>
+            <View className="flex-row items-center bg-[#f5f5f5] rounded-lg mb-4">
               <Controller
                 control={control}
-                name='password'
+                name="password"
                 render={({ field: { onChange, value } }) => (
                   <>
                     <TextInput
-                      className='flex-1 p-4 text-base'
+                      className="flex-1 p-4 text-base"
                       placeholder={passwordPlaceholder}
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}
                     />
                     {errors.password && (
-                      <Text className='text-red-500 text-sm absolute -bottom-6 left-0'>
+                      <Text className="text-red-500 text-sm absolute -bottom-6 left-0">
                         {errors.password.message}
                       </Text>
                     )}
@@ -151,26 +160,33 @@ export default function SignUp() {
                 )}
               />
 
-              <TouchableOpacity className='p-[15px]' onPress={() => setShowPassword(!showPassword)}>
-                <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color='#666' />
+              <TouchableOpacity
+                className="p-[15px]"
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                <Ionicons
+                  name={showPassword ? "eye-off" : "eye"}
+                  size={24}
+                  color="#666"
+                />
               </TouchableOpacity>
             </View>
 
-            <View className='flex-row items-center bg-[#f5f5f5] rounded-lg mb-4 mt-5'>
+            <View className="flex-row items-center bg-[#f5f5f5] rounded-lg mb-4 mt-5">
               <Controller
                 control={control}
-                name='confirmPassword'
+                name="confirmPassword"
                 render={({ field: { onChange, value } }) => (
                   <>
                     <TextInput
-                      className='flex-1 p-4 text-base'
+                      className="flex-1 p-4 text-base"
                       placeholder={confirmPasswordPlaceholder}
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}
                     />
                     {errors.confirmPassword && (
-                      <Text className='text-red-500 text-sm absolute -bottom-6 left-0'>
+                      <Text className="text-red-500 text-sm absolute -bottom-6 left-0">
                         {errors.confirmPassword.message}
                       </Text>
                     )}
@@ -178,8 +194,15 @@ export default function SignUp() {
                 )}
               />
 
-              <TouchableOpacity className='p-[15px]' onPress={() => setShowPassword(!showPassword)}>
-                <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color='#666' />
+              <TouchableOpacity
+                className="p-[15px]"
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                <Ionicons
+                  name={showPassword ? "eye-off" : "eye"}
+                  size={24}
+                  color="#666"
+                />
               </TouchableOpacity>
             </View>
 
@@ -191,16 +214,22 @@ export default function SignUp() {
               disabled={isLoading}
             >
               {isLoading ? (
-                <ActivityIndicator color='#FFFFFF' size='small' />
+                <ActivityIndicator color="#FFFFFF" size="small" />
               ) : (
-                <Text className='text-white text-base font-bold'>{signUpButton}</Text>
+                <Text className="text-white text-base font-bold">
+                  {signUpButton}
+                </Text>
               )}
             </TouchableOpacity>
 
-            <View className='flex-row justify-center items-center'>
-              <Text className='text-[#666] text-sm'>{alreadyHaveAccountText} </Text>
+            <View className="flex-row justify-center items-center">
+              <Text className="text-[#666] text-sm">
+                {alreadyHaveAccountText}{" "}
+              </Text>
               <TouchableOpacity onPress={goToLogin}>
-                <Text className='text-[#007AFF] text-sm font-bold'>{signInButton}</Text>
+                <Text className="text-[#007AFF] text-sm font-bold">
+                  {signInButton}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

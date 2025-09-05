@@ -67,7 +67,12 @@ export default function ApresentationOne() {
     return (
       <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
         <Text style={styles.title}>{item.title}</Text>
-        <LottieView source={item.lottie} autoPlay loop style={styles.lottieAnimation} />
+        <LottieView
+          source={item.lottie}
+          autoPlay
+          loop
+          style={styles.lottieAnimation}
+        />
         <Text style={styles.text}>{item.text}</Text>
       </View>
     );
