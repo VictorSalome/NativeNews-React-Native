@@ -3,7 +3,7 @@ import { AppRoutes } from "@/routes/appRoutes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useRef } from "react";
-import { Image, Text, View, Dimensions } from "react-native";
+import { Dimensions, Image, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -16,7 +16,7 @@ const introApresentation = [
     title: "Bem-vindo ao NativeNews",
     text: "Seu aplicativo de notícias personalizadas",
     image: require("../../../../assets/images/apresentation1.png"),
-    logo: require("../../../../assets/logos/nativeNewsLogo.png"),
+    logo: require("../../../../assets/logos/nativeNewsLogo.svg"),
     backgroundColor: "#ffffff",
   },
   {
@@ -24,8 +24,7 @@ const introApresentation = [
     title: "Mantenha-se Informado",
     text: "Receba atualizações sobre os assuntos que você se interessa",
     image: require("../../../../assets/images/apresentation2.png"),
-    logo: require("../../../../assets/logos/nativeNewsLogo.png"),
-
+    logo: require("../../../../assets/logos/nativeNewsLogo.svg"),
     backgroundColor: "#ffffff",
   },
   {
@@ -33,7 +32,7 @@ const introApresentation = [
     title: "Informações sempre atualizadas",
     text: "Atualizamos constantemente para trazer as últimas notícias.",
     image: require("../../../../assets/images/apresentation3.png"),
-    logo: require("../../../../assets/logos/nativeNewsLogo.png"),
+    logo: require("../../../../assets/logos/nativeNewsLogo.svg"),
 
     backgroundColor: "#ffffff",
   },

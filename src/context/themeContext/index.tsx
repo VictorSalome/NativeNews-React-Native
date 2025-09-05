@@ -29,6 +29,7 @@ export const useThemeContext = () => {
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
+  console.log('isDarkMode', isDarkMode)
   const [isLoading, setIsLoading] = useState(true);
 
   const systemColorScheme = useSystemColorScheme();

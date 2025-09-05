@@ -9,6 +9,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
+import { useThemeContext } from "@/context/themeContext";
 import { showSignUpError, showSignUpSuccess } from "@/utils/userFeedback";
 import {
   ActivityIndicator,
@@ -24,8 +25,10 @@ import {
 import { signUpSchema } from "./signUpSchema";
 import type { ISignUpData } from "./types";
 import { authTexts } from "@/constants/texts/auth";
+import { LogoSvg } from "@/components/LogoSvg";
 
 export default function SignUp() {
+  const { isDarkMode } = useThemeContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -102,11 +105,7 @@ export default function SignUp() {
           keyboardShouldPersistTaps="handled"
         >
           <View className="items-center mb-8">
-            <Image
-              source={require("../../../../assets/logos/nativeNewsLogo.png")}
-              className="w-[200px] h-[200px]"
-              resizeMode="contain"
-            />
+            <LogoSvg width={200} height={200} isDark={isDarkMode} />
           </View>
           <View className="w-full">
             <Text className="text-[28px] font-bold text-text-base dark:text-text-base-dark mb-2.5 text-center">
@@ -211,7 +210,9 @@ export default function SignUp() {
 
             <TouchableOpacity
               className={`rounded-lg p-4 items-center mb-5 mt-5 ${
-                isLoading ? "bg-primary/70 dark:bg-primary-dark/70" : "bg-primary dark:bg-primary-dark"
+                isLoading
+                  ? "bg-primary/70 dark:bg-primary-dark/70"
+                  : "bg-primary dark:bg-primary-dark"
               }`}
               onPress={handleSubmit(onSubmit)}
               disabled={isLoading}

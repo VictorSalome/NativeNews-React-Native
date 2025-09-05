@@ -73,7 +73,7 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
       <KeyboardAvoidingView
         className="flex-1 bg-surface dark:bg-surface-dark"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -89,7 +89,11 @@ export default function ForgotPassword() {
           keyboardShouldPersistTaps="handled"
         >
           <View className="items-center mb-8">
-            <MaterialIcons name="lock-reset" size={100} className="text-primary dark:text-primary-dark" />
+            <MaterialIcons
+              name="lock-reset"
+              size={100}
+              className="text-primary dark:text-primary-dark"
+            />
           </View>
 
           <View className="w-full">
@@ -126,7 +130,9 @@ export default function ForgotPassword() {
 
             <TouchableOpacity
               className={`rounded-lg p-4 items-center mb-5 ${
-                isLoading ? "bg-primary/70 dark:bg-primary-dark/70" : "bg-primary dark:bg-primary-dark"
+                isLoading
+                  ? "bg-primary/70 dark:bg-primary-dark/70"
+                  : "bg-primary dark:bg-primary-dark"
               }`}
               onPress={handleSubmit(onSubmit)}
               disabled={isLoading}
