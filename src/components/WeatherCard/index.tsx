@@ -1,3 +1,4 @@
+import { useWeatherGradient } from "@/app/(dashboard)/home";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -11,9 +12,10 @@ export const WeatherCard = ({
   wind,
   onPress,
 }: IWeatherCardProps) => {
+  const colors = useWeatherGradient(condition);
   return (
     <LinearGradient
-      colors={condition}
+      colors={colors}
       className="rounded-2xl p-6 mb-6 mt-6"
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}

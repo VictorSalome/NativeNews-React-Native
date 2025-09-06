@@ -8,30 +8,33 @@ import React, { useMemo } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type IWeatherCondition = "sunny" | "cloudy" | "rain" | "night";
+
 // Dados mockados (futuramente virão de uma API)
-const weatherMock = {
-  condition: "sunny" as "sunny" | "cloudy" | "rain" | "night",
+const weatherMock: {
+  condition: IWeatherCondition;
+  temperature: number;
+  feelsLike: number;
+  humidity: number;
+  wind: number;
+} = {
+  condition: "sunny",
   temperature: 24,
   feelsLike: 26,
   humidity: 60,
   wind: 15,
 };
 
-type WeatherCondition = "sunny" | "cloudy" | "rain" | "night";
+const WEATHER_GRADIENTS = {
+  rain: ["#4F6D7A", "#C0D6DF"] as const,
+  cloudy: ["#8BA4B1", "#E1EBF0"] as const,
+  night: ["#0F2027", "#203A43"] as const,
+  sunny: ["#9DD4F6", "#F7D4A9"] as const,
+} as const;
 
-export const useWeatherGradient = (condition: WeatherCondition) => {
+export const useWeatherGradient = (condition: IWeatherCondition) => {
   return useMemo(() => {
-    switch (condition) {
-      case "rain":
-        return ["#4F6D7A", "#C0D6DF"];
-      case "cloudy":
-        return ["#8BA4B1", "#E1EBF0"];
-      case "night":
-        return ["#0F2027", "#203A43"];
-      case "sunny":
-      default:
-        return ["#9DD4F6", "#F7D4A9"];
-    }
+    return WEATHER_GRADIENTS[condition] || WEATHER_GRADIENTS.sunny;
   }, [condition]);
 };
 
@@ -43,7 +46,7 @@ export default function Home() {
       <ScrollView contentContainerStyle={{ padding: 16 }}>
         {/* Seção de Clima */}
         <WeatherCard
-          condition={useWeatherGradient(weatherMock.condition)}
+          condition={weatherMock.condition}
           temperature={weatherMock.temperature}
           feelsLike={weatherMock.feelsLike}
           humidity={weatherMock.humidity}
@@ -55,9 +58,10 @@ export default function Home() {
         <Text className="text-xl font-bold text-text-base dark:text-text-base-dark mb-4">
           Featured News
         </Text>
+
         <NewsHorizontalList
           articles={newsAll?.articles}
-          onArticlePress={(item) => router.navigate(AppRoutes.News, { item })}
+          onArticlePress={(item) => router.navigate(AppRoutes.News)}
         />
 
         {/* CTA para todas as notícias */}

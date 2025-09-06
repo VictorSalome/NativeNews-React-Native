@@ -94,21 +94,17 @@ const weeklyForecastMock = [
 ];
 
 // Hook para gradientes baseados na condição climática
+const WEATHER_GRADIENTS = {
+  rain: ["#4F6D7A", "#C0D6DF"] as const, // azul chuvoso
+  cloudy: ["#8BA4B1", "#E1EBF0"] as const, // nublado
+  night: ["#0F2027", "#203A43"] as const, // noite
+  "partly-cloudy": ["#87CEEB", "#E0F6FF"] as const, // parcialmente nublado
+  sunny: ["#9DD4F6", "#F7D4A9"] as const, // ensolarado
+} as const;
+
 function useWeatherGradient(condition: typeof currentWeatherMock.condition) {
   return useMemo(() => {
-    switch (condition) {
-      case "rain":
-        return ["#4F6D7A", "#C0D6DF"]; // azul chuvoso
-      case "cloudy":
-        return ["#8BA4B1", "#E1EBF0"]; // nublado
-      case "night":
-        return ["#0F2027", "#203A43"]; // noite
-      case "partly-cloudy":
-        return ["#87CEEB", "#E0F6FF"]; // parcialmente nublado
-      case "sunny":
-      default:
-        return ["#9DD4F6", "#F7D4A9"]; // ensolarado
-    }
+    return WEATHER_GRADIENTS[condition] || WEATHER_GRADIENTS.sunny;
   }, [condition]);
 }
 
