@@ -1,4 +1,3 @@
-import useAuth from "@/hooks/useAuth";
 import { AppRoutes } from "@/routes/appRoutes";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -27,6 +26,7 @@ import {
 } from "react-native";
 import { signInSchema } from "./signInSchema";
 import type { ISignInData } from "./types";
+import useAuth from "@/hooks/useAuth";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");

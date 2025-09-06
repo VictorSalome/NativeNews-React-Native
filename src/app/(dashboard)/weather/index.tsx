@@ -1,11 +1,8 @@
 import { LogoSvg } from "@/components/LogoSvg";
 import { useThemeContext } from "@/context/themeContext";
-import { AppRoutes } from "@/routes/appRoutes";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
 import React, { useMemo, useState } from "react";
 import {
   FlatList,
@@ -21,7 +18,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const currentWeatherMock = {
   city: "São Paulo",
   state: "SP",
-  condition: "partly-cloudy" as "sunny" | "cloudy" | "rain" | "partly-cloudy" | "night",
+  condition: "partly-cloudy" as
+    | "sunny"
+    | "cloudy"
+    | "rain"
+    | "partly-cloudy"
+    | "night",
   temperature: 24,
   description: "Parcialmente Nublado",
   feelsLike: 26,
@@ -113,7 +115,7 @@ function useWeatherGradient(condition: typeof currentWeatherMock.condition) {
 // Função para obter ícone baseado na condição
 function getWeatherIcon(condition: string, size: number = 24) {
   const iconColor = "#F6C453";
-  
+
   switch (condition) {
     case "sunny":
       return <Ionicons name="sunny" size={size} color={iconColor} />;
@@ -133,7 +135,7 @@ function getWeatherIcon(condition: string, size: number = 24) {
 export default function Weather() {
   const { isDarkMode } = useThemeContext();
   const [refreshing, setRefreshing] = useState(false);
-  
+
   const dateText = useMemo(() => {
     const now = new Date();
     return now.toLocaleDateString("pt-BR", {
@@ -204,49 +206,77 @@ export default function Weather() {
         <View className="w-[48%] bg-white/20 rounded-lg p-3 mb-3">
           <View className="flex-row items-center mb-1">
             <Ionicons name="thermometer-outline" size={16} color="#374151" />
-            <Text className="text-xs text-black/60 ml-1 font-medium">Sensação</Text>
+            <Text className="text-xs text-black/60 ml-1 font-medium">
+              Sensação
+            </Text>
           </View>
-          <Text className="text-sm font-bold text-black/90">{currentWeatherMock.feelsLike}°C</Text>
+          <Text className="text-sm font-bold text-black/90">
+            {currentWeatherMock.feelsLike}°C
+          </Text>
         </View>
-        
+
         <View className="w-[48%] bg-white/20 rounded-lg p-3 mb-3">
           <View className="flex-row items-center mb-1">
             <Ionicons name="water-outline" size={16} color="#374151" />
-            <Text className="text-xs text-black/60 ml-1 font-medium">Umidade</Text>
+            <Text className="text-xs text-black/60 ml-1 font-medium">
+              Umidade
+            </Text>
           </View>
-          <Text className="text-sm font-bold text-black/90">{currentWeatherMock.humidity}%</Text>
+          <Text className="text-sm font-bold text-black/90">
+            {currentWeatherMock.humidity}%
+          </Text>
         </View>
-        
+
         <View className="w-[48%] bg-white/20 rounded-lg p-3 mb-3">
           <View className="flex-row items-center mb-1">
-            <MaterialCommunityIcons name="weather-windy" size={16} color="#374151" />
-            <Text className="text-xs text-black/60 ml-1 font-medium">Vento</Text>
+            <MaterialCommunityIcons
+              name="weather-windy"
+              size={16}
+              color="#374151"
+            />
+            <Text className="text-xs text-black/60 ml-1 font-medium">
+              Vento
+            </Text>
           </View>
-          <Text className="text-sm font-bold text-black/90">{currentWeatherMock.windSpeed} km/h</Text>
+          <Text className="text-sm font-bold text-black/90">
+            {currentWeatherMock.windSpeed} km/h
+          </Text>
         </View>
-        
+
         <View className="w-[48%] bg-white/20 rounded-lg p-3 mb-3">
           <View className="flex-row items-center mb-1">
             <MaterialCommunityIcons name="gauge" size={16} color="#374151" />
-            <Text className="text-xs text-black/60 ml-1 font-medium">Pressão</Text>
+            <Text className="text-xs text-black/60 ml-1 font-medium">
+              Pressão
+            </Text>
           </View>
-          <Text className="text-sm font-bold text-black/90">{currentWeatherMock.pressure} hPa</Text>
+          <Text className="text-sm font-bold text-black/90">
+            {currentWeatherMock.pressure} hPa
+          </Text>
         </View>
-        
+
         <View className="w-[48%] bg-white/20 rounded-lg p-3 mb-3">
           <View className="flex-row items-center mb-1">
             <Ionicons name="eye-outline" size={16} color="#374151" />
-            <Text className="text-xs text-black/60 ml-1 font-medium">Visibilidade</Text>
+            <Text className="text-xs text-black/60 ml-1 font-medium">
+              Visibilidade
+            </Text>
           </View>
-          <Text className="text-sm font-bold text-black/90">{currentWeatherMock.visibility} km</Text>
+          <Text className="text-sm font-bold text-black/90">
+            {currentWeatherMock.visibility} km
+          </Text>
         </View>
-        
+
         <View className="w-[48%] bg-white/20 rounded-lg p-3 mb-3">
           <View className="flex-row items-center mb-1">
             <Ionicons name="sunny-outline" size={16} color="#374151" />
-            <Text className="text-xs text-black/60 ml-1 font-medium">Pôr do Sol</Text>
+            <Text className="text-xs text-black/60 ml-1 font-medium">
+              Pôr do Sol
+            </Text>
           </View>
-          <Text className="text-sm font-bold text-black/90">{currentWeatherMock.sunset}</Text>
+          <Text className="text-sm font-bold text-black/90">
+            {currentWeatherMock.sunset}
+          </Text>
         </View>
       </View>
     </LinearGradient>
@@ -280,9 +310,7 @@ export default function Weather() {
               <Text className="text-sm font-medium text-text-base dark:text-text-base-dark mb-2">
                 {item.time}
               </Text>
-              <View className="mb-2">
-                {getWeatherIcon(item.condition, 32)}
-              </View>
+              <View className="mb-2">{getWeatherIcon(item.condition, 32)}</View>
               <Text className="text-lg font-bold text-text-base dark:text-text-base-dark">
                 {item.temperature}°
               </Text>
@@ -314,11 +342,11 @@ export default function Weather() {
                 {item.day}
               </Text>
             </View>
-            
+
             <View className="flex-row items-center flex-1 justify-center">
               {getWeatherIcon(item.condition, 28)}
             </View>
-            
+
             <View className="flex-1 flex-row justify-end items-center">
               <Text className="text-base font-bold text-text-base dark:text-text-base-dark mr-2">
                 {item.maxTemp}°
@@ -337,7 +365,7 @@ export default function Weather() {
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
       {/* Header */}
       {renderHeader()}
-      
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
@@ -352,10 +380,10 @@ export default function Weather() {
       >
         {/* Visão Geral do Clima Atual */}
         {renderCurrentWeather()}
-        
+
         {/* Previsão Horária */}
         {renderHourlyForecast()}
-        
+
         {/* Previsão Semanal */}
         {renderWeeklyForecast()}
       </ScrollView>

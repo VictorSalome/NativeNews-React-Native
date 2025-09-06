@@ -16,7 +16,6 @@ import {
   View,
 } from "react-native";
 
-import useAuth from "@/hooks/useAuth";
 import {
   showForgotPasswordError,
   showForgotPasswordSuccess,
@@ -25,6 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { forgotPasswordSchema } from "./forgotPasswordSchema";
 import type { IForgotPasswordData } from "./types";
+import useAuth from "@/hooks/useAuth";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");

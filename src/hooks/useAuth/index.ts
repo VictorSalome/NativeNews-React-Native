@@ -1,10 +1,6 @@
 import { useAuthContext } from "@/context/authContext";
 import { saveLastEmail } from "@/utils/lastCredentials";
-
-interface AuthResult {
-  ok: boolean;
-  error?: string;
-}
+import type { AuthResult } from "./types";
 
 export default function useAuth() {
   const { login, register, logout, resetPassword, error } = useAuthContext();

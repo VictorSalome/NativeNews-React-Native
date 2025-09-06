@@ -1,20 +1,16 @@
-import { LogoSvg } from "@/components/LogoSvg";
 import { useThemeContext } from "@/context/themeContext";
-import { AppRoutes } from "@/routes/appRoutes";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   FlatList,
   Image,
+  RefreshControl,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  RefreshControl,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

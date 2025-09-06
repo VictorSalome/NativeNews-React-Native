@@ -1,4 +1,3 @@
-import useAuth from "@/hooks/useAuth";
 import { AppRoutes } from "@/routes/appRoutes";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -9,11 +8,12 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
+import { LogoSvg } from "@/components/LogoSvg";
+import { authTexts } from "@/constants/texts/auth";
 import { useThemeContext } from "@/context/themeContext";
 import { showSignUpError, showSignUpSuccess } from "@/utils/userFeedback";
 import {
   ActivityIndicator,
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -24,8 +24,7 @@ import {
 } from "react-native";
 import { signUpSchema } from "./signUpSchema";
 import type { ISignUpData } from "./types";
-import { authTexts } from "@/constants/texts/auth";
-import { LogoSvg } from "@/components/LogoSvg";
+import useAuth from "@/hooks/useAuth";
 
 export default function SignUp() {
   const { isDarkMode } = useThemeContext();
