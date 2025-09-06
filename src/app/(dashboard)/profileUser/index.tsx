@@ -1,8 +1,11 @@
 import { useThemeContext } from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
+import { storage } from "@/services/firebaseConfig";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
 import React, { useCallback, useState } from "react";
 import {
   Alert,
@@ -13,6 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { uuidv4 } from "zod";
 
 export default function ProfileUser() {
   const router = useRouter();
@@ -35,40 +39,58 @@ export default function ProfileUser() {
   const handleSelectFromGallery = useCallback(async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: "images",
+        mediaTypes: ImagePicker.MediaTypeOptions.Images, // ajuste aqui
         allowsEditing: true,
         aspect: [1, 1] as [number, number],
         quality: 0.8,
       });
 
       if (!result.canceled && result.assets?.[0]?.uri) {
-        setSelectedImage(result.assets[0].uri);
+        const uri = result.assets[0].uri;
+
+        // 🔹 Converte imagem em blob
+        const response = await fetch(uri);
+        const blob = await response.blob();
+
+        // 🔹 Cria referência no Firebase Storage
+        const imageRef = ref(storage, `profilePictures/${uuidv4()}.jpg`);
+
+        // 🔹 Faz upload
+        await uploadBytes(imageRef, blob);
+
+        // 🔹 Pega URL pública
+        const downloadURL = await getDownloadURL(imageRef);
+
+        console.log("✅ Foto enviada! URL:", downloadURL);
+
+        // aqui você pode salvar a URL no Firestore ou no usuário
+        Alert.alert("Sucesso", "Foto de perfil enviada!");
       }
     } catch (error) {
-      console.error("Erro ao selecionar imagem da galeria:", error);
-      Alert.alert("Erro", "Não foi possível acessar a galeria");
+      console.error("Erro ao selecionar/enviar imagem:", error);
+      Alert.alert("Erro", "Não foi possível enviar a foto");
     }
   }, []);
 
-  const handleTakePhoto = useCallback(async () => {
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: "images",
-        allowsEditing: true,
-        aspect: [1, 1] as [number, number],
-        quality: 0.8,
-      });
+  // const handleTakePhoto = useCallback(async () => {
+  //   try {
+  //     const result = await ImagePicker.launchCameraAsync({
+  //       mediaTypes: "images",
+  //       allowsEditing: true,
+  //       aspect: [1, 1] as [number, number],
+  //       quality: 0.8,
+  //     });
 
-      if (!result.canceled && result.assets?.[0]?.uri) {
-        setSelectedImage(result.assets[0].uri);
-      } else if (result.canceled) {
-        Alert.alert("Aviso", "A captura foi cancelada");
-      }
-    } catch (error) {
-      console.error("Erro ao acessar câmera:", error);
-      Alert.alert("Erro", "Não foi possível acessar a câmera");
-    }
-  }, []);
+  //     if (!result.canceled && result.assets?.[0]?.uri) {
+  //       setSelectedImage(result.assets[0].uri);
+  //     } else if (result.canceled) {
+  //       Alert.alert("Aviso", "A captura foi cancelada");
+  //     }
+  //   } catch (error) {
+  //     console.error("Erro ao acessar câmera:", error);
+  //     Alert.alert("Erro", "Não foi possível acessar a câmera");
+  //   }
+  // }, []);
 
   // const handleSave = useCallback(async () => {
   //   if (!selectedImage) {

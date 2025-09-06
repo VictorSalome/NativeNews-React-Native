@@ -82,57 +82,28 @@ export default function Home() {
 
   const gradient = useWeatherGradient(weatherMock.condition);
 
+  // Componente do header simplificado
+  const renderHeader = () => (
+    <View className="bg-surface dark:bg-surface-dark px-4 py-3">
+      <View className="flex-row items-center justify-center">
+        <Text className="text-lg font-semibold text-text-base dark:text-text-base-dark">
+          Home
+        </Text>
+      </View>
+    </View>
+  );
+
   return (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
+      {/* Header */}
+      {renderHeader()}
+      
       <ScrollView contentContainerStyle={{ padding: 16 }}>
-        {/* Header */}
-        <View className="flex-row items-center justify-between mb-6 px-1">
-          {/* Lado Esquerdo: Data e Localização */}
-          <View className="flex-1">
-            <View className="flex-row items-center mb-1">
-              <Ionicons
-                name="calendar-outline"
-                size={16}
-                color={isDarkMode ? "#9CA3AF" : "#6B7280"}
-              />
-              <Text className="text-sm font-medium text-text-base dark:text-text-base-dark ml-2 capitalize">
-                {dateText}
-              </Text>
-            </View>
-            <View className="flex-row items-center">
-              <Ionicons
-                name="location-outline"
-                size={14}
-                color={isDarkMode ? "#9CA3AF" : "#6B7280"}
-              />
-              <Text className="text-xs text-text-muted dark:text-text-muted-dark ml-1">
-                {locationText}
-              </Text>
-            </View>
-          </View>
-
-          {/* Lado Direito: Logo e Avatar */}
-          <View className="flex-row items-center gap-3">
-            <LogoSvg width={24} height={24} isDark={isDarkMode} />
-            <TouchableOpacity
-              className="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary-dark/10 items-center justify-center border border-primary/20 dark:border-primary-dark/20"
-              onPress={() => router.navigate(AppRoutes.ProfileUser)}
-              accessibilityLabel="Abrir perfil"
-              style={{ minWidth: 44, minHeight: 44 }}
-            >
-              <AntDesign
-                name="user"
-                size={18}
-                color={isDarkMode ? "#60A5FA" : "#3B82F6"}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
 
         {/* Seção de Clima */}
         <LinearGradient
           colors={gradient}
-          className="rounded-2xl p-6 mb-6"
+          className="rounded-2xl p-6 mb-6 mt-6"
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={{

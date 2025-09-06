@@ -39,7 +39,7 @@ export default function DashboardLayout() {
             headerShown: false,
             title: "Notícias",
             tabBarIcon: ({ color }) => (
-              <AntDesign name="cloud" size={24} color={color} />
+              <AntDesign name="filetext1" size={24} color={color} />
             ),
           }}
         />

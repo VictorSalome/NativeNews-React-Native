@@ -13,7 +13,7 @@ import { authTexts } from "@/constants/texts/auth";
 import { useThemeContext } from "@/context/themeContext";
 import { getLastEmail, saveLastEmail } from "@/utils/lastCredentials";
 import { showLoginError, showLoginSuccess } from "@/utils/userFeedback";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -48,6 +48,8 @@ export default function SignIn() {
 
   const { handleSignIn } = useAuth();
   const { isDarkMode } = useThemeContext();
+
+  const passwordRef = useRef<TextInput>(null);
 
   const {
     control,
@@ -147,6 +149,11 @@ export default function SignIn() {
                     onBlur={onBlur}
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    returnKeyType="next" // Mostra "Próximo" no teclado
+                    onSubmitEditing={() => {
+                      // Foca no próximo campo (senha)
+                      passwordRef.current?.focus();
+                    }}
                   />
                   {errors.email && (
                     <Text className="text-red-500 text-sm mb-2">
@@ -163,12 +170,15 @@ export default function SignIn() {
                 render={({ field: { onChange, value } }) => (
                   <>
                     <TextInput
+                      ref={passwordRef}
                       className="flex-1 p-4 text-base text-text-base dark:text-text-base-dark"
                       placeholder={passwordPlaceholder}
                       placeholderTextColor="#9CA3AF"
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}
+                      returnKeyType="send" // Mostra "Enviar" no teclado
+                      onSubmitEditing={handleSubmit(onSubmit)} // Submete o formulário
                     />
                     {errors.password && (
                       <Text className="text-red-500 text-sm absolute -bottom-6 left-0">
