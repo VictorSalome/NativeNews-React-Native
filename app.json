@@ -1,21 +1,35 @@
 {
   "expo": {
-    "name": "app-estude",
-    "slug": "app-estude",
+    "name": "NativeNews",
+    "slug": "NativeNews",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "appestude",
+    "scheme": "nativenews",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nativenews.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Este app precisa de acesso à câmera para tirar fotos de perfil.",
+        "NSPhotoLibraryUsageDescription": "Este app precisa de acesso à galeria para selecionar fotos de perfil.",
+        "NSPhotoLibraryAddUsageDescription": "Este app precisa de acesso para salvar fotos na galeria.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "com.nativenews.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_IMAGES"
+      ],
       "edgeToEdgeEnabled": true,
       "softwareKeyboardLayoutMode": "pan"
     },
@@ -34,7 +48,17 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir $(PRODUCT_NAME) acessar suas fotos",
+          "cameraPermission": "Permitir $(PRODUCT_NAME) abrir a câmera",
+          "microphonePermission": false
+        }
+      ],
+      "expo-web-browser",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true

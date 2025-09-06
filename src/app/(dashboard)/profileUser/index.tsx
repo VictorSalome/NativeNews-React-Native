@@ -1,9 +1,11 @@
 import { useThemeContext } from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
+  Alert,
   Image,
   ScrollView,
   Switch,
@@ -17,11 +19,86 @@ export default function ProfileUser() {
   const { logout } = useAuth();
   const { toggleTheme, isDarkMode } = useThemeContext();
 
+  const [status, requestPermission] = ImagePicker.useCameraPermissions();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [cameraStatus, requestCameraPermission] =
+    ImagePicker.useCameraPermissions();
+  const [mediaLibraryStatus, requestMediaLibraryPermission] =
+    ImagePicker.useMediaLibraryPermissions();
+
   const handleLogout = async () => {
     await logout();
     router.replace("/(auth)/sign-in");
     alert("Usuário desconectado com sucesso");
   };
+
+  const handleSelectFromGallery = useCallback(async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: "images",
+        allowsEditing: true,
+        aspect: [1, 1] as [number, number],
+        quality: 0.8,
+      });
+
+      if (!result.canceled && result.assets?.[0]?.uri) {
+        setSelectedImage(result.assets[0].uri);
+      }
+    } catch (error) {
+      console.error("Erro ao selecionar imagem da galeria:", error);
+      Alert.alert("Erro", "Não foi possível acessar a galeria");
+    }
+  }, []);
+
+  const handleTakePhoto = useCallback(async () => {
+    try {
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: "images",
+        allowsEditing: true,
+        aspect: [1, 1] as [number, number],
+        quality: 0.8,
+      });
+
+      if (!result.canceled && result.assets?.[0]?.uri) {
+        setSelectedImage(result.assets[0].uri);
+      } else if (result.canceled) {
+        Alert.alert("Aviso", "A captura foi cancelada");
+      }
+    } catch (error) {
+      console.error("Erro ao acessar câmera:", error);
+      Alert.alert("Erro", "Não foi possível acessar a câmera");
+    }
+  }, []);
+
+  // const handleSave = useCallback(async () => {
+  //   if (!selectedImage) {
+  //     Alert.alert("Aviso", "Selecione uma imagem primeiro");
+  //     return;
+  //   }
+
+  //   if (selectedImage === profileImage) {
+  //     Alert.alert("Info", "Nenhuma alteração foi feita");
+  //     return;
+  //   }
+
+  //   setIsUploading(true);
+  //   try {
+  //     await updateImageProfile(selectedImage);
+  //     await fetchProfileImage();
+  //     Alert.alert("Sucesso", "Imagem atualizada com sucesso");
+  //   } catch (error) {
+  //     console.error("Erro ao salvar perfil:", error);
+  //     Alert.alert("Erro", "Não foi possível salvar a imagem");
+  //   } finally {
+  //     setIsUploading(false);
+  //   }
+  // }, [
+  //   selectedImage,
+  //   profileImage,
+  //   updateImageProfile,
+  //   fetchProfileImage,
+  //   messages,
+  // ]);
 
   const ConfigItem = ({
     icon,
@@ -94,11 +171,14 @@ export default function ProfileUser() {
           <View className="relative">
             <Image
               source={{
-                uri: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+                uri: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
               }}
               className="w-32 h-32 rounded-full mb-4"
             />
-            <TouchableOpacity className="absolute bottom-2 right-2 w-10 h-10 bg-blue-500 rounded-full items-center justify-center shadow-lg">
+            <TouchableOpacity
+              className="absolute bottom-2 right-2 w-10 h-10 bg-blue-500 rounded-full items-center justify-center shadow-lg"
+              onPress={handleSelectFromGallery}
+            >
               <Ionicons name="camera" size={20} color="white" />
             </TouchableOpacity>
           </View>
