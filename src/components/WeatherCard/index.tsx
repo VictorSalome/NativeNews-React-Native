@@ -1,8 +1,8 @@
-import { useWeatherGradient } from "@/app/(dashboard)/home";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, TouchableOpacity, View } from "react-native";
 import type { IWeatherCardProps } from "./types";
+import { useWeatherGradient } from "@/app/(dashboard)/home/mockData";
 
 export const WeatherCard = ({
   condition,

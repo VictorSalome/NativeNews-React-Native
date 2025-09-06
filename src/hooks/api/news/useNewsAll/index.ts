@@ -16,8 +16,6 @@ export const useNewsAll = () => {
         },
       });
 
-      console.log(data);
-
       setNewsAll(data);
       setNewsError(null);
     } catch (error) {
