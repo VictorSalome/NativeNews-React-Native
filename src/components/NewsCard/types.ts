@@ -1,4 +1,4 @@
-import type { IArticle } from "@/hooks/api/news/useNews/types";
+import type { IArticle } from "@/hooks/api/news/types";
 
 export interface INewsCardProps {
   handleArticlePress: (article: IArticle) => void;

@@ -9,7 +9,14 @@ import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import React, { useCallback, useState } from "react";
-import { FlatList, RefreshControl, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { categories } from "./mockDataNews";
 
@@ -45,32 +52,16 @@ export default function News() {
     world: string;
   }
 
-  // de acordo com o seletor tem que fazer uma requisição diferente
-  // se for geral tem que fazer uma requisição com a chave general
-  // se for tecnologia tem que fazer uma requisição com a chave technology
-  // se for esportes tem que fazer uma requisição com a chave sports
-  // se for mundo tem que fazer uma requisição com a chave world
-
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
-    // React Query automaticamente faz nova requisição!
   };
 
-  // Função para filtrar notícias por categoria e busca
-  // const filteredNews = newsMock.filter((news) => {
-  //   const matchesCategory =
-  //     selectedCategory === "geral" || news.category === selectedCategory;
-  //   const matchesSearch =
-  //     searchQuery === "" ||
-  //     news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     news.source.toLowerCase().includes(searchQuery.toLowerCase());
-  //   return matchesCategory && matchesSearch;
-  // });
+ 
 
   // Função para atualizar a lista
-  const onRefresh = useCallback(() => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    fetchNews();
+    await fetchNews();
     setRefreshing(false);
   }, [fetchNews]);
 
@@ -79,6 +70,22 @@ export default function News() {
     // Aqui você navegaria para a tela de detalhes do artigo
     console.log("Navegando para artigo:", article);
   };
+
+  if (newsLoading && !refreshing) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" color="#4FA6BB" />
+      </View>
+    );
+  }
+
+  if (newsError) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text className="text-red-500">Erro ao carregar notícias</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
