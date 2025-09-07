@@ -4,8 +4,6 @@ export const categories = [
   { id: "tecnologia", name: "Tecnologia", active: false },
   { id: "esportes", name: "Esportes", active: false },
   { id: "mundo", name: "Mundo", active: false },
-  { id: "negocios", name: "Negócios", active: false },
-  { id: "saude", name: "Saúde", active: false },
 ];
 
 // Dados mockados de notícias (futuramente virão de uma API)

@@ -3,12 +3,12 @@ import { NewsCard } from "@/components/NewsCard";
 import { NewsHeader } from "@/components/NewsHeader";
 import { NewsSearchBar } from "@/components/NewsSearchBar";
 import { useThemeContext } from "@/context/themeContext";
-import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
 
 import type { IArticle } from "@/hooks/api/news/useNews/types";
+import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FlatList, RefreshControl, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { categories } from "./mockDataNews";
@@ -21,13 +21,6 @@ export default function News() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
-
-  interface ISelectorFilter {
-    general: string;
-    technology: string;
-    sports: string;
-    world: string;
-  }
 
   const selectorFilter: Record<string, string> = {
     geral: "general",
@@ -44,6 +37,14 @@ export default function News() {
     error: newsError,
     refetch: fetchNews,
   } = useNewsQuery(categoryInEnglish);
+
+  interface ISelectorFilter {
+    general: string;
+    technology: string;
+    sports: string;
+    world: string;
+  }
+
   // de acordo com o seletor tem que fazer uma requisição diferente
   // se for geral tem que fazer uma requisição com a chave general
   // se for tecnologia tem que fazer uma requisição com a chave technology
@@ -51,8 +52,8 @@ export default function News() {
   // se for mundo tem que fazer uma requisição com a chave world
 
   const handleCategorySelect = (category: string) => {
-    console.log(category);
     setSelectedCategory(category);
+    // React Query automaticamente faz nova requisição!
   };
 
   // Função para filtrar notícias por categoria e busca
@@ -67,13 +68,11 @@ export default function News() {
   // });
 
   // Função para atualizar a lista
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
-    // Simula uma requisição à API
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+    fetchNews();
+    setRefreshing(false);
+  }, [fetchNews]);
 
   // Função para navegar para o artigo completo
   const handleArticlePress = (article: string) => {
@@ -133,6 +132,8 @@ export default function News() {
             }
           />
         )}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
         keyExtractor={(item) => item.url}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingTop: 16, paddingBottom: 100 }}
