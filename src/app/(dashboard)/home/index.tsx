@@ -79,7 +79,7 @@ export default function Home() {
 
         <TouchableOpacity
           className="mt-6 self-center px-8 py-4 rounded-full bg-primary dark:bg-primary-dark min-w-[60%]"
-          onPress={() => router.navigate(AppRoutes.Home)}
+          onPress={() => router.navigate(AppRoutes.News)}
           activeOpacity={0.9}
           style={{
             shadowColor: "#3B82F6",
