@@ -3,8 +3,9 @@ import { NewsCard } from "@/components/NewsCard";
 import { NewsHeader } from "@/components/NewsHeader";
 import { NewsSearchBar } from "@/components/NewsSearchBar";
 import { useThemeContext } from "@/context/themeContext";
+import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
 
-import { useNews } from "@/hooks/api/news/useNews";
+import type { IArticle } from "@/hooks/api/news/useNews/types";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -15,13 +16,11 @@ import { categories } from "./mockDataNews";
 export default function News() {
   const { isDarkMode } = useThemeContext();
   const [selectedCategory, setSelectedCategory] = useState("geral");
-  console.log('selectedCategory', selectedCategory)
+  console.log("selectedCategory", selectedCategory);
   const [refreshing, setRefreshing] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
-
-  const { news, fetchNews, newsError, newsLoading } = useNews(selectedCategory);
 
   interface ISelectorFilter {
     general: string;
@@ -37,6 +36,14 @@ export default function News() {
     mundo: "world",
   };
 
+  const categoryInEnglish = selectorFilter[selectedCategory] || "general";
+
+  const {
+    data: news,
+    isLoading: newsLoading,
+    error: newsError,
+    refetch: fetchNews,
+  } = useNewsQuery(categoryInEnglish);
   // de acordo com o seletor tem que fazer uma requisição diferente
   // se for geral tem que fazer uma requisição com a chave general
   // se for tecnologia tem que fazer uma requisição com a chave technology
@@ -44,9 +51,8 @@ export default function News() {
   // se for mundo tem que fazer uma requisição com a chave world
 
   const handleCategorySelect = (category: string) => {
-    console.log(category);  
+    console.log(category);
     setSelectedCategory(category);
-    
   };
 
   // Função para filtrar notícias por categoria e busca
@@ -122,7 +128,9 @@ export default function News() {
           <NewsCard
             article={item}
             isDarkMode={isDarkMode}
-            handleArticlePress={handleArticlePress}
+            handleArticlePress={(article: IArticle) =>
+              handleArticlePress(article.url)
+            }
           />
         )}
         keyExtractor={(item) => item.url}

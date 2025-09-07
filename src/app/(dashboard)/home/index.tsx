@@ -1,6 +1,7 @@
 import { NewsHorizontalList } from "@/components/NewsHorizontalList";
 import { WeatherCard } from "@/components/WeatherCard";
-import { useNews } from "@/hooks/api/news/useNews";
+
+import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
 import { AppRoutes } from "@/routes/appRoutes";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
@@ -17,7 +18,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { weatherMock } from "./mockData";
 
 export default function Home() {
-  const { news, newsLoading, newsError, fetchNews } = useNews("brasil");
+  const {
+    data: news,
+    isLoading: newsLoading,
+    error: newsError,
+    refetch: fetchNews,
+    
+  } = useNewsQuery("Brasil");
   const { condition, temperature, feelsLike, humidity, wind } = weatherMock;
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -55,9 +62,11 @@ export default function Home() {
             <Text className="text-red-800 font-medium">
               Erro ao carregar notícias
             </Text>
-            <Text className="text-red-600 text-sm mt-1">{newsError}</Text>
+            <Text className="text-red-600 text-sm mt-1">
+              {newsError.message}
+            </Text>
             <TouchableOpacity
-              onPress={fetchNews}
+              onPress={() => fetchNews()}
               className="mt-2 bg-red-600 px-4 py-2 rounded"
             >
               <Text className="text-white text-center">Tentar novamente</Text>
