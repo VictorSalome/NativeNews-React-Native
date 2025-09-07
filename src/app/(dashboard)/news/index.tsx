@@ -42,14 +42,14 @@ export default function News() {
     mundo: "world",
   };
 
-  const categoryInEnglish = selectorFilter[selectedCategory] || "general";
+  const categoryTags = selectorFilter[selectedCategory] || "general";
 
   const {
     data: news,
     isLoading: newsLoading,
     error: newsError,
     refetch: fetchNews,
-  } = useNewsQuery(categoryInEnglish);
+  } = useNewsQuery(categoryTags);
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
