@@ -4,9 +4,9 @@ import { NewsHeader } from "@/components/NewsHeader";
 import { NewsSearchBar } from "@/components/NewsSearchBar";
 import { useThemeContext } from "@/context/themeContext";
 
+import { NewsEmpty } from "@/components/NewsEmpty";
 import type { IArticle } from "@/hooks/api/news/useNews/types";
 import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
@@ -45,27 +45,16 @@ export default function News() {
     refetch: fetchNews,
   } = useNewsQuery(categoryInEnglish);
 
-  interface ISelectorFilter {
-    general: string;
-    technology: string;
-    sports: string;
-    world: string;
-  }
-
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
 
- 
-
-  // Função para atualizar a lista
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchNews();
     setRefreshing(false);
   }, [fetchNews]);
 
-  // Função para navegar para o artigo completo
   const handleArticlePress = (article: string) => {
     // Aqui você navegaria para a tela de detalhes do artigo
     console.log("Navegando para artigo:", article);
@@ -153,23 +142,7 @@ export default function News() {
           />
         }
         ListEmptyComponent={
-          <View className="items-center justify-center py-20">
-            <Ionicons
-              name="newspaper-outline"
-              size={64}
-              color={isDarkMode ? "#6B7280" : "#9CA3AF"}
-            />
-            <Text className="text-text-muted dark:text-text-muted-dark text-lg font-medium mt-4">
-              {searchQuery
-                ? "Nenhum resultado encontrado"
-                : "Nenhuma notícia encontrada"}
-            </Text>
-            <Text className="text-text-muted dark:text-text-muted-dark text-sm mt-2 text-center px-8">
-              {searchQuery
-                ? `Não encontramos notícias para "${searchQuery}"`
-                : "Tente selecionar uma categoria diferente ou atualize a página"}
-            </Text>
-          </View>
+          <NewsEmpty searchQuery={searchQuery} isDarkMode={isDarkMode} />
         }
       />
     </SafeAreaView>
