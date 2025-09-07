@@ -18,6 +18,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNewsSearchQuery } from "@/hooks/api/news/useNewsSearchQuery";
 
 const categories = [
   { id: "geral", name: "Geral", active: true },
@@ -29,9 +30,7 @@ const categories = [
 export default function News() {
   const { isDarkMode } = useThemeContext();
   const [selectedCategory, setSelectedCategory] = useState("geral");
-  console.log("selectedCategory", selectedCategory);
   const [refreshing, setRefreshing] = useState(false);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
 
@@ -51,6 +50,12 @@ export default function News() {
     refetch: fetchNews,
   } = useNewsQuery(categoryTags);
 
+  const {
+    data: searchResults,
+    isLoading: searchLoading,
+    error: searchError,
+  } = useNewsSearchQuery(searchQuery);
+
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
@@ -65,6 +70,14 @@ export default function News() {
     // Aqui você navegaria para a tela de detalhes do artigo
     console.log("Navegando para artigo:", article);
   };
+
+  // Determinar quais dados mostrar
+  const displayData =
+    searchQuery.length >= 3 ? searchResults?.articles : news?.articles;
+
+  const isLoading = searchQuery.length >= 3 ? searchLoading : newsLoading;
+
+  const hasError = searchQuery.length >= 3 ? searchError : newsError;
 
   if (newsLoading && !refreshing) {
     return (
@@ -123,8 +136,7 @@ export default function News() {
 
       {/* Lista de Notícias */}
       <FlatList
-        // data={filteredNews}
-        data={news?.articles}
+        data={displayData}
         renderItem={({ item }) => (
           <NewsCard
             article={item}

@@ -9,3 +9,16 @@ export const fetchNewsByCategory = async (
   });
   return data;
 };
+
+export const fetchNewsBySearch = async (
+  searchQuery: string,
+): Promise<INewsData> => {
+  const { data } = await newsApi.get<INewsData>("/everything", {
+    params: {
+      q: searchQuery,
+      language: "pt", // Para resultados em português
+      sortBy: "relevancy", // Ordenar por relevância
+    },
+  });
+  return data;
+};
