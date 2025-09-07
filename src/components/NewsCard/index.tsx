@@ -1,15 +1,18 @@
-import React from "react";
+import { convertDateToBr } from "@/utils/convertDateToBr";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import type { INewsCardProps } from "./types";
-import { convertDateToBr } from "@/utils/convertDateToBr";
 
-export const NewsCard = ({ article, onPress }: INewsCardProps) => {
+export const NewsCard = ({
+  handleArticlePress,
+  article,
+  isDarkMode,
+}: INewsCardProps) => {
   return (
     <TouchableOpacity
-      key={article?.url ?? Math.random().toString()}
-      className="w-80 bg-surface dark:bg-surface-dark rounded-2xl overflow-hidden border border-border dark:border-border-dark"
-      activeOpacity={0.95}
-      onPress={onPress}
+      className="bg-surface dark:bg-surface-dark mx-4 mb-4 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden"
+      onPress={() => handleArticlePress(article)}
+      activeOpacity={0.9}
       style={{
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
@@ -18,23 +21,47 @@ export const NewsCard = ({ article, onPress }: INewsCardProps) => {
         elevation: 4,
       }}
     >
-      <Image
-        source={article?.urlToImage ? { uri: article.urlToImage } : undefined}
-        className="w-full h-32"
-        resizeMode="cover"
-        onError={(e) => console.log("Image error:", e.nativeEvent.error)}
-      />
-      <View className="p-4">
-        <Text
-          className="text-base font-bold text-text-base dark:text-text-base-dark leading-5"
-          numberOfLines={2}
-        >
-          {article?.description}
-        </Text>
-        <Text className="text-xs text-text-muted dark:text-text-muted-dark mt-2 font-medium">
-          Fonte: {article?.source?.name} •{" "}
-          {convertDateToBr(article?.publishedAt)}
-        </Text>
+      <View className="flex-row">
+        {/* Imagem da notícia */}
+        <View className="w-24 h-24 bg-gray-200 dark:bg-gray-700">
+          <Image
+            source={
+              article?.urlToImage ? { uri: article.urlToImage } : undefined
+            }
+            className="w-full h-full"
+            resizeMode="cover"
+            onError={(e) => console.log("Image error:", e.nativeEvent.error)}
+          />
+        </View>
+
+        {/* Conteúdo da notícia */}
+        <View className="flex-1 p-4">
+          <View className="flex-row items-start justify-between mb-2">
+            <Text
+              className="flex-1 text-base font-bold leading-5 mr-2"
+              numberOfLines={2}
+            >
+              {article.description}
+            </Text>
+
+            {/* Indicador de favorito */}
+            <TouchableOpacity
+              className="ml-2 p-1"
+              onPress={() => console.log("Favoritar:", article.url)}
+            >
+              <MaterialIcons
+                name="favorite-border"
+                size={16}
+                color={isDarkMode ? "#9CA3AF" : "#6B7280"}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <Text className="text-xs text-text-muted dark:text-text-muted-dark font-medium">
+            Fonte: {article?.source?.name} •{" "}
+            {convertDateToBr(article?.publishedAt)}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

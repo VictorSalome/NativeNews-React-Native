@@ -47,9 +47,9 @@ export default function News() {
   }, []);
 
   // Função para navegar para o artigo completo
-  const handleArticlePress = (article: any) => {
+  const handleArticlePress = (article: string) => {
     // Aqui você navegaria para a tela de detalhes do artigo
-    console.log("Navegando para artigo:", article.title);
+    console.log("Navegando para artigo:", article);
   };
 
   // Componente do card de notícia

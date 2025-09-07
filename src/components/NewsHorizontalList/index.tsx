@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import { NewsCard } from "../NewsCard";
+
+import { NewsCardHome } from "../NewsCardHome";
 import type { INewsHorizontalListProps } from "./types";
 
 export const NewsHorizontalList = ({
@@ -15,7 +16,7 @@ export const NewsHorizontalList = ({
     >
       <View className="flex-row gap-4">
         {articles?.map((item) => (
-          <NewsCard
+          <NewsCardHome
             key={item?.url}
             article={item}
             onPress={() => onArticlePress?.(item)}
