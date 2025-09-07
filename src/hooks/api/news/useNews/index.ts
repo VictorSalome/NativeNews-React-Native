@@ -2,21 +2,21 @@ import { newsApi } from "@/services/axios/api";
 import { useEffect, useState } from "react";
 import type { INewsData } from "./types";
 
-export const useNewsAll = () => {
-  const [newsAll, setNewsAll] = useState<INewsData>();
+export const useNews = (category: string) => {
+  const [news, setNews] = useState<INewsData>();
   const [newsLoading, setNewsLoading] = useState(false);
   const [newsError, setNewsError] = useState<string | null>(null);
 
-  const fetchAllNews = async () => {
+  const fetchNews = async () => {
     try {
       setNewsLoading(true);
       const { data } = await newsApi.get<INewsData>("/everything", {
         params: {
-          q: "Brasil",
+          q: category,
         },
       });
 
-      setNewsAll(data);
+      setNews(data);
       setNewsError(null);
     } catch (error) {
       console.log(error);
@@ -30,13 +30,13 @@ export const useNewsAll = () => {
   };
 
   useEffect(() => {
-    fetchAllNews();
-  }, []);
+    fetchNews();
+  }, [category]);
 
   return {
-    newsAll,
+    news,
     newsLoading,
     newsError,
-    fetchAllNews,
+    fetchNews,
   };
 };

@@ -1,41 +1,64 @@
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { NewsCard } from "@/components/NewsCard";
 import { NewsHeader } from "@/components/NewsHeader";
 import { NewsSearchBar } from "@/components/NewsSearchBar";
 import { useThemeContext } from "@/context/themeContext";
+
+import { useNews } from "@/hooks/api/news/useNews";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import {
-  FlatList,
-  Image,
-  RefreshControl,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { categories, newsMock } from "./mockDataNews";
+import { categories } from "./mockDataNews";
 
 export default function News() {
   const { isDarkMode } = useThemeContext();
   const [selectedCategory, setSelectedCategory] = useState("geral");
+  console.log('selectedCategory', selectedCategory)
   const [refreshing, setRefreshing] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
 
+  const { news, fetchNews, newsError, newsLoading } = useNews(selectedCategory);
+
+  interface ISelectorFilter {
+    general: string;
+    technology: string;
+    sports: string;
+    world: string;
+  }
+
+  const selectorFilter: Record<string, string> = {
+    geral: "general",
+    tecnologia: "technology",
+    esportes: "sports",
+    mundo: "world",
+  };
+
+  // de acordo com o seletor tem que fazer uma requisição diferente
+  // se for geral tem que fazer uma requisição com a chave general
+  // se for tecnologia tem que fazer uma requisição com a chave technology
+  // se for esportes tem que fazer uma requisição com a chave sports
+  // se for mundo tem que fazer uma requisição com a chave world
+
+  const handleCategorySelect = (category: string) => {
+    console.log(category);  
+    setSelectedCategory(category);
+    
+  };
+
   // Função para filtrar notícias por categoria e busca
-  const filteredNews = newsMock.filter((news) => {
-    const matchesCategory =
-      selectedCategory === "geral" || news.category === selectedCategory;
-    const matchesSearch =
-      searchQuery === "" ||
-      news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      news.source.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // const filteredNews = newsMock.filter((news) => {
+  //   const matchesCategory =
+  //     selectedCategory === "geral" || news.category === selectedCategory;
+  //   const matchesSearch =
+  //     searchQuery === "" ||
+  //     news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     news.source.toLowerCase().includes(searchQuery.toLowerCase());
+  //   return matchesCategory && matchesSearch;
+  // });
 
   // Função para atualizar a lista
   const onRefresh = React.useCallback(() => {
@@ -50,64 +73,6 @@ export default function News() {
   const handleArticlePress = (article: string) => {
     // Aqui você navegaria para a tela de detalhes do artigo
     console.log("Navegando para artigo:", article);
-  };
-
-  // Componente do card de notícia
-  const renderNewsCard = ({ item }: { item: any }) => {
-    return (
-      <TouchableOpacity
-        className="bg-surface dark:bg-surface-dark mx-4 mb-4 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden"
-        onPress={() => handleArticlePress(item)}
-        activeOpacity={0.9}
-        style={{
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          elevation: 4,
-        }}
-      >
-        <View className="flex-row">
-          {/* Imagem da notícia */}
-          <View className="w-24 h-24 bg-gray-200 dark:bg-gray-700">
-            <Image
-              source={{ uri: item.image }}
-              className="w-full h-full"
-              resizeMode="cover"
-              onError={(e) => console.log("Image error:", e.nativeEvent.error)}
-            />
-          </View>
-
-          {/* Conteúdo da notícia */}
-          <View className="flex-1 p-4">
-            <View className="flex-row items-start justify-between mb-2">
-              <Text
-                className="flex-1 text-base font-bold leading-5 mr-2"
-                numberOfLines={2}
-              >
-                {item.title}
-              </Text>
-
-              {/* Indicador de favorito */}
-              <TouchableOpacity
-                className="ml-2 p-1"
-                onPress={() => console.log("Favoritar:", item.id)}
-              >
-                <MaterialIcons
-                  name="favorite-border"
-                  size={16}
-                  color={isDarkMode ? "#9CA3AF" : "#6B7280"}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <Text className="text-xs text-text-muted dark:text-text-muted-dark font-medium">
-              {item.source} • {item.time}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
   };
 
   return (
@@ -151,9 +116,16 @@ export default function News() {
 
       {/* Lista de Notícias */}
       <FlatList
-        data={filteredNews}
-        renderItem={renderNewsCard}
-        keyExtractor={(item) => item.id}
+        // data={filteredNews}
+        data={news?.articles}
+        renderItem={({ item }) => (
+          <NewsCard
+            article={item}
+            isDarkMode={isDarkMode}
+            handleArticlePress={handleArticlePress}
+          />
+        )}
+        keyExtractor={(item) => item.url}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingTop: 16, paddingBottom: 100 }}
         refreshControl={

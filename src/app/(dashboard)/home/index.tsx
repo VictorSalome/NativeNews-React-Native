@@ -1,6 +1,6 @@
 import { NewsHorizontalList } from "@/components/NewsHorizontalList";
 import { WeatherCard } from "@/components/WeatherCard";
-import { useNewsAll } from "@/hooks/api/news/useNewsAll";
+import { useNews } from "@/hooks/api/news/useNews";
 import { AppRoutes } from "@/routes/appRoutes";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
@@ -17,7 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { weatherMock } from "./mockData";
 
 export default function Home() {
-  const { newsAll, newsLoading, newsError, fetchAllNews } = useNewsAll();
+  const { news, newsLoading, newsError, fetchNews } = useNews("brasil");
   const { condition, temperature, feelsLike, humidity, wind } = weatherMock;
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -30,7 +30,7 @@ export default function Home() {
             refreshing={isRefreshing}
             onRefresh={async () => {
               setIsRefreshing(true);
-              await fetchAllNews();
+              await fetchNews();
               setIsRefreshing(false);
             }}
             colors={["#3B82F6"]}
@@ -57,7 +57,7 @@ export default function Home() {
             </Text>
             <Text className="text-red-600 text-sm mt-1">{newsError}</Text>
             <TouchableOpacity
-              onPress={fetchAllNews}
+              onPress={fetchNews}
               className="mt-2 bg-red-600 px-4 py-2 rounded"
             >
               <Text className="text-white text-center">Tentar novamente</Text>
@@ -72,7 +72,7 @@ export default function Home() {
           </View>
         ) : (
           <NewsHorizontalList
-            articles={newsAll?.articles}
+            articles={news?.articles}
             onArticlePress={(item) => router.navigate(AppRoutes.News)}
           />
         )}
