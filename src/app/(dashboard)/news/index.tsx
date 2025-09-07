@@ -18,7 +18,13 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { categories } from "./mockDataNews";
+
+const categories = [
+  { id: "geral", name: "Geral", active: true },
+  { id: "tecnologia", name: "Tecnologia", active: false },
+  { id: "esportes", name: "Esportes", active: false },
+  { id: "mundo", name: "Mundo", active: false },
+];
 
 export default function News() {
   const { isDarkMode } = useThemeContext();
