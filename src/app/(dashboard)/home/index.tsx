@@ -23,7 +23,6 @@ export default function Home() {
     isLoading: newsLoading,
     error: newsError,
     refetch: fetchNews,
-    
   } = useNewsQuery("Brasil");
   const { condition, temperature, feelsLike, humidity, wind } = weatherMock;
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -54,7 +53,7 @@ export default function Home() {
         />
 
         <Text className="text-xl font-bold text-text-base dark:text-text-base-dark mb-4">
-          Featured News
+          Ultimas noticias
         </Text>
 
         {newsError ? (
@@ -80,10 +79,12 @@ export default function Home() {
             <Text className="mt-2 text-gray-600">Carregando notícias...</Text>
           </View>
         ) : (
-          <NewsHorizontalList
-            articles={news?.articles}
-            onArticlePress={(item) => router.navigate(AppRoutes.News)}
-          />
+          <View className="w-full ">
+            <NewsHorizontalList
+              articles={news?.articles}
+              onArticlePress={(item) => router.navigate(AppRoutes.News)}
+            />
+          </View>
         )}
 
         <TouchableOpacity
@@ -99,12 +100,12 @@ export default function Home() {
           }}
         >
           <View className="flex-row items-center justify-center gap-2">
-            <Text className="text-white font-bold text-base">See all news</Text>
+            <Text className="text-white font-bold text-base">
+              Ver todas as noticias
+            </Text>
             <Ionicons name="chevron-forward" size={20} color="#FFFFFF" />
           </View>
         </TouchableOpacity>
-
-        <View className="h-6" />
       </ScrollView>
     </SafeAreaView>
   );
