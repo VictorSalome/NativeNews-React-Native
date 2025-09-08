@@ -1,5 +1,6 @@
 import { NewsHorizontalList } from "@/components/NewsHorizontalList";
 import { WeatherCard } from "@/components/WeatherCard";
+import { LogoSvg } from "@/components/LogoSvg";
 
 import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
 import { AppRoutes } from "@/routes/appRoutes";
@@ -27,8 +28,66 @@ export default function Home() {
   const { condition, temperature, feelsLike, humidity, wind } = weatherMock;
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Bom dia";
+    if (hour < 18) return "Boa tarde";
+    return "Boa noite";
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
+      {/* Header */}
+      <View className="px-4 py-3 bg-background dark:bg-background-dark border-b border-gray-200 dark:border-gray-700">
+        <View className="flex-row items-center justify-between">
+          {/* Logo e Saudação */}
+          <View className="flex-row items-center gap-3">
+            <View className="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary-dark/10 items-center justify-center">
+              <LogoSvg width={24} height={24} isDark={false} />
+            </View>
+            <View>
+              <Text className="text-sm text-gray-600 dark:text-gray-400">
+                {getGreeting()}
+              </Text>
+              <Text className="text-lg font-bold text-text-base dark:text-text-base-dark">
+                NativeNews
+              </Text>
+            </View>
+          </View>
+
+          {/* Ícones de Ação */}
+          <View className="flex-row items-center gap-2">
+            {/* Notificações */}
+            <TouchableOpacity
+              className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 items-center justify-center"
+              onPress={() => {/* TODO: Implementar notificações */}}
+              accessibilityLabel="Notificações"
+            >
+              <Ionicons
+                name="notifications-outline"
+                size={20}
+                color="#6B7280"
+              />
+              {/* Badge de notificação */}
+              <View className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full" />
+            </TouchableOpacity>
+
+            {/* Perfil */}
+            <TouchableOpacity
+              className="w-10 h-10 rounded-full bg-primary dark:bg-primary-dark items-center justify-center"
+              onPress={() => router.navigate(AppRoutes.ProfileUser || '/profile')}
+              accessibilityLabel="Perfil do usuário"
+            >
+              <Ionicons
+                name="person"
+                size={18}
+                color="#FFFFFF"
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 20 }}
         refreshControl={
