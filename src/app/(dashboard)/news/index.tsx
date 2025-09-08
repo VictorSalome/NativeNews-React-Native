@@ -7,8 +7,9 @@ import { useThemeContext } from "@/context/themeContext";
 import { NewsEmpty } from "@/components/NewsEmpty";
 import type { IArticle } from "@/hooks/api/news/useNews/types";
 import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
+import { useNewsSearchQuery } from "@/hooks/api/news/useNewsSearchQuery";
 import { router } from "expo-router";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -18,13 +19,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNewsSearchQuery } from "@/hooks/api/news/useNewsSearchQuery";
 
 const categories = [
-  { id: "geral", name: "Geral", active: true },
-  { id: "tecnologia", name: "Tecnologia", active: false },
-  { id: "esportes", name: "Esportes", active: false },
-  { id: "mundo", name: "Mundo", active: false },
+  { id: "geral", name: "Geral" },
+  { id: "tecnologia", name: "Tecnologia" },
+  { id: "esportes", name: "Esportes" },
+  { id: "mundo", name: "Mundo" },
 ];
 
 export default function News() {
@@ -32,16 +32,23 @@ export default function News() {
   const [selectedCategory, setSelectedCategory] = useState("geral");
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [actualSearchTerm, setActualSearchTerm] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
 
-  const selectorFilter: Record<string, string> = {
-    geral: "general",
-    tecnologia: "technology",
-    esportes: "sports",
-    mundo: "world",
-  };
+  const selectorFilter = useMemo<Record<string, string>>(
+    () => ({
+      geral: "general",
+      tecnologia: "technology",
+      esportes: "sports",
+      mundo: "world",
+    }),
+    [selectedCategory],
+  );
 
-  const categoryTags = selectorFilter[selectedCategory] || "general";
+  const categoryTags = useMemo(
+    () => selectorFilter[selectedCategory],
+    [selectedCategory, selectorFilter],
+  );
 
   const {
     data: news,
@@ -54,7 +61,13 @@ export default function News() {
     data: searchResults,
     isLoading: searchLoading,
     error: searchError,
-  } = useNewsSearchQuery(searchQuery);
+  } = useNewsSearchQuery(actualSearchTerm);
+
+  const handleSearch = () => {
+    if (searchQuery.length >= 3) {
+      setActualSearchTerm(searchQuery);
+    }
+  };
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
@@ -66,31 +79,26 @@ export default function News() {
     setRefreshing(false);
   }, [fetchNews]);
 
-  const handleArticlePress = (article: string) => {
+  const handleArticlePress = (article: IArticle) => {
     // Aqui você navegaria para a tela de detalhes do artigo
     console.log("Navegando para artigo:", article);
   };
 
-  // Determinar quais dados mostrar
   const displayData =
-    searchQuery.length >= 3 ? searchResults?.articles : news?.articles;
-
-  const isLoading = searchQuery.length >= 3 ? searchLoading : newsLoading;
-
-  const hasError = searchQuery.length >= 3 ? searchError : newsError;
-
-  if (newsLoading && !refreshing) {
-    return (
-      <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#4FA6BB" />
-      </View>
-    );
-  }
+    actualSearchTerm.length >= 3 ? searchResults?.articles : news?.articles;
 
   if (newsError) {
     return (
       <View className="flex-1 items-center justify-center">
         <Text className="text-red-500">Erro ao carregar notícias</Text>
+      </View>
+    );
+  }
+
+  if (searchError) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text className="text-red-500">Erro ao buscar notícias</Text>
       </View>
     );
   }
@@ -115,6 +123,8 @@ export default function News() {
             searchQuery={searchQuery}
             showSearchBar={showSearchBar}
             setSearchQuery={setSearchQuery}
+            setActualSearchTerm={setActualSearchTerm}
+            onSearch={handleSearch}
           />
         </View>
       ) : null}
@@ -135,34 +145,40 @@ export default function News() {
       </View>
 
       {/* Lista de Notícias */}
-      <FlatList
-        data={displayData}
-        renderItem={({ item }) => (
-          <NewsCard
-            article={item}
-            isDarkMode={isDarkMode}
-            handleArticlePress={(article: IArticle) =>
-              handleArticlePress(article.url)
-            }
-          />
-        )}
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-        keyExtractor={(item) => item.url}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingTop: 16, paddingBottom: 100 }}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            colors={["#4FA6BB"]}
-            tintColor={"#4FA6BB"}
-          />
-        }
-        ListEmptyComponent={
-          <NewsEmpty searchQuery={searchQuery} isDarkMode={isDarkMode} />
-        }
-      />
+      {newsLoading || searchLoading ? (
+        <View className="flex-1 items-center justify-center">
+          <ActivityIndicator size="large" color="#4FA6BB" />
+        </View>
+      ) : (
+        <FlatList
+          data={displayData}
+          renderItem={({ item }) => (
+            <NewsCard
+              article={item}
+              isDarkMode={isDarkMode}
+              handleArticlePress={(article: IArticle) =>
+                handleArticlePress(article)
+              }
+            />
+          )}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          keyExtractor={(item) => item.url}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingTop: 16, paddingBottom: 100 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={["#4FA6BB"]}
+              tintColor={"#4FA6BB"}
+            />
+          }
+          ListEmptyComponent={
+            <NewsEmpty searchQuery={searchQuery} isDarkMode={isDarkMode} />
+          }
+        />
+      )}
     </SafeAreaView>
   );
 }
