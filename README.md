@@ -25,7 +25,7 @@ O **NativeNews** é uma aplicação mobile completa que oferece uma experiência
 <div align="center">
   <img src="./assets/imagesApp/5.png" width="200" alt="Detalhes da Notícia" />
   <img src="./assets/imagesApp/6.png" width="200" alt="Busca" />
-  <img src="./assets/imagesApp/7.png" width="200" alt="Perfil" />
+  <!-- <img src="./assets/imagesApp/7.png" width="200" alt="Perfil" /> -->
   <img src="./assets/imagesApp/8.png" width="200" alt="Configurações" />
 </div>
 
