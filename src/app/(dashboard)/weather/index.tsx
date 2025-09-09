@@ -176,6 +176,7 @@ export default function Weather() {
         shadowOpacity: 0.1,
         shadowRadius: 12,
         elevation: 8,
+        borderRadius: 24,
       }}
     >
       {/* Localização */}
