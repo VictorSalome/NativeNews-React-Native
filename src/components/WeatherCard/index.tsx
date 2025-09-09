@@ -64,7 +64,7 @@ export const WeatherCard = ({
         activeOpacity={0.8}
       >
         <Text className="text-sm font-bold text-[#1E40AF]">
-          View detailed weather
+          Ver previsão detalhada
         </Text>
       </TouchableOpacity>
     </LinearGradient>
