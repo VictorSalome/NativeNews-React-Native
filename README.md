@@ -32,29 +32,34 @@ O **NativeNews** é uma aplicação mobile completa que oferece uma experiência
 ## 🛠️ Tecnologias Utilizadas
 
 ### Core
+
 - **React Native** `0.79.6` - Framework principal
 - **Expo** `~53.0.22` - Plataforma de desenvolvimento
 - **TypeScript** `~5.8.3` - Tipagem estática
 - **Expo Router** `~5.1.5` - Navegação file-based
 
 ### UI/UX
+
 - **NativeWind** `^4.1.23` - Styling com Tailwind CSS
 - **React Native Reanimated** `~3.17.4` - Animações performáticas
 - **Expo Linear Gradient** `~14.1.5` - Gradientes nativos
 - **React Native SVG** `15.11.2` - Ícones e ilustrações vetoriais
 
 ### Estado e Dados
+
 - **TanStack Query** `^5.85.9` - Gerenciamento de estado servidor
 - **React Hook Form** `^7.62.0` - Formulários performáticos
 - **Zod** `^4.1.5` - Validação de schemas
 - **Axios** `^1.11.0` - Cliente HTTP
 
 ### Autenticação e Segurança
+
 - **Firebase** `^12.2.1` - Backend as a Service
 - **Expo Secure Store** `^14.2.3` - Armazenamento seguro
 - **AsyncStorage** `^1.18.1` - Persistência local
 
 ### Experiência do Usuário
+
 - **React Native Toast Message** `^2.3.3` - Notificações
 - **Expo Haptics** `~14.1.4` - Feedback tátil
 - **React Native App Intro Slider** `^4.0.4` - Onboarding
@@ -62,6 +67,7 @@ O **NativeNews** é uma aplicação mobile completa que oferece uma experiência
 ## 🏗️ Arquitetura e Boas Práticas
 
 ### 📁 Estrutura de Pastas
+
 ```
 src/
 ├── app/                    # Rotas file-based (Expo Router)
@@ -79,30 +85,35 @@ src/
 ### 🎯 Princípios Aplicados
 
 #### **Clean Architecture**
+
 - Separação clara de responsabilidades
 - Componentes modulares e reutilizáveis
 - Hooks customizados para lógica de negócio
 - Serviços isolados para APIs externas
 
 #### **Performance**
+
 - Lazy loading de componentes
 - Otimização de re-renders com React.memo
 - Uso de FlatList para listas grandes
 - Imagens otimizadas com Expo Image
 
 #### **Segurança**
+
 - Variáveis sensíveis no `.env`
 - Armazenamento seguro com Expo Secure Store
 - Validação rigorosa com Zod
 - Sanitização de dados de entrada
 
 #### **Acessibilidade**
+
 - Labels descritivos em todos os elementos
 - Suporte a leitores de tela
 - Contraste adequado de cores
 - Navegação por teclado
 
 #### **Responsividade**
+
 - Design adaptativo para diferentes tamanhos
 - Uso de unidades relativas
 - Testes em múltiplos dispositivos
@@ -111,6 +122,7 @@ src/
 ## 🚀 Como Executar
 
 ### Pré-requisitos
+
 - Node.js (versão 18 ou superior)
 - Yarn ou npm
 - Expo CLI
@@ -119,12 +131,14 @@ src/
 ### Instalação
 
 1. **Clone o repositório**
+
    ```bash
    git clone <repository-url>
    cd NativeNews-React-Native
    ```
 
 2. **Instale as dependências**
+
    ```bash
    npm install
    # ou
@@ -132,6 +146,7 @@ src/
    ```
 
 3. **Configure as variáveis de ambiente**
+
    ```bash
    cp .env.example .env
    # Edite o arquivo .env com suas configurações
@@ -152,12 +167,14 @@ src/
 ## 📱 Funcionalidades
 
 ### 🔐 Autenticação
+
 - Login com email/senha
 - Registro de novos usuários
 - Recuperação de senha
 - Autenticação persistente
 
 ### 📰 Notícias
+
 - Feed personalizado
 - Categorias de notícias
 - Busca avançada
@@ -165,12 +182,14 @@ src/
 - Compartilhamento
 
 ### 🌤️ Clima
+
 - Previsão atual
 - Previsão estendida
 - Localização automática
 - Múltiplas cidades
 
 ### 👤 Perfil
+
 - Edição de dados pessoais
 - Preferências de notificação
 - Tema escuro/claro
@@ -208,7 +227,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Desenvolvedor
 
-Desenvolvido com ❤️ por [Seu Nome]
+Desenvolvido com ❤️ por Victor Salome
 
 ---
 
