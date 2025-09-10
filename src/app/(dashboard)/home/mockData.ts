@@ -29,3 +29,10 @@ export const useWeatherGradient = (condition: IWeatherCondition) => {
     return WEATHER_GRADIENTS[condition] || WEATHER_GRADIENTS.sunny;
   }, [condition]);
 };
+
+export const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Bom dia";
+  if (hour < 18) return "Boa tarde";
+  return "Boa noite";
+};
