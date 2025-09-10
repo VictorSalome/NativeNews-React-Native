@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 
-import { authTexts } from "@/constants/texts/auth";
+import { AuthTexts } from "@/constants/texts/auth";
 
 import {
   ActivityIndicator,
@@ -36,7 +36,7 @@ export default function ForgotPassword() {
     emailPlaceholder,
     backToLoginButton,
     recoverButton,
-  } = authTexts.forgotPassword;
+  } = AuthTexts.ForgotPassword;
 
   const { handleResetPassword } = useAuth();
 
