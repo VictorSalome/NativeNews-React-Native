@@ -4,20 +4,14 @@ import { NewsHeader } from "@/components/NewsHeader";
 import { NewsSearchBar } from "@/components/NewsSearchBar";
 import { useThemeContext } from "@/context/themeContext";
 
+import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { NewsEmpty } from "@/components/NewsEmpty";
 import type { IArticle } from "@/hooks/api/news/useNews/types";
 import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
 import { useNewsSearchQuery } from "@/hooks/api/news/useNewsSearchQuery";
 import { router } from "expo-router";
 import React, { useCallback, useMemo, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const categories = [
@@ -80,7 +74,6 @@ export default function News() {
   }, [fetchNews]);
 
   const handleArticlePress = (article: IArticle) => {
-    // Aqui você navegaria para a tela de detalhes do artigo
     console.log("Navegando para artigo:", article);
   };
 
@@ -105,7 +98,6 @@ export default function News() {
 
   return (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
-      {/* Header */}
       <View className="bg-surface dark:bg-surface-dark px-4 py-4 border-b border-gray-200 dark:border-gray-800">
         <NewsHeader
           onPress={() => router.back()}
@@ -115,7 +107,6 @@ export default function News() {
         />
       </View>
 
-      {/* Barra de Busca */}
       {showSearchBar ? (
         <View className="bg-surface dark:bg-surface-dark px-4 pb-3">
           <NewsSearchBar
@@ -129,7 +120,6 @@ export default function News() {
         </View>
       ) : null}
 
-      {/* Filtros de Categoria */}
       <View className="bg-surface dark:bg-surface-dark px-4 py-3">
         <ScrollView
           horizontal
@@ -144,11 +134,8 @@ export default function News() {
         </ScrollView>
       </View>
 
-      {/* Lista de Notícias */}
       {newsLoading || searchLoading ? (
-        <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#4FA6BB" />
-        </View>
+        <LoadingIndicator color="#4FA6BB" size={"large"} />
       ) : (
         <FlatList
           data={displayData}
