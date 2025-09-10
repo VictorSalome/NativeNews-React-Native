@@ -9,8 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
 import { LogoSvg } from "@/components/LogoSvg";
-import { authTexts } from "@/constants/texts/auth";
+import { AuthTexts } from "@/constants/texts/auth";
 import { useThemeContext } from "@/context/themeContext";
+import useAuth from "@/hooks/useAuth";
 import { showSignUpError, showSignUpSuccess } from "@/utils/userFeedback";
 import {
   ActivityIndicator,
@@ -24,7 +25,6 @@ import {
 } from "react-native";
 import { signUpSchema } from "./signUpSchema";
 import type { ISignUpData } from "./types";
-import useAuth from "@/hooks/useAuth";
 
 export default function SignUp() {
   const { isDarkMode } = useThemeContext();
@@ -43,7 +43,7 @@ export default function SignUp() {
     passwordPlaceholder,
     signInButton,
     signUpButton,
-  } = authTexts.signUp;
+  } = AuthTexts.SignUp;
 
   const { handleSignUp } = useAuth();
 
