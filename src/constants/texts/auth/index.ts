@@ -1,45 +1,18 @@
-interface IAuthTexts {
-  signIn: {
-    title: string;
-    description: string;
-    emailPlaceholder: string;
-    passwordPlaceholder: string;
-    forgotPassword: string;
-    loginButton: string;
-    noAccountText: string;
-    createAccountButton: string;
-  };
-  signUp: {
-    title: string;
-    description: string;
-    emailPlaceholder: string;
-    passwordPlaceholder: string;
-    confirmPasswordPlaceholder: string;
-    signUpButton: string;
-    alreadyHaveAccountText: string;
-    signInButton: string;
-  };
-  forgotPassword: {
-    title: string;
-    description: string;
-    emailPlaceholder: string;
-    recoverButton: string;
-    backToLoginButton: string;
-  };
-}
+import type { IAuthTexts } from "./types";
 
-export const authTexts: IAuthTexts = {
-  signIn: {
+export const AuthTexts: IAuthTexts = {
+  SignIn: {
     title: "Bem-vindo!",
     description: "Faça login para continuar",
     emailPlaceholder: "Email",
     passwordPlaceholder: "Senha",
-    forgotPassword: "Esqueceu a senha?",
+    forgotPasswordButton: "Esqueceu a senha?",
     loginButton: "Entrar",
     noAccountText: "Não tem uma conta? ",
     createAccountButton: "Criar Conta",
+    rememberCredentials: "Lembrar Credenciais",
   },
-  signUp: {
+  SignUp: {
     title: "Crie sua conta",
     description: "Cadastre-se para continuar",
     emailPlaceholder: "Email",
@@ -49,7 +22,7 @@ export const authTexts: IAuthTexts = {
     alreadyHaveAccountText: "Já tem uma conta? ",
     signInButton: "Entrar",
   },
-  forgotPassword: {
+  ForgotPassword: {
     title: "Recuperar Senha",
     description: "Digite seu email para recuperar a senha",
     emailPlaceholder: "Email",
