@@ -8,8 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
 import { LogoSvg } from "@/components/LogoSvg";
-import { authTexts } from "@/constants/texts/auth";
+
+import { AuthTexts } from "@/constants/texts/auth";
 import { useThemeContext } from "@/context/themeContext";
+import useAuth from "@/hooks/useAuth";
 import { getLastEmail, saveLastEmail } from "@/utils/lastCredentials";
 import { showLoginError, showLoginSuccess } from "@/utils/userFeedback";
 import { useEffect, useRef, useState } from "react";
@@ -26,7 +28,6 @@ import {
 } from "react-native";
 import { signInSchema } from "./signInSchema";
 import type { ISignInData } from "./types";
-import useAuth from "@/hooks/useAuth";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -40,11 +41,12 @@ export default function SignIn() {
     description,
     emailPlaceholder,
     passwordPlaceholder,
-    forgotPassword,
+    forgotPasswordButton,
     loginButton,
     noAccountText,
     createAccountButton,
-  } = authTexts.signIn;
+    rememberCredentials,
+  } = AuthTexts.SignIn;
 
   const { handleSignIn } = useAuth();
   const { isDarkMode } = useThemeContext();
@@ -149,9 +151,8 @@ export default function SignIn() {
                     onBlur={onBlur}
                     keyboardType="email-address"
                     autoCapitalize="none"
-                    returnKeyType="next" // Mostra "Próximo" no teclado
+                    returnKeyType="next"
                     onSubmitEditing={() => {
-                      // Foca no próximo campo (senha)
                       passwordRef.current?.focus();
                     }}
                   />
@@ -177,8 +178,8 @@ export default function SignIn() {
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword}
-                      returnKeyType="send" // Mostra "Enviar" no teclado
-                      onSubmitEditing={handleSubmit(onSubmit)} // Submete o formulário
+                      returnKeyType="send"
+                      onSubmitEditing={handleSubmit(onSubmit)}
                     />
                     {errors.password && (
                       <Text className="text-red-500 text-sm absolute -bottom-6 left-0">
@@ -210,7 +211,7 @@ export default function SignIn() {
                 ios_backgroundColor="#3e3e3e"
               />
               <Text className="ml-2 text-text-muted dark:text-text-muted-dark">
-                Lembrar Credenciais?
+                {rememberCredentials}
               </Text>
             </View>
 
@@ -219,7 +220,7 @@ export default function SignIn() {
               onPress={handleGoToForgotPassword}
             >
               <Text className="text-text-muted dark:text-text-muted-dark text-sm">
-                {forgotPassword}
+                {forgotPasswordButton}
               </Text>
             </TouchableOpacity>
 
