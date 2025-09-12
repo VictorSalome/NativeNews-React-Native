@@ -1,4 +1,4 @@
-import { newsApi } from "@/services/axios/api";
+import { newsApi } from "@/services/axios/newsApi";
 import type { INewsData } from "./types";
 
 export const fetchNewsByCategory = async (
