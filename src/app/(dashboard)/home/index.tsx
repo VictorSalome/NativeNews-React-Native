@@ -17,10 +17,12 @@ import { weatherMock } from "./mockData";
 export default function Home() {
   const {
     data: news,
+   
     isLoading: newsLoading,
     error: newsError,
     refetch: fetchNews,
   } = useNewsQuery("Brasil");
+  
   const { condition, temperature, feelsLike, humidity, wind } = weatherMock;
   const [isRefreshing, setIsRefreshing] = useState(false);
 
