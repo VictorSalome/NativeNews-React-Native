@@ -1,4 +1,4 @@
-import type { IArticle } from "@/hooks/api/news/useNews/types";
+import type { IArticle } from "@/hooks/api/news/requests/types";
 
 export interface INewsHorizontalListProps {
   articles: IArticle[] | undefined;

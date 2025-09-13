@@ -6,32 +6,76 @@ import { HomeHeader } from "@/components/HomeHeader";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { ViewAllNewsButton } from "@/components/ViewAllNewsButton";
 import { DashboardTexts } from "@/constants/texts/dashboard";
-import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
+
+import { useNewsBySearch } from "@/hooks/api/news/useNewsBySearch";
+import { useWeatherCurrent } from "@/hooks/api/weather/useWeatherCurrent";
 import { AppRoutes } from "@/routes/appRoutes";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { RefreshControl, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { weatherMock } from "./mockData";
+import useLocation from "./TesteLocation";
 
 export default function Home() {
   const {
     data: news,
-   
+
     isLoading: newsLoading,
     error: newsError,
     refetch: fetchNews,
-  } = useNewsQuery("Brasil");
-  
+  } = useNewsBySearch("Brasil");
+
   const { condition, temperature, feelsLike, humidity, wind } = weatherMock;
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { label, latestNews, noNews, viewAll, loadingNews } =
     DashboardTexts.Home;
 
+  const { location, errorMsg, loading, getCurrentLocation } = useLocation();
+  console.log("location", location?.latitude, location?.longitude);
+
+  const { data: weatherData } = useWeatherCurrent(
+    location?.latitude!,
+    location?.longitude!,
+  );
+
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#3B82F6" />
+        <Text className="mt-2">Obtendo localização...</Text>
+      </View>
+    );
+  }
+
+  if (errorMsg) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-red-500 mb-4">{errorMsg}</Text>
+        <Button title="Tentar Novamente" onPress={getCurrentLocation} />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
       <HomeHeader label={label} />
+
+      {/* <View className="p-4">
+        <Text className="text-lg font-bold mb-2">Sua Localização:</Text>
+        <Text>Latitude: {location?.latitude}</Text>
+        <Text>Longitude: {location?.longitude}</Text>
+        <Text>Precisão: {location?.accuracy}m</Text>
+        <Button title="Atualizar Localização" onPress={getCurrentLocation} />
+      </View> */}
 
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 20 }}
@@ -50,6 +94,7 @@ export default function Home() {
       >
         <View className="mb-6">
           <WeatherCard
+            weatherData={weatherData}
             condition={condition}
             temperature={temperature}
             feelsLike={feelsLike}

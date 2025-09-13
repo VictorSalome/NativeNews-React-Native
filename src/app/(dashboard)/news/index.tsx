@@ -6,9 +6,9 @@ import { useThemeContext } from "@/context/themeContext";
 
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { NewsEmpty } from "@/components/NewsEmpty";
-import type { IArticle } from "@/hooks/api/news/useNews/types";
-import { useNewsQuery } from "@/hooks/api/news/useNewsQuery";
-import { useNewsSearchQuery } from "@/hooks/api/news/useNewsSearchQuery";
+import type { IArticle } from "@/hooks/api/news/requests/types";
+import { useNewsByCategory } from "@/hooks/api/news/useNewsByCategory";
+import { useNewsBySearch } from "@/hooks/api/news/useNewsBySearch";
 import { router } from "expo-router";
 import React, { useCallback, useMemo, useState } from "react";
 import { FlatList, RefreshControl, ScrollView, Text, View } from "react-native";
@@ -49,13 +49,13 @@ export default function News() {
     isLoading: newsLoading,
     error: newsError,
     refetch: fetchNews,
-  } = useNewsQuery(categoryTags);
+  } = useNewsByCategory(categoryTags);
 
   const {
     data: searchResults,
     isLoading: searchLoading,
     error: searchError,
-  } = useNewsSearchQuery(actualSearchTerm);
+  } = useNewsBySearch(actualSearchTerm);
 
   const handleSearch = () => {
     if (searchQuery.length >= 3) {

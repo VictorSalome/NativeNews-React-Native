@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchNewsByCategory } from "../useNews";
+import { fetchNewsByCategory } from "../requests";
 
-export const useNewsQuery = (category: string) => {
+export const useNewsByCategory = (category: string) => {
   return useQuery({
     queryKey: ["news", category],
     queryFn: () => fetchNewsByCategory(category),

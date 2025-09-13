@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchNewsBySearch } from "../useNews";
+import { fetchNewsBySearch } from "../requests";
 
-export const useNewsSearchQuery = (searchQuery: string) => {
+export const useNewsBySearch = (searchQuery: string) => {
   return useQuery({
     queryKey: ["news-search", searchQuery],
     queryFn: () => fetchNewsBySearch(searchQuery),

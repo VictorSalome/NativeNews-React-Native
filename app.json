@@ -57,6 +57,14 @@
           "microphonePermission": false
         }
       ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Este app precisa acessar sua localização para mostrar notícias próximas.",
+          "locationAlwaysPermission": "Este app precisa acessar sua localização em segundo plano.",
+          "locationWhenInUsePermission": "Este app precisa acessar sua localização quando estiver em uso."
+        }
+      ],
       "expo-web-browser",
       "expo-asset"
     ],

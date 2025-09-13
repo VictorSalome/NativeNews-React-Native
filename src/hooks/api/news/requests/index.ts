@@ -16,8 +16,8 @@ export const fetchNewsBySearch = async (
   const { data } = await newsApi.get<INewsData>("/everything", {
     params: {
       q: searchQuery,
-      language: "pt", // Para resultados em português
-      sortBy: "relevancy", // Ordenar por relevância
+      language: "pt",
+      sortBy: "relevancy",
     },
   });
   return data;
