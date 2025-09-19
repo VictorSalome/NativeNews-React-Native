@@ -9,6 +9,7 @@ import { WeatherCard } from "@/components/WeatherCard";
 import { DashboardTexts } from "@/constants/texts/dashboard";
 import { useNewsBySearch } from "@/hooks/api/news/useNewsBySearch";
 import { useWeatherCurrent } from "@/hooks/api/weather/useWeatherCurrent";
+import useLocation from "@/hooks/useLocation";
 import { AppRoutes } from "@/routes/appRoutes";
 import { router } from "expo-router";
 import {
@@ -20,8 +21,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import useLocation from "./TesteLocation";
 
 export default function Home() {
   const {
@@ -37,7 +36,6 @@ export default function Home() {
     DashboardTexts.Home;
 
   const { location, errorMsg, loading, getCurrentLocation } = useLocation();
-  console.log("location", location?.latitude, location?.longitude);
 
   const { data: weatherData } = useWeatherCurrent(
     location?.latitude!,
