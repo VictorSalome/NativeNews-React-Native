@@ -1,18 +1,16 @@
-import { AppRoutes } from "@/routes/appRoutes";
-
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-
 import { LogoSvg } from "@/components/LogoSvg";
-import { AuthTexts } from "@/constants/texts/auth";
+import { AuthTexts } from "@/constants/texts/auth/authText";
 import { useThemeContext } from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
+import { AppRoutes } from "@/routes/appRoutes";
 import { showSignUpError, showSignUpSuccess } from "@/utils/userFeedback";
+import { Ionicons } from "@expo/vector-icons";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Controller, useForm } from "react-hook-form";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -23,6 +21,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 import { signUpSchema } from "./signUpSchema";
 import type { ISignUpData } from "./types";
 
@@ -76,6 +75,7 @@ export default function SignUp() {
         showSignUpError();
       }
     } catch (error) {
+      console.error("Erro ao fazer cadastro:", error);
       showSignUpError();
     } finally {
       setIsLoading(false);
