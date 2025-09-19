@@ -1,99 +1,29 @@
-import { useWeatherGradient } from "@/app/(dashboard)/home/mockData";
+import { weatherSensationsCods } from "@/app/(dashboard)/home/mockData";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useMemo } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+
 import type { IWeatherCardProps } from "./types";
 
-interface IWeatherSensationProps {
-  icon: keyof typeof Ionicons.glyphMap;
-  color: string;
-}
+export const WeatherCard = ({ weatherData, onPress }: IWeatherCardProps) => {
+  if (!weatherData) return null;
 
-const WEATHER_SENSATIONS: Record<string, IWeatherSensationProps> = {
-  nublado: {
-    icon: "cloudy",
-    color: "#64748B",
-  },
-  chuvoso: {
-    icon: "rainy",
-    color: "#374151",
-  },
-  sol: {
-    icon: "sunny",
-    color: "#F59E0B",
-  },
-  "céu limpo": {
-    icon: "sunny",
-    color: "#F59E0B",
-  },
-  "poucas nuvens": {
-    icon: "partly-sunny",
-    color: "#94A3B8",
-  },
-  "nuvens dispersas": {
-    icon: "cloudy",
-    color: "#64748B",
-  },
-  tempestade: {
-    icon: "thunderstorm",
-    color: "#1E293B",
-  },
-  neve: {
-    icon: "snow",
-    color: "#E2E8F0",
-  },
-  névoa: {
-    icon: "partly-sunny",
-    color: "#9CA3AF",
-  },
-};
+  const { main, wind, name, weather } = weatherData;
+  const { temp_min, humidity, feels_like } = main || {};
+  const { speed } = wind || {};
 
-const DEFAULT_SENSATION: IWeatherSensationProps = {
-  icon: "partly-sunny",
-  color: "#94A3B8",
-};
+  const weatherCondition = weather?.[0];
+  const { id: conditionId } = weatherCondition || {};
 
-export const WeatherCard = ({
-  weatherData,
-  condition,
-  temperature,
-  feelsLike,
-  onPress,
-}: IWeatherCardProps) => {
-  const colors = useWeatherGradient(condition);
+  const currentCondition = conditionId
+    ? weatherSensationsCods[conditionId]
+    : undefined;
 
-  const weatherInfo = useMemo(() => {
-    if (!weatherData) return null;
-
-    const { main, wind, name, weather } = weatherData;
-    const { temp, temp_min, temp_max, humidity } = main || {};
-    const { speed } = wind || {};
-    const weatherCondition = weather?.[0]?.description;
-
-    return {
-      name,
-      temp,
-      temp_min,
-      temp_max,
-      humidity,
-      windSpeed: speed,
-      condition: weatherCondition,
-    };
-  }, [weatherData]);
-
-  const sensation = useMemo(() => {
-    if (!weatherInfo?.condition) return DEFAULT_SENSATION;
-    return WEATHER_SENSATIONS[weatherInfo.condition] || DEFAULT_SENSATION;
-  }, [weatherInfo?.condition]);
-
-  if (!weatherInfo) {
-    return null;
-  }
+  const { description, icon, color, gradient } = currentCondition || {};
 
   return (
     <LinearGradient
-      colors={colors}
+      colors={gradient || ["#4F6D7A", "#C0D6DF"]}
       className="rounded-2xl p-6 mb-6 mt-6"
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
@@ -106,43 +36,39 @@ export const WeatherCard = ({
         borderRadius: 24,
       }}
     >
-      {/* Header com localização e condição */}
-      <View className="items-center mb-4">
+      <View className="items-center mb-4 ">
         <Text className="text-lg font-bold text-center text-black/90 mb-4">
-          {weatherInfo.name}
+          {name || "--"}
         </Text>
 
-        {weatherInfo.condition && (
+        {currentCondition && (
           <View className="items-center">
-            <Ionicons name={sensation.icon} size={56} color={sensation.color} />
+            <Ionicons name={icon as any} size={56} color={color} />
             <Text className="text-sm text-black/75 font-medium mt-2 capitalize">
-              {weatherInfo.condition}
+              {description || "--"}
             </Text>
           </View>
         )}
       </View>
 
-      {/* Temperatura principal */}
       <Text className="text-6xl font-black text-center text-black/90 mb-4">
-        {weatherInfo.temp_min ? Math.round(weatherInfo.temp_min) : "--"}°C
+        {temp_min ? Math.round(temp_min) : "--"}°C
       </Text>
 
-      {/* Informações detalhadas */}
       <View className="items-center gap-3 mb-6">
         <View className="flex-row items-center gap-2">
           <Ionicons name="thermometer-outline" size={16} color="#374151" />
           <Text className="text-sm text-black/75 font-medium">
-            Sensação: {feelsLike ? `${feelsLike}°C` : "--"}
+            Sensação: {feels_like ? `${Math.round(feels_like)}°C` : "--"}
           </Text>
         </View>
-
+        ;
         <View className="flex-row items-center gap-2">
           <Ionicons name="water-outline" size={16} color="#374151" />
           <Text className="text-sm text-black/75 font-medium">
-            Umidade: {weatherInfo.humidity ? `${weatherInfo.humidity}%` : "--"}
+            Umidade: {humidity ? `${humidity}%` : "--"}
           </Text>
         </View>
-
         <View className="flex-row items-center gap-2">
           <MaterialCommunityIcons
             name="weather-windy"
@@ -150,15 +76,11 @@ export const WeatherCard = ({
             color="#374151"
           />
           <Text className="text-sm text-black/75 font-medium">
-            Vento:{" "}
-            {weatherInfo.windSpeed
-              ? `${Math.round(weatherInfo.windSpeed)} km/h`
-              : "--"}
+            Vento: {speed ? `${Math.round(speed)} km/h` : "--"}
           </Text>
         </View>
       </View>
 
-      {/* Botão de ação */}
       <TouchableOpacity
         onPress={onPress}
         className="items-center py-3 px-6 rounded-full bg-white/20 self-center"
