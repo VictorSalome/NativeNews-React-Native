@@ -1,4 +1,5 @@
 import React from "react";
+
 import { ScrollView, View } from "react-native";
 
 import { NewsCardHome } from "../NewsCardHome";

@@ -24,4 +24,4 @@ export interface ICredentials {
   password: string;
 }
 
-export interface IResetPassword extends Pick<ICredentials, "email"> {}
+export type IResetPassword = Pick<ICredentials, "email">;

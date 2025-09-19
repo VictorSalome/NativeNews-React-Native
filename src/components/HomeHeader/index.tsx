@@ -1,4 +1,4 @@
-import { getGreeting } from "@/app/(dashboard)/home/mockData";
+import { getGreeting } from "@/constants/texts/dashboard/homeMock/weatherConditions";
 import { AppRoutes } from "@/routes/appRoutes";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -28,9 +28,7 @@ export const HomeHeader = ({ label }: IHomeHeaderProps) => {
         <View className="flex-row items-center gap-2">
           <TouchableOpacity
             className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 items-center justify-center"
-            onPress={() => {
-              console.log("Notificações");
-            }}
+            onPress={() => {}}
             accessibilityLabel="Notificações"
           >
             <Ionicons name="notifications-outline" size={20} color="#6B7280" />

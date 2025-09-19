@@ -1,6 +1,7 @@
-// src/components/CategoryFilter/index.tsx
 import React from "react";
+
 import { Text, TouchableOpacity, View } from "react-native";
+
 import type { ICategoryFilterProps } from "./types";
 
 export const CategoryFilter = ({

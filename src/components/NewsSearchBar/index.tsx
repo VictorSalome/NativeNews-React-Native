@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { TextInput, TouchableOpacity, View } from "react-native";
+
 import type { INewsSearchBarProps } from "./types";
 
 export const NewsSearchBar = ({

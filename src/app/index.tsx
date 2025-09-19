@@ -1,6 +1,7 @@
 import "./global.css";
 
 import { Redirect } from "expo-router";
+
 import { LoadingScreens } from "../components/LoadingScreens";
 import { useAuthContext } from "../context/authContext";
 import { useOnboardingContext } from "../context/onboardContext";

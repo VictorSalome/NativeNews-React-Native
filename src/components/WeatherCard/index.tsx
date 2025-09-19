@@ -1,4 +1,4 @@
-import { weatherSensationsCods } from "@/app/(dashboard)/home/mockData";
+import { weatherSensationsCods } from "@/constants/texts/dashboard/homeMock/weatherConditions";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -62,7 +62,7 @@ export const WeatherCard = ({ weatherData, onPress }: IWeatherCardProps) => {
             Sensação: {feels_like ? `${Math.round(feels_like)}°C` : "--"}
           </Text>
         </View>
-        ;
+
         <View className="flex-row items-center gap-2">
           <Ionicons name="water-outline" size={16} color="#374151" />
           <Text className="text-sm text-black/75 font-medium">

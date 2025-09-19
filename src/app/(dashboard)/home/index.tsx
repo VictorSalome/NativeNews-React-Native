@@ -14,7 +14,6 @@ import { AppRoutes } from "@/routes/appRoutes";
 import { router } from "expo-router";
 import {
   ActivityIndicator,
-  Button,
   RefreshControl,
   ScrollView,
   Text,
@@ -35,42 +34,35 @@ export default function Home() {
   const { label, latestNews, noNews, viewAll, loadingNews } =
     DashboardTexts.Home;
 
-  const { location, errorMsg, loading, getCurrentLocation } = useLocation();
+  const {
+    location,
+    getCurrentLocation,
+    loading: locationLoading,
+  } = useLocation();
 
   const { latitude, longitude } = location || {};
 
-  const { data: weatherData } = useWeatherCurrent(latitude!, longitude!);
+  const { data: weatherData, isLoading: weatherLoading } = useWeatherCurrent(
+    latitude!,
+    longitude!,
+  );
 
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#3B82F6" />
-        <Text className="mt-2">Obtendo localização...</Text>
-      </View>
-    );
-  }
+  const isLoadingMain = locationLoading || newsLoading || weatherLoading;
 
-  if (errorMsg) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-red-500 mb-4">{errorMsg}</Text>
-        <Button title="Tentar Novamente" onPress={getCurrentLocation} />
-      </View>
-    );
-  }
-
-  return (
+  return isLoadingMain ? (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
+      }}
+    >
+      <ActivityIndicator size="large" color="#3B82F6" />
+    </View>
+  ) : (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
       <HomeHeader label={label} />
-
-      {/* <View className="p-4">
-        <Text className="text-lg font-bold mb-2">Sua Localização:</Text>
-        <Text>Latitude: {location?.latitude}</Text>
-        <Text>Longitude: {location?.longitude}</Text>
-        <Text>Precisão: {location?.accuracy}m</Text>
-        <Button title="Atualizar Localização" onPress={getCurrentLocation} />
-      </View> */}
-
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 20 }}
         refreshControl={
@@ -79,6 +71,7 @@ export default function Home() {
             onRefresh={async () => {
               setIsRefreshing(true);
               await fetchNews();
+              await getCurrentLocation();
               setIsRefreshing(false);
             }}
             colors={["#3B82F6"]}

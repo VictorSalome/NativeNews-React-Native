@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+
 import type { IErrorStateProps } from "./types";
 
 export const ErrorState = ({ newsError, noNews }: IErrorStateProps) => {

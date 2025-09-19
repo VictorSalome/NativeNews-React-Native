@@ -1,5 +1,6 @@
 import { useAuthContext } from "@/context/authContext";
 import { saveLastEmail } from "@/utils/lastCredentials";
+
 import type { AuthResult } from "./types";
 
 export default function useAuth() {
@@ -9,18 +10,13 @@ export default function useAuth() {
     email: string,
     password: string,
   ): Promise<AuthResult> => {
-    console.log("[useAuth] Iniciando handleSignIn");
     try {
-      console.log("[useAuth] Chamando função login do AuthContext");
       const result = await login(email, password);
 
       if (result) {
         await saveLastEmail(email);
       }
-      console.log(
-        "[useAuth] Resultado do login:",
-        result ? "Sucesso" : "Falha",
-      );
+
       return { ok: !!result };
     } catch (err) {
       console.error(
@@ -39,6 +35,10 @@ export default function useAuth() {
       const result = await register(email, password);
       return { ok: !!result };
     } catch (err) {
+      console.error(
+        "[useAuth] Erro durante registro:",
+        err instanceof Error ? err.message : "Erro desconhecido",
+      );
       return { ok: false, error: error || "Erro ao criar conta" };
     }
   };
@@ -48,6 +48,10 @@ export default function useAuth() {
       const result = await resetPassword(email);
       return { ok: result };
     } catch (err) {
+      console.error(
+        "[useAuth] Erro durante reset de senha:",
+        err instanceof Error ? err.message : "Erro desconhecido",
+      );
       return { ok: false, error: error || "Erro ao resetar senha" };
     }
   };

@@ -1,6 +1,7 @@
 import { convertDateToBr } from "@/utils/convertDateToBr";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+
 import type { INewsCardProps } from "./types";
 
 export const NewsCard = ({
@@ -30,7 +31,9 @@ export const NewsCard = ({
             }
             className="w-full h-full"
             resizeMode="cover"
-            onError={(e) => console.log("Image error:", e.nativeEvent.error)}
+            onError={(e) => {
+              console.error("Image error:", e.nativeEvent.error);
+            }}
           />
         </View>
 
@@ -47,7 +50,9 @@ export const NewsCard = ({
             {/* Indicador de favorito */}
             <TouchableOpacity
               className="ml-2 p-1"
-              onPress={() => console.log("Favoritar:", article.url)}
+              onPress={() => {
+                console.error("Favoritar:", article.url);
+              }}
             >
               <MaterialIcons
                 name="favorite-border"

@@ -1,4 +1,5 @@
 import { openWeatherApi } from "@/services/axios/openWeatherApi";
+
 import type {
   IFetchCurrentWeatherProps,
   IFetchCurrentWeatherResponse,

@@ -1,15 +1,15 @@
-// src/app/(onboarding)/apresentationTwo/index.tsx
+import React, { useRef } from "react";
+
 import { LogoSvg } from "@/components/LogoSvg";
 import { AppRoutes } from "@/routes/appRoutes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import React, { useRef } from "react";
-import { Dimensions, Image, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Obtém as dimensões da tela para cálculos responsivos
-const { width, height } = Dimensions.get("window");
+// const { width, height } = Dimensions.get("window");
 
 const introApresentation = [
   {

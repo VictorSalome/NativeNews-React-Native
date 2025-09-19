@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import * as Location from "expo-location";
 
@@ -8,12 +8,9 @@ const useLocation = () => {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refetch, setRefetch] = useState(false);
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
-
-  const getCurrentLocation = async () => {
+  const getCurrentLocation = useCallback(async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -28,6 +25,7 @@ const useLocation = () => {
         distanceInterval: 10,
       });
 
+      setRefetch(!refetch);
       setLocation({
         latitude: currentLocation.coords.latitude,
         longitude: currentLocation.coords.longitude,
@@ -39,7 +37,11 @@ const useLocation = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [refetch]);
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
 
   return { location, errorMsg, loading, getCurrentLocation };
 };

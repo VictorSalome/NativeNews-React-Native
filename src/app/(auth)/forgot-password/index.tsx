@@ -1,10 +1,16 @@
-import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 
 import { AuthTexts } from "@/constants/texts/auth/authText";
-
+import useAuth from "@/hooks/useAuth";
+import {
+  showForgotPasswordError,
+  showForgotPasswordSuccess,
+} from "@/utils/userFeedback";
+import { MaterialIcons } from "@expo/vector-icons";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Controller, useForm } from "react-hook-form";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -16,13 +22,6 @@ import {
   View,
 } from "react-native";
 
-import useAuth from "@/hooks/useAuth";
-import {
-  showForgotPasswordError,
-  showForgotPasswordSuccess,
-} from "@/utils/userFeedback";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
 import { forgotPasswordSchema } from "./forgotPasswordSchema";
 import type { IForgotPasswordData } from "./types";
 
@@ -65,6 +64,10 @@ export default function ForgotPassword() {
         showForgotPasswordError();
       }
     } catch (error) {
+      console.error(
+        "[ForgotPassword] Erro durante reset de senha:",
+        error instanceof Error ? error.message : "Erro desconhecido",
+      );
       showForgotPasswordError();
     } finally {
       setIsLoading(false);

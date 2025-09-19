@@ -1,17 +1,9 @@
-import { LogoSvg } from "@/components/LogoSvg";
-import { useThemeContext } from "@/context/themeContext";
+import React, { useMemo, useState } from "react";
+
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useMemo, useState } from "react";
-import {
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { RefreshControl, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Dados mockados do clima atual
@@ -129,17 +121,16 @@ function getWeatherIcon(condition: string, size: number = 24) {
 }
 
 export default function Weather() {
-  const { isDarkMode } = useThemeContext();
   const [refreshing, setRefreshing] = useState(false);
 
-  const dateText = useMemo(() => {
-    const now = new Date();
-    return now.toLocaleDateString("pt-BR", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-    });
-  }, []);
+  // const dateText = useMemo(() => {
+  //   const now = new Date();
+  //   return now.toLocaleDateString("pt-BR", {
+  //     weekday: "long",
+  //     day: "numeric",
+  //     month: "long",
+  //   });
+  // }, []);
 
   const gradient = useWeatherGradient(currentWeatherMock.condition);
 

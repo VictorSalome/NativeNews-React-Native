@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { fetchNewsByCategory } from "../requests";
 
 export const useNewsByCategory = (category: string) => {

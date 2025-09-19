@@ -1,6 +1,8 @@
-import { convertDateToBr } from "@/utils/convertDateToBr";
 import React from "react";
+
+import { convertDateToBr } from "@/utils/convertDateToBr";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+
 import type { INewsCardHomeProps } from "./types";
 
 export const NewsCardHome = ({ article, onPress }: INewsCardHomeProps) => {
@@ -22,7 +24,9 @@ export const NewsCardHome = ({ article, onPress }: INewsCardHomeProps) => {
         source={article?.urlToImage ? { uri: article.urlToImage } : undefined}
         className="w-full h-32"
         resizeMode="cover"
-        onError={(e) => console.log("Image error:", e.nativeEvent.error)}
+        onError={(e) => {
+          console.error("Image error:", e.nativeEvent.error);
+        }}
       />
       <View className="p-4">
         <Text

@@ -17,7 +17,12 @@ import {
 } from "@firebase/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { IAuthContext, IAuthTokens, IResetPassword } from "./types";
+import {
+  IAuthContext,
+  IAuthTokens,
+  ICredentials,
+  IResetPassword,
+} from "./types";
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -73,13 +78,18 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
               setUser(auth.currentUser || ({ uid: "temp-user-id" } as any));
             } else {
               const refreshResult = await handleRefreshAccessToken();
+              if (refreshResult) {
+                setUser(refreshResult.user);
+              }
             }
           } catch (error) {
+            console.error("Error refreshing token:", error);
             await handleClearAuthData();
           }
         }
       }
     } catch (error) {
+      console.error("Error loading tokens:", error);
       await handleClearAuthData();
     } finally {
       setIsLoading(false);
@@ -221,6 +231,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       await handleClearAuthData();
       return false;
     } catch (error) {
+      console.error("Error refreshing token:", error);
       await handleClearAuthData();
       return false;
     }
@@ -231,7 +242,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       () => {
         if (tokens.expiresAt) {
           const timeToExpiry = tokens.expiresAt - Date.now();
-          const minutesToExpiry = Math.floor(timeToExpiry / 1000 / 60);
+          // const minutesToExpiry = Math.floor(timeToExpiry / 1000 / 60);
 
           if (timeToExpiry < 1800000) {
             // 30 minutos

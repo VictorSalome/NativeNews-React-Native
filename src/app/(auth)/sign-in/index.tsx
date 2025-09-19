@@ -29,7 +29,6 @@ import type { ISignInData } from "./types";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [rememberEmail, setRememberEmail] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +47,8 @@ export default function SignIn() {
 
   const { handleSignIn } = useAuth();
   const { isDarkMode } = useThemeContext();
+
+  const password = "";
 
   const passwordRef = useRef<TextInput>(null);
 
