@@ -37,10 +37,9 @@ export default function Home() {
 
   const { location, errorMsg, loading, getCurrentLocation } = useLocation();
 
-  const { data: weatherData } = useWeatherCurrent(
-    location?.latitude!,
-    location?.longitude!,
-  );
+  const { latitude, longitude } = location || {};
+
+  const { data: weatherData } = useWeatherCurrent(latitude!, longitude!);
 
   if (loading) {
     return (
