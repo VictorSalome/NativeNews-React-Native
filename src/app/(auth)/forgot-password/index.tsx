@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 
-import { AuthTexts } from "@/constants/texts/auth";
+import { AuthTexts } from "@/constants/texts/auth/authText";
 
 import {
   ActivityIndicator,
@@ -16,6 +16,7 @@ import {
   View,
 } from "react-native";
 
+import useAuth from "@/hooks/useAuth";
 import {
   showForgotPasswordError,
   showForgotPasswordSuccess,
@@ -24,7 +25,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { forgotPasswordSchema } from "./forgotPasswordSchema";
 import type { IForgotPasswordData } from "./types";
-import useAuth from "@/hooks/useAuth";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
