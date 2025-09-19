@@ -1,17 +1,16 @@
-import { NewsHorizontalList } from "@/components/NewsHorizontalList";
-import { WeatherCard } from "@/components/WeatherCard";
+import React, { useState } from "react";
 
 import { ErrorState } from "@/components/ErrorState";
 import { HomeHeader } from "@/components/HomeHeader";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
+import { NewsHorizontalList } from "@/components/NewsHorizontalList";
 import { ViewAllNewsButton } from "@/components/ViewAllNewsButton";
+import { WeatherCard } from "@/components/WeatherCard";
 import { DashboardTexts } from "@/constants/texts/dashboard";
-
 import { useNewsBySearch } from "@/hooks/api/news/useNewsBySearch";
 import { useWeatherCurrent } from "@/hooks/api/weather/useWeatherCurrent";
 import { AppRoutes } from "@/routes/appRoutes";
 import { router } from "expo-router";
-import React, { useState } from "react";
 import {
   ActivityIndicator,
   Button,
@@ -21,19 +20,17 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { weatherMock } from "./mockData";
+
 import useLocation from "./TesteLocation";
 
 export default function Home() {
   const {
     data: news,
-
     isLoading: newsLoading,
     error: newsError,
     refetch: fetchNews,
   } = useNewsBySearch("Brasil");
 
-  const { condition, temperature, feelsLike, humidity, wind } = weatherMock;
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { label, latestNews, noNews, viewAll, loadingNews } =
@@ -95,11 +92,6 @@ export default function Home() {
         <View className="mb-6">
           <WeatherCard
             weatherData={weatherData}
-            condition={condition}
-            temperature={temperature}
-            feelsLike={feelsLike}
-            humidity={humidity}
-            wind={wind}
             onPress={() => router.navigate(AppRoutes.Weather)}
           />
         </View>
