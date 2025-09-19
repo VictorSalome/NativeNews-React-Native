@@ -1,5 +1,6 @@
-import * as Location from "expo-location";
 import { useEffect, useState } from "react";
+
+import * as Location from "expo-location";
 
 interface LocationData {
   latitude: number | null;
