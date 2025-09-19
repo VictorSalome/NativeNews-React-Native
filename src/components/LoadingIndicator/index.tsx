@@ -1,10 +1,7 @@
 import { ActivityIndicator, Text, View } from "react-native";
 
-interface ILoadingIndicatorProps {
-  size?: number | "large" | "small" | undefined;
-  color?: string;
-  label?: string;
-}
+import { ILoadingIndicatorProps } from "./types";
+
 export const LoadingIndicator = ({
   size,
   color,
