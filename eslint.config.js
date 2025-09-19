@@ -7,8 +7,12 @@ module.exports = defineConfig([
   {
     plugins: {
       "import-helpers": require("eslint-plugin-import-helpers"),
+      "react-native": require("eslint-plugin-react-native"),
     },
     rules: {
+      // React Native
+      "react-native/no-raw-text": "error",
+
       // React Rules
       "react/react-in-jsx-scope": "off",
       "react-hooks/rules-of-hooks": "error",
