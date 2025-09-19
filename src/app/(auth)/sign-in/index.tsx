@@ -1,20 +1,17 @@
-import { AppRoutes } from "@/routes/appRoutes";
-
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
 
 import { LogoSvg } from "@/components/LogoSvg";
-
 import { AuthTexts } from "@/constants/texts/auth";
 import { useThemeContext } from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
+import { AppRoutes } from "@/routes/appRoutes";
 import { getLastEmail, saveLastEmail } from "@/utils/lastCredentials";
-import { showLoginError, showLoginSuccess } from "@/utils/userFeedback";
-import { useEffect, useRef, useState } from "react";
+import { showLoginError } from "@/utils/userFeedback";
+import { Ionicons } from "@expo/vector-icons";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Controller, useForm } from "react-hook-form";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -26,6 +23,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 import { signInSchema } from "./signInSchema";
 import type { ISignInData } from "./types";
 
@@ -74,7 +72,7 @@ export default function SignIn() {
       const response = await handleSignIn(email, password);
 
       if (response.ok) {
-        showLoginSuccess();
+        // showLoginSuccess();
 
         if (rememberEmail) {
           await saveLastEmail(email);
@@ -84,7 +82,8 @@ export default function SignIn() {
         showLoginError();
       }
     } catch (error) {
-      showLoginError();
+      console.error("Erro ao fazer login:", error);
+      // showLoginError();
     } finally {
       setIsLoading(false);
     }
@@ -108,7 +107,7 @@ export default function SignIn() {
     };
 
     loadLastEmail();
-  }, []);
+  }, [setValue]);
 
   return (
     <>
