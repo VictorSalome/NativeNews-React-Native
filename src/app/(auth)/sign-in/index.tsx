@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { LogoSvg } from "@/components/LogoSvg";
-import { AuthTexts } from "@/constants/texts/auth";
+import { AuthTexts } from "@/constants/texts/auth/authText";
 import { useThemeContext } from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
 import { AppRoutes } from "@/routes/appRoutes";
