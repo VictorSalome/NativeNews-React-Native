@@ -6,7 +6,7 @@ import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { NewsHorizontalList } from "@/components/NewsHorizontalList";
 import { ViewAllNewsButton } from "@/components/ViewAllNewsButton";
 import { WeatherCard } from "@/components/WeatherCard";
-import { DashboardTexts } from "@/constants/texts/dashboard";
+import { DashboardTexts } from "@/constants/texts/dashboard/dashboardTexts";
 import { useNewsBySearch } from "@/hooks/api/news/useNewsBySearch";
 import { useWeatherCurrent } from "@/hooks/api/weather/useWeatherCurrent";
 import useLocation from "@/hooks/useLocation";
