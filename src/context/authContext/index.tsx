@@ -1,14 +1,3 @@
-import { auth } from "@/services/firebaseConfig";
-import { getSecureItem, saveSecureItem } from "@/utils/secureStore";
-import {
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signOut,
-  type User,
-  type UserCredential,
-} from "@firebase/auth";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createContext,
   useContext,
@@ -17,31 +6,18 @@ import {
   type ReactNode,
 } from "react";
 
-interface IAuthContext {
-  user: User | null;
-  tokens: IAuthTokens;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
-  login: (email: string, password: string) => Promise<UserCredential | null>;
-  register: (email: string, password: string) => Promise<UserCredential | null>;
-  logout: () => Promise<void>;
-  refreshAccessToken: () => Promise<boolean>;
-  resetPassword: (email: string) => Promise<boolean>;
-}
+import { auth } from "@/services/firebaseConfig";
+import { getSecureItem, saveSecureItem } from "@/utils/secureStore";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+  type User,
+} from "@firebase/auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-interface IAuthTokens {
-  accessToken: string | null;
-  refreshToken: string | null;
-  expiresAt: number | null;
-}
-
-interface ICredentials {
-  email: string;
-  password: string;
-}
-
-interface IResetPassword extends Pick<ICredentials, "email"> {}
+import { IAuthContext, IAuthTokens, IResetPassword } from "./types";
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
